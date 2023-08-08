@@ -1,0 +1,11 @@
+[versions]
+android-target-sdk = "33"
+android-compile-sdk = "33"
+android-min-sdk = "24"
+
+androidGradlePlugin = "7.4.2"
+kotlin = "1.7.10"
+
+[libraries]
+
+[plugins]
