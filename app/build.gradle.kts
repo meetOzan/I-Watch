@@ -1,21 +1,26 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.hilt.plugin)
+    alias(libs.plugins.androidx.navigation.safe.args)
 }
 
 android {
-    namespace = "com.mertozan.moviescompose"
-    compileSdk = 33
+    namespace = libs.versions.namespace.get()
+    compileSdk = (libs.versions.android.compile.sdk.get()).toInt()
 
     defaultConfig {
-        applicationId = "com.mertozan.moviescompose"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
+        applicationId = libs.versions.applicationId.get()
+        minSdk = (libs.versions.android.min.sdk.get()).toInt()
+        targetSdk = (libs.versions.android.target.sdk.get()).toInt()
+        versionCode = (libs.versions.versionCode.get()).toInt()
 
-        versionName = "1.0"
+        versionName = libs.versions.version.name.get()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = libs.versions.testInstrumentationRunner.get()
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -31,17 +36,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = libs.versions.jvmTarget.get()
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packaging {
         resources {
@@ -52,19 +57,46 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    val composeBom = platform(libs.androidx.compose.bom)
+
+    implementation(libs.androidx.core.ktx) /*1.9.0*/
+    implementation(libs.androidx.lifecycle.runtime.ktx) /*2.6.1*/
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(composeBom)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.util)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext) /* 1.1.5 */
+    androidTestImplementation(libs.androidx.test.espresso.core) /* 3.5.1 */
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.junit)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp.logging)
+
+    // Room
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+    implementation(libs.room.runtime)
+
+    // Coil
+    implementation(libs.coil.kt.compose)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
 }
