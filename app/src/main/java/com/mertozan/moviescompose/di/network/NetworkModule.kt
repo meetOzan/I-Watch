@@ -1,6 +1,6 @@
 package com.mertozan.moviescompose.di.network
 
-import com.mertozan.moviescompose.BuildConfig
+import com.mertozan.moviescompose.common.constants.Constants.BASE_URL
 import com.mertozan.moviescompose.data.api.MovieService
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitService(): MovieService = Retrofit.Builder()
-        .baseUrl(BuildConfig.MOVIE_BASE_URL)
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(MovieService::class.java)

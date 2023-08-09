@@ -26,7 +26,6 @@ android {
         }
 
         buildConfigField ("String", "API_KEY", "\"Your API Key\"")
-        buildConfigField("String","MOVIE_BASE_URL", "\"https://api.themoviedb.org/\"")
     }
 
     android {
