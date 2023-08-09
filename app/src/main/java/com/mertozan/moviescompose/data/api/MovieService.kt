@@ -12,7 +12,7 @@ interface MovieService {
     // GET https://api.themoviedb.org/3/movie/{movie_id}/images | Get Movie Image
 
     // GET https://api.themoviedb.org/3/account/{account_id} | Get Account
-    // ? -> Retrofitte user mantığı kullanmadım
+    // ? -> Retrofit'de user mantığı kullanmadım
 
     // POST https://api.themoviedb.org/3/account/{account_id}/favorite | Add to Fav
     // GET https://api.themoviedb.org/3/account/{account_id}/favorite/movies | Get Fav Movies
