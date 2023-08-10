@@ -1,14 +1,25 @@
 package com.mertozan.moviescompose.data.api
 
+import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.data.model.MovieResponse
+import com.mertozan.moviescompose.data.model.SeriesResponse
+import retrofit2.http.GET
 
 // Service olarak mı Api olarak mı isimlendirmem lazım ?
 interface MovieService {
 
+    @GET("movie/popular?api_key=${BuildConfig.API_KEY})")
+    fun getPopularMovies() : MovieResponse
+    @GET("tv/popular?api_key=${BuildConfig.API_KEY}")
+    fun getPopularSeries() : SeriesResponse
+
     // GET https://api.themoviedb.org/3/movie/{movie_id} | Single Movie Details
     // GET https://api.themoviedb.org/3/tv/{series_id} | Single TV Series Details
+
+
     // GET https://api.themoviedb.org/3/trending/movie/{time_window} | Trend Movies
     // GET https://api.themoviedb.org/3/trending/tv/{time_window} | Trend TV Series
+
     // GET https://api.themoviedb.org/3/tv/popular | Popular TV Series
     // GET https://api.themoviedb.org/3/movie/popular | Popular Movies
     // GET https://api.themoviedb.org/3/movie/{movie_id}/images | Get Movie Image
