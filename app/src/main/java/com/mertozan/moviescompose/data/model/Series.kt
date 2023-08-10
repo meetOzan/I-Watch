@@ -1,9 +1,9 @@
-package com.mertozan.moviescompose.data.dto
+package com.mertozan.moviescompose.data.model
 
 import com.google.gson.annotations.SerializedName
 
 // Fazla olanları silebiliriz
-data class SeriesDto(
+data class Series(
     @SerializedName("id")
     val id : Int,
     @SerializedName("name")
@@ -15,7 +15,7 @@ data class SeriesDto(
     @SerializedName("first_air_date")
     val firstAirDate : String,
     @SerializedName("genres")
-    val genres: GenresDto,
+    val genres: Genres,
     @SerializedName("poster_path")
     val posterPath : String,
     @SerializedName("original_language")

@@ -1,8 +1,8 @@
-package com.mertozan.moviescompose.data.dto
+package com.mertozan.moviescompose.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDto(
+data class Movie(
 
     @SerializedName("id")
     val id: Int,
@@ -18,7 +18,7 @@ data class MovieDto(
     @SerializedName("genres")
     // JSON da genres "genres":[{"id":12,"name":"Adventure"}]" olarak tutuluyor
     // Sitesinde genre_ids -> array of integers diyor hangisi olmalı.
-    val genres: GenresDto,
+    val genres: Genres,
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("release_date")

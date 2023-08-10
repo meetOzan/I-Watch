@@ -17,7 +17,7 @@ object NetworkModule {
     // Retrofit Built
     @Singleton
     @Provides
-    fun provideRetrofitService(): MovieService = Retrofit.Builder()
+    internal fun provideRetrofitService(): MovieService = Retrofit.Builder()
         .baseUrl(BuildConfig.MOVIE_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

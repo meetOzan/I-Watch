@@ -1,5 +1,7 @@
 package com.mertozan.moviescompose.data.api
 
+import com.mertozan.moviescompose.data.model.MovieResponse
+
 // Service olarak mı Api olarak mı isimlendirmem lazım ?
 interface MovieService {
 

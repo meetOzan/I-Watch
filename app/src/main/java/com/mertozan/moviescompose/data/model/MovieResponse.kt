@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.domain.response
+package com.mertozan.moviescompose.data.model
 
 import com.google.gson.annotations.SerializedName
 

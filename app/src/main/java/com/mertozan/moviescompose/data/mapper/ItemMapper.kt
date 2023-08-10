@@ -1,11 +1,11 @@
 package com.mertozan.moviescompose.data.mapper
 
-import com.mertozan.moviescompose.data.dto.MovieDto
-import com.mertozan.moviescompose.data.dto.SeriesDto
+import com.mertozan.moviescompose.data.model.Movie
+import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.domain.model.MovieItem
 import com.mertozan.moviescompose.domain.model.SeriesItem
 
-fun MovieDto.toMovieItem(): MovieItem {
+fun Movie.toMovieItem(): MovieItem {
     return MovieItem(
         title = title,
         popularity = popularity,
@@ -17,7 +17,7 @@ fun MovieDto.toMovieItem(): MovieItem {
     )
 }
 
-fun SeriesDto.toSeriesItem(): SeriesItem {
+fun Series.toSeriesItem(): SeriesItem {
     return SeriesItem(
         name = name,
         popularity = popularity,
