@@ -12,7 +12,7 @@ data class Movie(
     @SerializedName("original_title") //
     val originalTitle: String,
     @SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Float,
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("genres")

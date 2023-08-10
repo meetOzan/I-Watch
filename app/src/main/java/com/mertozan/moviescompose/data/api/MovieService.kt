@@ -8,10 +8,10 @@ import retrofit2.http.GET
 // Service olarak mı Api olarak mı isimlendirmem lazım ?
 interface MovieService {
 
-    @GET("movie/popular?api_key=${BuildConfig.API_KEY})")
-    fun getPopularMovies() : MovieResponse
+    @GET("movie/popular?api_key=${BuildConfig.API_KEY}")
+    suspend fun getPopularMovies() : MovieResponse
     @GET("tv/popular?api_key=${BuildConfig.API_KEY}")
-    fun getPopularSeries() : SeriesResponse
+    suspend fun getPopularSeries() : SeriesResponse
 
     // GET https://api.themoviedb.org/3/movie/{movie_id} | Single Movie Details
     // GET https://api.themoviedb.org/3/tv/{series_id} | Single TV Series Details
