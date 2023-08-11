@@ -94,12 +94,6 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp.logging)
-    implementation(libs.com.squareup.retrofit2.converter.moshi)
-
-    // Moshi
-    implementation(libs.squareup.moshi.moshi)
-    kapt(libs.squareup.moshi.moshi.kotlin.codegen)
-    implementation(libs.squareup.moshi.moshi.kotlin)
 
     // Room
     implementation(libs.room.ktx)
