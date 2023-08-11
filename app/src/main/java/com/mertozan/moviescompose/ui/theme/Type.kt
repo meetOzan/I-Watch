@@ -2,11 +2,19 @@ package com.mertozan.moviescompose.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.mertozan.moviescompose.R
 
 // Set of Material typography styles to start with
+
+val amazonEmberFamily = FontFamily(
+    Font(R.font.amazonember_bd, FontWeight.Bold),
+    Font(R.font.amazonember_rg, FontWeight.Normal)
+)
+
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,

@@ -1,11 +1,10 @@
 package com.mertozan.moviescompose.presantation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -24,10 +23,9 @@ class MovieViewModel @Inject constructor(
     }
 
     private fun getPopularMovies() {
-        CoroutineScope(Dispatchers.IO).launch {
-            movieRepository.getAllPopularMovies()
-            _popularMovies.value = movieRepository.repoPopularMovies.value
+        viewModelScope.launch {
+            val response = movieRepository.getAllPopularMovies()
+            _popularMovies.value = response.movieResults
         }
     }
-
 }
