@@ -16,9 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
@@ -44,7 +46,7 @@ fun MainScreen(
                 color = Color.Yellow
             )
             Text(
-                text = "Top 20 movies on this week",
+                text = stringResource(R.string.top_20_movies_on_this_week),
                 fontFamily = amazonEmberFamily,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -56,12 +58,11 @@ fun MainScreen(
             items(movieList) { movie ->
                 RowItem(
                     onCardClick = {},
-                    movie = movie,
+                    posterPath = movie.posterPath,
+                    title = movie.title,
                     number = (movieList.indexOf(movie)) + 1
                 )
             }
         }
-
-
     }
 }
