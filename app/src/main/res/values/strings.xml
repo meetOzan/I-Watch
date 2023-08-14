@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MoviesCompose</string>
+    <string name="top_20_tv_series_on_this_week">Top 20 TV Series on this week</string>
+    <string name="top_20_movies_on_this_week">Top 20 movies on this week</string>
+    <string name="https_image_tmdb_org_t_p_original">https://image.tmdb.org/t/p/original/%1$s</string>
+    <string name="animated_color">animated_color</string>
+    <string name="movie_poster">movie_poster</string>
+    <string name="add_fav">add_fav</string>
 </resources>

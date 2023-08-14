@@ -27,7 +27,8 @@ fun NavGraphBuilder.mainScreen() {
     composable(MainScreen.route) {
         val viewModel = hiltViewModel<MovieViewModel>()
         MainScreen(
-            movieList = viewModel.popularMovies.collectAsState().value
+            movieList = viewModel.popularMovies.collectAsState().value,
+            seriesList = viewModel.popularSeries.collectAsState().value
         )
     }
 }
