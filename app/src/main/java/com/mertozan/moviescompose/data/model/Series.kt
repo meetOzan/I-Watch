@@ -11,7 +11,7 @@ data class Series(
     @SerializedName("original_name")
     val originalName : String,
     @SerializedName("popularity")
-    val popularity : Int,
+    val popularity : Float,
     @SerializedName("first_air_date")
     val firstAirDate : String,
     @SerializedName("genres")

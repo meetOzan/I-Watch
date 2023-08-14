@@ -4,7 +4,7 @@ import com.mertozan.moviescompose.data.model.Genres
 
 data class SeriesItem(
     val name: String,
-    val popularity: Int,
+    val popularity: Float,
     val firstAirDate: String,
     val genresDto: Genres,
     val posterPath: String,

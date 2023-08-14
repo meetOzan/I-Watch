@@ -42,7 +42,6 @@ object NetworkModule {
             writeTimeout(TIMEOUT, TimeUnit.SECONDS)
         }.build()
 
-    // Bunu tam olarak nerede kullanacağız ? ve Header'ı nereye vereceğiz?
     @Provides
     @Singleton
     fun createHttpLoggingInterceptor(): HttpLoggingInterceptor {

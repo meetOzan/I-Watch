@@ -105,6 +105,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.compose.viewmodel)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
