@@ -5,8 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,7 +52,7 @@ fun MovieItem(
     }
 
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Red else Color.White,
+        if (isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
 
@@ -62,10 +65,10 @@ fun MovieItem(
                 shape = MaterialTheme.shapes.medium,
                 color = Color.Yellow
             )
-            .clickable { onCardClick }
+            .clickable(onClick = onCardClick)
             .background(Dark80)
     ) {
-        Box {
+        Box{
             AsyncImage(
                 model = (stringResource(R.string.https_image_tmdb_org_t_p_original, posterPath)),
                 contentDescription = stringResource(R.string.movie_poster),
@@ -75,26 +78,31 @@ fun MovieItem(
                     .height(300.dp),
                 alignment = Alignment.Center
             )
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "#$number",
+                fontSize = 24.sp,
+                fontFamily = amazonEmberFamily,
+                modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
+                color = Color.Gray,
+                fontWeight = FontWeight.SemiBold
+            )   
+            Spacer(modifier = Modifier.width(130.dp))
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
-                    .size(36.dp)
-                    .padding(5.dp)
-                    .clickable { isFavorite = !isFavorite }
-                    .background(Color.Gray.copy(alpha = 0.5f)),
+                    .size(28.dp)
+                    .clickable { isFavorite = !isFavorite },
                 alignment = Alignment.TopStart
             )
         }
-        Text(
-            "#$number",
-            fontSize = 24.sp,
-            fontFamily = amazonEmberFamily,
-            modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
-            color = Color.Gray,
-            fontWeight = FontWeight.SemiBold
-        )
         Text(
             title.isLongerThan(),
             fontSize = 15.sp,

@@ -5,11 +5,10 @@ interface Destination{
 }
 
 object MainScreen : Destination{
-    override val route: String
-        get() = "main_screen"
+    override val route = "main_screen"
 }
 
 object DetailScreen : Destination{
-    override val route: String
-        get() = "detail_screen"
+    override val route = "detail_screen"
+
 }

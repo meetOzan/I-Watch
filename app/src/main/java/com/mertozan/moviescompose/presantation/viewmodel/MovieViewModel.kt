@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation
+package com.mertozan.moviescompose.presantation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +23,10 @@ class MovieViewModel @Inject constructor(
     val popularSeries = _popularSeries.asStateFlow()
 
     init {
+        getGenres()
+    }
+
+    init {
         getPopularMovies()
         getPopularSeries()
     }
@@ -38,6 +42,13 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             val response = movieRepository.getAllPopularSeries()
             _popularSeries.value = response.seriesResults
+        }
+    }
+
+    private fun getGenres() {
+        viewModelScope.launch {
+            movieRepository.getMovieGenres()
+            movieRepository.getSeriesGenres()
         }
     }
 }

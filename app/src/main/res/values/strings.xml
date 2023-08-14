@@ -6,4 +6,9 @@
     <string name="animated_color">animated_color</string>
     <string name="movie_poster">movie_poster</string>
     <string name="add_fav">add_fav</string>
+    <string name="back_arrow">back_arrow</string>
+    <string name="duration">Duration</string>
+    <string name="adult">Adult?</string>
+    <string name="adult_yes">adult_yes</string>
+    <string name="language">Language</string>
 </resources>

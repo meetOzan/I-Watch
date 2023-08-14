@@ -21,16 +21,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.navigation.DetailScreen
 import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun MainScreen(
     movieList: List<Movie>,
-    seriesList: List<Series>
+    seriesList: List<Series>,
+    navController: NavController
 ) {
     Column(
         modifier = Modifier
@@ -62,8 +65,11 @@ fun MainScreen(
                 .background(LightBlack)
         ) {
             items(movieList) { movie ->
+                val args = "${movie.id}/${DataTypes.MOVIE}"
                 MovieItem(
-                    onCardClick = {},
+                    onCardClick = {
+                        navController.navigate("${DetailScreen.route}/$args")
+                    },
                     posterPath = movie.posterPath,
                     title = movie.title,
                     number = (movieList.indexOf(movie)) + 1
@@ -95,8 +101,11 @@ fun MainScreen(
                 .background(LightBlack)
         ) {
             items(seriesList) { series ->
+                val args = "${series.id}/${DataTypes.SERIES}"
                 MovieItem(
-                    onCardClick = {},
+                    onCardClick = {
+                        navController.navigate("${DetailScreen.route}/$args")
+                    },
                     posterPath = series.posterPath,
                     title = series.name,
                     number = (seriesList.indexOf(series)) + 1
@@ -104,4 +113,9 @@ fun MainScreen(
             }
         }
     }
+}
+
+enum class DataTypes {
+    MOVIE,
+    SERIES
 }
