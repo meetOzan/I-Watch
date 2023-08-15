@@ -14,7 +14,7 @@ data class Movie(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("genres")
-    val genres: ArrayList<Genres>,
+    val genres: List<Genres>,
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("release_date")

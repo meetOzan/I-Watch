@@ -16,7 +16,7 @@ data class Series(
     @SerializedName("first_air_date")
     val firstAirDate : String,
     @SerializedName("genres")
-    val genres: ArrayList<Genres>,
+    val genres: List<Genres>,
     @SerializedName("episode_number")
     val episodeNumber : Int,
     @SerializedName("poster_path")

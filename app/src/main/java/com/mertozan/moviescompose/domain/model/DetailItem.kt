@@ -6,7 +6,7 @@ data class DetailItem(
     val title: String = "",
     val popularity: Float? = 0f,
     val releaseDate: String = "",
-    val genresDto: ArrayList<Genres>? = null,
+    val genresDto: List<Genres> = emptyList(),
     val posterPath: String = "",
     val adult: Boolean = false,
     val runTime: Int = 0,
