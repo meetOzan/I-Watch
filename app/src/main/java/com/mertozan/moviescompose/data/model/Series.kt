@@ -2,7 +2,6 @@ package com.mertozan.moviescompose.data.model
 
 import com.google.gson.annotations.SerializedName
 
-// Fazla olanları silebiliriz
 data class Series(
     @SerializedName("id")
     val id : Int,
@@ -10,12 +9,16 @@ data class Series(
     val name: String,
     @SerializedName("original_name")
     val originalName : String,
+    @SerializedName("adult")
+    val adult: Boolean,
     @SerializedName("popularity")
     val popularity : Float,
     @SerializedName("first_air_date")
     val firstAirDate : String,
     @SerializedName("genres")
-    val genres: Genres,
+    val genres: ArrayList<Genres>,
+    @SerializedName("episode_number")
+    val episodeNumber : Int,
     @SerializedName("poster_path")
     val posterPath : String,
     @SerializedName("original_language")

@@ -92,13 +92,14 @@ fun MovieItem(
                 color = Color.Gray,
                 fontWeight = FontWeight.SemiBold
             )   
-            Spacer(modifier = Modifier.width(130.dp))
+            Spacer(modifier = Modifier.width(135.dp))
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
                     .size(28.dp)
+                    .padding(bottom = 4.dp)
                     .clickable { isFavorite = !isFavorite },
                 alignment = Alignment.TopStart
             )

@@ -3,7 +3,6 @@ package com.mertozan.moviescompose.presantation
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,14 +10,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,6 +30,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
@@ -37,8 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.presantation.viewmodel.DetailViewModel
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
@@ -46,8 +49,8 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 fun DetailScreen(
     onBackClicked: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
-    id: Int?,
-    type: String?
+    id: Int,
+    type: String
 ) {
 
     var isFavorite by rememberSaveable {
@@ -55,20 +58,12 @@ fun DetailScreen(
     }
 
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Red else Color.White,
+        if (isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
 
-    var series: Series? = null
-    var movies: Movie? = null
-
-    if (type == DataTypes.SERIES.toString()) {
-        viewModel.getSingleSeries(3)
-        series = viewModel.singleSeries.collectAsState().value
-    } else {
-        viewModel.getSingleMovie(4)
-        movies = viewModel.singleMovie.collectAsState().value
-    }
+    viewModel.getList(id = id, type = type)
+    val details = viewModel.singleDetail.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -78,149 +73,196 @@ fun DetailScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 model = (stringResource(
-                    R.string.https_image_tmdb_org_t_p_original
-                )) + (series?.posterPath ?: movies?.posterPath)!!,
+                    R.string.https_image_tmdb_org_t_p_original,
+                    details.posterPath
+                )),
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
-                    .fillMaxSize(0.8f),
+                    .fillMaxSize(1f),
                 alignment = Alignment.Center
             )
-            Image(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back_arrow),
-                colorFilter = ColorFilter.tint(Color.White),
-                alignment = Alignment.TopStart,
+            Box(
                 modifier = Modifier
-                    .padding(8.dp)
-                    .size(36.dp)
-                    .clickable(onClick = onBackClicked),
+                    .background(
+                        brush = Brush.verticalGradient(
+                            listOf(
+                                Color.Transparent,
+                                Color.Black
+                            )
+                        )
+                    )
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .align(Alignment.BottomCenter)
             )
-            Image(
-                imageVector = Icons.Filled.Favorite,
-                contentDescription = stringResource(R.string.add_fav),
-                alignment = Alignment.TopEnd,
-                colorFilter = ColorFilter.tint(animateFavColor),
+            Box(
                 modifier = Modifier
+                    .align(Alignment.TopStart)
                     .padding(8.dp)
-                    .size(36.dp)
-                    .clickable { isFavorite = !isFavorite },
-            )
+                    .background(Color.Black, shape = MaterialTheme.shapes.medium)
+                    .alpha(0.5f)
+            ) {
+                Image(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.back_arrow),
+                    colorFilter = ColorFilter.tint(Color.White),
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .size(36.dp)
+                        .clickable(onClick = onBackClicked),
+                )
+            }
+
         }
         Text(
-            // TODO Title
-            text = "BladeRunner 2049",
-            fontSize = 20.sp,
+            text = details.title,
+            fontSize = 22.sp,
+            modifier = Modifier.padding(vertical = 8.dp),
             color = Color.White,
             fontFamily = amazonEmberFamily,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            // TODO Popularity, Circle Score
-            text = "64.56",
-            fontSize = 16.sp,
-            color = Color.White,
-            fontFamily = amazonEmberFamily,
-        )
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            horizontalArrangement = Arrangement.spacedBy(280.dp)
+        ) {
+            Text(
+                // TODO Circle Score
+                text = details.popularity.toString(),
+                fontSize = 16.sp,
+                color = Color.White,
+                fontFamily = amazonEmberFamily,
+            )
+
+            Image(
+                imageVector = Icons.Filled.Favorite,
+                contentDescription = stringResource(R.string.add_fav),
+                colorFilter = ColorFilter.tint(animateFavColor),
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { isFavorite = !isFavorite },
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp)
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(3.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.border(width = 0.2.dp, color = Color.White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = stringResource(R.string.duration),
-                    fontSize = 12.sp,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    // TODO runtime
-                    text = "2h19m",
-                    fontSize = 16.sp,
+                    text = details.runTime.toString(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
             }
             Column(
-                verticalArrangement = Arrangement.spacedBy(3.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.border(width = 0.2.dp, color = Color.White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = stringResource(R.string.adult),
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(top = 7.dp),
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
-                Image(
-                    imageVector = Icons.Filled.CheckCircle,
-                    colorFilter = ColorFilter.tint(Color.Green),
-                    contentDescription = stringResource(R.string.adult_yes),
-                )
-                /*Image(
-                    imageVector = Icons.Filled.AddCircle,
-                    modifier = Modifier.rotate(90f),
-                    colorFilter = ColorFilter.tint(Color.Red),
-                    contentDescription = stringResource(R.string.adult_yes),
-                )*/
+                if (details.adult) {
+                    Image(
+                        imageVector = Icons.Filled.CheckCircle,
+                        colorFilter = ColorFilter.tint(Color.Green),
+                        modifier = Modifier
+                            .size(20.dp)
+                            .padding(top = 6.dp, start = 6.dp),
+                        contentDescription = stringResource(R.string.adult_yes),
+                    )
+                } else {
+                    Image(
+                        imageVector = Icons.Filled.AddCircle,
+                        modifier = Modifier
+                            .rotate(45f)
+                            .padding(top = 6.dp, start = 6.dp)
+                            .size(20.dp),
+                        colorFilter = ColorFilter.tint(Color.Red),
+                        contentDescription = stringResource(R.string.no_adult),
+                    )
+                }
             }
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(3.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.border(width = 0.2.dp, color = Color.White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = stringResource(R.string.language),
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    // TODO Language
-                    text = "EN",
-                    fontSize = 16.sp,
+                    text = details.originalLanguage.uppercase(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
             }
             Column(
-                verticalArrangement = Arrangement.spacedBy(3.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.border(width = 0.2.dp, color = Color.White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Release Date",
-                    fontSize = 12.sp,
+                    text = stringResource(R.string.release_date),
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    // TODO Release Date
-                    text = "2019-22-07",
-                    fontSize = 16.sp,
+                    text = details.releaseDate,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
             }
         }
         Text(
-            //TODO Description
-            text = "Description",
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+            text = "Details",
+            modifier = Modifier
+                .padding(
+                    top = 16.dp
+                ),
+            fontSize = 24.sp,
+            color = Color.White,
+            fontFamily = amazonEmberFamily,
+        )
+        Text(
+            text = if (details.overview == "")
+                "No Detail"
+            else
+                details.overview,
+            modifier = Modifier.padding(
+                horizontal = 24.dp,
+                vertical = 8.dp
+            ),
             color = Color.White,
             fontFamily = amazonEmberFamily,
         )

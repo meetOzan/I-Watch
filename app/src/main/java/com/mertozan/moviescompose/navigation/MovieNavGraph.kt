@@ -6,8 +6,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.mertozan.moviescompose.presantation.DetailScreen
 import com.mertozan.moviescompose.presantation.MainScreen
 import com.mertozan.moviescompose.presantation.viewmodel.MovieViewModel
@@ -36,13 +38,22 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
 }
 
 fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
-    composable("${DetailScreen.route}/{id}/{type}") { backStackEntry ->
-        val id = backStackEntry.arguments?.getInt("id")
-        val type = backStackEntry.arguments?.getString("type")
-        DetailScreen(
-            onBackClicked = onNavigate,
-            id = id,
-            type = type
+    composable(
+        DetailScreen.route + "/{id}/{type}",
+        arguments = listOf(
+            navArgument("id"){
+                type = NavType.IntType
+            }, navArgument("type"){
+                type = NavType.StringType
+            }
         )
+    ) { backStackEntry ->
+        backStackEntry.arguments?.let {
+            DetailScreen(
+                onBackClicked = onNavigate,
+                id = it.getInt("id"),
+                type = it.getString("type").toString()
+            )
+        }
     }
 }

@@ -65,10 +65,10 @@ fun MainScreen(
                 .background(LightBlack)
         ) {
             items(movieList) { movie ->
-                val args = "${movie.id}/${DataTypes.MOVIE}"
+                val args = "/${movie.id}/${DataTypes.MOVIE.name}"
                 MovieItem(
                     onCardClick = {
-                        navController.navigate("${DetailScreen.route}/$args")
+                        navController.navigate(DetailScreen.route + args)
                     },
                     posterPath = movie.posterPath,
                     title = movie.title,
@@ -101,10 +101,10 @@ fun MainScreen(
                 .background(LightBlack)
         ) {
             items(seriesList) { series ->
-                val args = "${series.id}/${DataTypes.SERIES}"
+                val args = "/${series.id}/${DataTypes.SERIES.name}"
                 MovieItem(
                     onCardClick = {
-                        navController.navigate("${DetailScreen.route}/$args")
+                        navController.navigate(DetailScreen.route + args)
                     },
                     posterPath = series.posterPath,
                     title = series.name,

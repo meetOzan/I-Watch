@@ -1,7 +1,7 @@
 package com.mertozan.moviescompose.data.repository
 
 import com.mertozan.moviescompose.data.api.MovieService
-import com.mertozan.moviescompose.data.model.Genres
+import com.mertozan.moviescompose.data.model.GenresResponse
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.MovieResponse
 import com.mertozan.moviescompose.data.model.Series
@@ -16,23 +16,23 @@ class MovieRepository @Inject constructor(
         return movieService.getPopularMovies()
     }
 
-    suspend fun getAllPopularSeries() : SeriesResponse{
+    suspend fun getAllPopularSeries(): SeriesResponse {
         return movieService.getPopularSeries()
     }
 
-    suspend fun getMovieGenres() : Genres {
+    suspend fun getMovieGenres(): GenresResponse {
         return movieService.getMovieGenres()
     }
 
-    suspend fun getSeriesGenres() : Genres {
+    suspend fun getSeriesGenres(): GenresResponse {
         return movieService.getSeriesGenres()
     }
 
-    suspend fun getSingleMovie(movieId: Int) : Movie {
+    suspend fun getSingleMovie(movieId: Int): Movie {
         return movieService.getSingleMovie(movieId = movieId)
     }
 
-    suspend fun getSingleSeries(seriesId: Int) : Series {
+    suspend fun getSingleSeries(seriesId: Int): Series {
         return movieService.getSingleSeries(seriesId = seriesId)
     }
 

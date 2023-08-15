@@ -2,28 +2,31 @@ package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.Series
-import com.mertozan.moviescompose.domain.model.MovieItem
-import com.mertozan.moviescompose.domain.model.SeriesItem
+import com.mertozan.moviescompose.domain.model.DetailItem
 
-fun Movie.toMovieItem(): MovieItem {
-    return MovieItem(
+fun Movie.toMovieItem(): DetailItem {
+    return DetailItem(
         title = title,
         popularity = popularity,
-        adult = adult,
         genresDto = genres,
         posterPath = posterPath,
         releaseDate = releaseDate,
+        adult = adult,
+        runTime = runtime,
+        originalLanguage = originalLanguage,
         overview = overview
     )
 }
 
-fun Series.toSeriesItem(): SeriesItem {
-    return SeriesItem(
-        name = name,
+fun Series.toSeriesItem(): DetailItem {
+    return DetailItem(
+        title = name,
         popularity = popularity,
-        firstAirDate = firstAirDate,
         genresDto = genres,
         posterPath = posterPath,
+        releaseDate = firstAirDate,
+        adult = adult,
+        runTime = episodeNumber,
         originalLanguage = originalLanguage,
         overview = overview
     )

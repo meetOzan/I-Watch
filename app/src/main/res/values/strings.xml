@@ -8,7 +8,9 @@
     <string name="add_fav">add_fav</string>
     <string name="back_arrow">back_arrow</string>
     <string name="duration">Duration</string>
-    <string name="adult">Adult?</string>
+    <string name="adult">Adult</string>
     <string name="adult_yes">adult_yes</string>
     <string name="language">Language</string>
+    <string name="release_date">Release Date</string>
+    <string name="no_adult">no_adult</string>
 </resources>

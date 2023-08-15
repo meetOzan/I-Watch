@@ -2,6 +2,7 @@ package com.mertozan.moviescompose.presantation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mertozan.moviescompose.data.model.Genres
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.data.repository.MovieRepository
@@ -21,6 +22,12 @@ class MovieViewModel @Inject constructor(
 
     private val _popularSeries = MutableStateFlow(emptyList<Series>())
     val popularSeries = _popularSeries.asStateFlow()
+
+    private val _movieGenre = MutableStateFlow(emptyList<Genres>())
+    val movieGenre = _movieGenre.asStateFlow()
+
+    private val _seriesGenre = MutableStateFlow(emptyList<Genres>())
+    val seriesGenre = _seriesGenre.asStateFlow()
 
     init {
         getGenres()
@@ -47,8 +54,10 @@ class MovieViewModel @Inject constructor(
 
     private fun getGenres() {
         viewModelScope.launch {
-            movieRepository.getMovieGenres()
-            movieRepository.getSeriesGenres()
+            val movieGenresResponse = movieRepository.getMovieGenres()
+            val seriesGenresResponse = movieRepository.getMovieGenres()
+            _movieGenre.value = movieGenresResponse.genres
+            _seriesGenre.value = seriesGenresResponse.genres
         }
     }
 }
