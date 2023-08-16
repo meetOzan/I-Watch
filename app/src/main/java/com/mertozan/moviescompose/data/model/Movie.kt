@@ -7,7 +7,7 @@ data class Movie(
     val id: Int,
     @SerializedName("title")
     val title: String,
-    @SerializedName("original_title") //
+    @SerializedName("original_title")
     val originalTitle: String,
     @SerializedName("popularity")
     val popularity: Float,

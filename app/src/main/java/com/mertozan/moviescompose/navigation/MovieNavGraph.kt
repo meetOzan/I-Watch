@@ -6,10 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.mertozan.moviescompose.presantation.DetailScreen
 import com.mertozan.moviescompose.presantation.MainScreen
 import com.mertozan.moviescompose.presantation.viewmodel.MovieViewModel
@@ -27,7 +25,7 @@ fun MovieNavHost(
 }
 
 fun NavGraphBuilder.mainScreen(navController: NavController) {
-    composable(MainScreen.route) {
+    composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<MovieViewModel>()
         MainScreen(
             movieList = viewModel.popularMovies.collectAsState().value,
@@ -39,20 +37,16 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
 
 fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
     composable(
-        DetailScreen.route + "/{id}/{type}",
-        arguments = listOf(
-            navArgument("id"){
-                type = NavType.IntType
-            }, navArgument("type"){
-                type = NavType.StringType
-            }
-        )
+        route = DetailScreen.routeWithArgs,
+        arguments = DetailScreen.args
     ) { backStackEntry ->
         backStackEntry.arguments?.let {
+            val id = it.getInt(DetailScreen.argsId)
+            val type = it.getString(DetailScreen.argsType).toString()
             DetailScreen(
                 onBackClicked = onNavigate,
-                id = it.getInt("id"),
-                type = it.getString("type").toString()
+                id = id,
+                type = type
             )
         }
     }

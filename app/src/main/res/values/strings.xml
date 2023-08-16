@@ -13,4 +13,5 @@
     <string name="language">Language</string>
     <string name="release_date">Release Date</string>
     <string name="no_adult">no_adult</string>
+    <string name="details">Details</string>
 </resources>

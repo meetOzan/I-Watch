@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation
+package com.mertozan.moviescompose.presantation.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
@@ -68,9 +69,9 @@ fun MovieItem(
             .clickable(onClick = onCardClick)
             .background(Dark80)
     ) {
-        Box{
+        Box {
             AsyncImage(
-                model = (stringResource(R.string.https_image_tmdb_org_t_p_original, posterPath)),
+                model = "${BuildConfig.POSTER_BASE_PATH}${posterPath}",
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -91,7 +92,7 @@ fun MovieItem(
                 modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                 color = Color.Gray,
                 fontWeight = FontWeight.SemiBold
-            )   
+            )
             Spacer(modifier = Modifier.width(135.dp))
             Image(
                 imageVector = Icons.Filled.Favorite,

@@ -2,10 +2,11 @@ package com.mertozan.moviescompose.presantation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mertozan.moviescompose.data.model.Genres
-import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.mapper.moviesToList
+import com.mertozan.moviescompose.data.mapper.seriesToList
 import com.mertozan.moviescompose.data.repository.MovieRepository
+import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.presantation.MovieOrSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,47 +18,32 @@ class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    private val _popularMovies = MutableStateFlow(emptyList<Movie>())
+    // SavedStateHandle ile type al
+
+    private val _popularMovies = MutableStateFlow(emptyList<DetailItem>())
     val popularMovies = _popularMovies.asStateFlow()
 
-    private val _popularSeries = MutableStateFlow(emptyList<Series>())
+    private val _popularSeries = MutableStateFlow(emptyList<DetailItem>())
     val popularSeries = _popularSeries.asStateFlow()
 
-    private val _movieGenre = MutableStateFlow(emptyList<Genres>())
-    val movieGenre = _movieGenre.asStateFlow()
-
-    private val _seriesGenre = MutableStateFlow(emptyList<Genres>())
-    val seriesGenre = _seriesGenre.asStateFlow()
-
-    init {
-        getGenres()
-    }
-
-    init {
-        getPopularMovies()
-        getPopularSeries()
+    fun getContents(type: String){
+        when(type){
+            MovieOrSeries.MOVIE.name -> getPopularMovies()
+            MovieOrSeries.SERIES.name -> getPopularSeries()
+        }
     }
 
     private fun getPopularMovies() {
         viewModelScope.launch {
             val response = movieRepository.getAllPopularMovies()
-            _popularMovies.value = response.movieResults
+            _popularMovies.value = response.movieResults.moviesToList()
         }
     }
 
-    private fun getPopularSeries(){
+    private fun getPopularSeries() {
         viewModelScope.launch {
             val response = movieRepository.getAllPopularSeries()
-            _popularSeries.value = response.seriesResults
-        }
-    }
-
-    private fun getGenres() {
-        viewModelScope.launch {
-            val movieGenresResponse = movieRepository.getMovieGenres()
-            val seriesGenresResponse = movieRepository.getMovieGenres()
-            _movieGenre.value = movieGenresResponse.genres
-            _seriesGenre.value = seriesGenresResponse.genres
+            _popularSeries.value = response.seriesResults.seriesToList()
         }
     }
 }

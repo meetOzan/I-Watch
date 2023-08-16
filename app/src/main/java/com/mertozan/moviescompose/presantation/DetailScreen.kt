@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.viewmodel.DetailViewModel
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
@@ -62,8 +64,16 @@ fun DetailScreen(
         label = stringResource(R.string.animated_color)
     )
 
-    viewModel.getList(id = id, type = type)
-    val details = viewModel.singleDetail.collectAsState().value
+    val detail = viewModel.movieDetailUiState.collectAsState().value
+
+    LaunchedEffect(Unit){
+        // Unit ile 1 kere çalışır
+        // Detay güncellenirse eğer, bütün bir ekran yerine sadece burası güncellenir
+        // Güncellenmeden burası bir daha çalışmaz
+        // Api Call olmaz her seferinde
+        viewModel.getGenres(type)
+        viewModel.getList(id = id, type = type)
+    }
 
     Column(
         modifier = Modifier
@@ -75,15 +85,12 @@ fun DetailScreen(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
-                model = (stringResource(
-                    R.string.https_image_tmdb_org_t_p_original,
-                    details.posterPath
-                )),
+                model = "${BuildConfig.POSTER_BASE_PATH}${detail.posterPath}",
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
                     .fillMaxSize(1f),
-                alignment = Alignment.Center
+                alignment = Alignment.Center,
             )
             Box(
                 modifier = Modifier
@@ -119,7 +126,7 @@ fun DetailScreen(
 
         }
         Text(
-            text = details.title,
+            text = detail.title,
             fontSize = 22.sp,
             modifier = Modifier.padding(vertical = 8.dp),
             color = Color.White,
@@ -131,8 +138,7 @@ fun DetailScreen(
             horizontalArrangement = Arrangement.spacedBy(280.dp)
         ) {
             Text(
-                // TODO Circle Score
-                text = details.popularity.toString(),
+                text = detail.popularity,
                 fontSize = 16.sp,
                 color = Color.White,
                 fontFamily = amazonEmberFamily,
@@ -166,7 +172,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    text = details.runTime.toString(),
+                    text = detail.runTime,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -184,7 +190,7 @@ fun DetailScreen(
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
-                if (details.adult) {
+                if (detail.adult) {
                     Image(
                         imageVector = Icons.Filled.CheckCircle,
                         colorFilter = ColorFilter.tint(Color.Green),
@@ -217,7 +223,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    text = details.originalLanguage.uppercase(),
+                    text = detail.originalLanguage.uppercase(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -236,7 +242,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    text = details.releaseDate,
+                    text = detail.releaseDate,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -245,7 +251,7 @@ fun DetailScreen(
             }
         }
         Text(
-            text = "Details",
+            text = stringResource(R.string.details),
             modifier = Modifier
                 .padding(
                     top = 16.dp
@@ -255,10 +261,7 @@ fun DetailScreen(
             fontFamily = amazonEmberFamily,
         )
         Text(
-            text = if (details.overview == "")
-                "No Detail"
-            else
-                details.overview,
+            text = detail.overview,
             modifier = Modifier.padding(
                 horizontal = 24.dp,
                 vertical = 8.dp

@@ -6,27 +6,29 @@ import com.mertozan.moviescompose.domain.model.DetailItem
 
 fun Movie.toMovieItem(): DetailItem {
     return DetailItem(
+        id = id,
         title = title,
-        popularity = popularity,
+        popularity = popularity.toString(),
         genresDto = genres,
         posterPath = posterPath,
         releaseDate = releaseDate,
         adult = adult,
-        runTime = runtime,
+        runTime = runtime.toString(),
         originalLanguage = originalLanguage,
-        overview = overview
+        overview = if (overview == "") "No Detail" else overview
     )
 }
 
 fun Series.toSeriesItem(): DetailItem {
     return DetailItem(
+        id = id,
         title = name,
-        popularity = popularity,
+        popularity = popularity.toString(),
         genresDto = genres,
         posterPath = posterPath,
         releaseDate = firstAirDate,
         adult = adult,
-        runTime = episodeNumber,
+        runTime = episodeNumber.toString(),
         originalLanguage = originalLanguage,
         overview = overview
     )
