@@ -4,24 +4,36 @@ import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.domain.model.DetailItem
 
-fun List<Movie>.moviesToList() : MutableList<DetailItem> {
-
-    val detailList = mutableListOf<DetailItem>()
-
-    for(i in 0..lastIndex){
-       detailList.add(this[i].toMovieItem())
+fun List<Movie>.moviesToList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toString(),
+            releaseDate = it.releaseDate,
+            genresDto = it.genres,
+            posterPath = it.posterPath,
+            adult = it.adult,
+            runTime = it.runtime.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
     }
-
-    return detailList
 }
 
-fun List<Series>.seriesToList(): MutableList<DetailItem> {
-
-    val detailList = mutableListOf<DetailItem>()
-
-    for(i in 0..lastIndex){
-        detailList.add(this[i].toSeriesItem())
+fun List<Series>.seriesToList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.name,
+            popularity = it.popularity.toString(),
+            releaseDate = it.firstAirDate,
+            genresDto = it.genres,
+            posterPath = it.posterPath,
+            adult = it.adult,
+            runTime = it.episodeNumber.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
     }
-
-    return detailList
 }
