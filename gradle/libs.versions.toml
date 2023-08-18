@@ -3,6 +3,7 @@ android-target-sdk = "33"
 android-compile-sdk = "33"
 android-min-sdk = "24"
 jvmTarget = "17"
+androidFoundation = "1.4.1"
 version-name = "1.0"
 versionCode = "1"
 namespace = "com.mertozan.moviescompose"
@@ -52,6 +53,7 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "androidFoundation"}
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 coil-kt-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }

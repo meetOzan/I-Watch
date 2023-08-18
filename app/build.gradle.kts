@@ -85,6 +85,7 @@ dependencies {
     androidTestImplementation(libs.junit)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.androidx.compose.foundation)
 
     // Hilt
     implementation(libs.hilt.android)
