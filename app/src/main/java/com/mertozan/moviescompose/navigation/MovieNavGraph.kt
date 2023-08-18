@@ -3,12 +3,15 @@ package com.mertozan.moviescompose.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.mertozan.moviescompose.presantation.DetailScreen
 import com.mertozan.moviescompose.presantation.MainScreen
-import com.mertozan.moviescompose.presantation.MovieViewModel
+import com.mertozan.moviescompose.presantation.viewmodel.DetailViewModel
+import com.mertozan.moviescompose.presantation.viewmodel.MovieViewModel
 
 @Composable
 fun MovieNavHost(
@@ -17,24 +20,35 @@ fun MovieNavHost(
     NavHost(
         navController = navController, startDestination = MainScreen.route
     ) {
-        mainScreen()
-        // Navigate functions will be added
-        detailScreen()
+        mainScreen(navController = navController)
+        detailScreen { navController.navigate(MainScreen.route) }
     }
 }
 
-fun NavGraphBuilder.mainScreen() {
-    composable(MainScreen.route) {
+fun NavGraphBuilder.mainScreen(navController: NavController) {
+    composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<MovieViewModel>()
+        val movieList = viewModel.popularMovies.collectAsState()
+        val seriesList = viewModel.popularSeries.collectAsState()
         MainScreen(
-            movieList = viewModel.popularMovies.collectAsState().value,
-            seriesList = viewModel.popularSeries.collectAsState().value
+            movieList = movieList.value,
+            seriesList = seriesList.value,
+            navController = navController
         )
     }
 }
 
-fun NavGraphBuilder.detailScreen() {
-    composable(DetailScreen.route) {
-        DetailScreen
+fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
+    composable(
+        route = DetailScreen.routeWithArgs,
+        arguments = DetailScreen.args
+    ) {
+        val viewModel : DetailViewModel = hiltViewModel()
+        val detail = viewModel.movieDetailUiState.collectAsState()
+        DetailScreen(
+            onBackClicked = onNavigate,
+            detail = detail.value,
+            viewModel = viewModel
+        )
     }
 }

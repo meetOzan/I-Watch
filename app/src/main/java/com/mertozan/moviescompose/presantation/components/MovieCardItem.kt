@@ -1,12 +1,15 @@
-package com.mertozan.moviescompose.presantation
+package com.mertozan.moviescompose.presantation.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
@@ -49,7 +53,7 @@ fun MovieItem(
     }
 
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Red else Color.White,
+        if (isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
 
@@ -62,12 +66,12 @@ fun MovieItem(
                 shape = MaterialTheme.shapes.medium,
                 color = Color.Yellow
             )
-            .clickable { onCardClick }
+            .clickable(onClick = onCardClick)
             .background(Dark80)
     ) {
         Box {
             AsyncImage(
-                model = (stringResource(R.string.https_image_tmdb_org_t_p_original, posterPath)),
+                model = "${BuildConfig.POSTER_BASE_PATH}${posterPath}",
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -75,26 +79,32 @@ fun MovieItem(
                     .height(300.dp),
                 alignment = Alignment.Center
             )
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "#$number",
+                fontSize = 24.sp,
+                fontFamily = amazonEmberFamily,
+                modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
+                color = Color.Gray,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.width(135.dp))
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
-                    .size(36.dp)
-                    .padding(5.dp)
-                    .clickable { isFavorite = !isFavorite }
-                    .background(Color.Gray.copy(alpha = 0.5f)),
+                    .size(28.dp)
+                    .padding(bottom = 4.dp)
+                    .clickable { isFavorite = !isFavorite },
                 alignment = Alignment.TopStart
             )
         }
-        Text(
-            "#$number",
-            fontSize = 24.sp,
-            fontFamily = amazonEmberFamily,
-            modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
-            color = Color.Gray,
-            fontWeight = FontWeight.SemiBold
-        )
         Text(
             title.isLongerThan(),
             fontSize = 15.sp,

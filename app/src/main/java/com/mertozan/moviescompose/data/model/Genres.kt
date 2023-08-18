@@ -7,5 +7,4 @@ data class Genres(
     val id : Int,
     @SerializedName("name")
     val name : String
-) {
-}
+)

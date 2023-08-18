@@ -2,29 +2,34 @@ package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.Series
-import com.mertozan.moviescompose.domain.model.MovieItem
-import com.mertozan.moviescompose.domain.model.SeriesItem
+import com.mertozan.moviescompose.domain.model.DetailItem
 
-fun Movie.toMovieItem(): MovieItem {
-    return MovieItem(
+fun Movie.toMovieItem(): DetailItem {
+    return DetailItem(
+        id = id,
         title = title,
-        popularity = popularity,
-        adult = adult,
+        popularity = popularity.toString(),
         genresDto = genres,
         posterPath = posterPath,
         releaseDate = releaseDate,
-        overview = overview
+        adult = adult,
+        runTime = runtime.toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
     )
 }
 
-fun Series.toSeriesItem(): SeriesItem {
-    return SeriesItem(
-        name = name,
-        popularity = popularity,
-        firstAirDate = firstAirDate,
+fun Series.toSeriesItem(): DetailItem {
+    return DetailItem(
+        id = id,
+        title = name,
+        popularity = popularity.toString(),
         genresDto = genres,
         posterPath = posterPath,
+        releaseDate = firstAirDate,
+        adult = adult,
+        runTime = episodeNumber.toString(),
         originalLanguage = originalLanguage,
-        overview = overview
+        overview = if (overview == "") "No Detail" else overview
     )
 }
