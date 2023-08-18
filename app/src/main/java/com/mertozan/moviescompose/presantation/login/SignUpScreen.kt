@@ -56,8 +56,7 @@ fun SignUpScreen() {
             .background(LightBlack),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(130.dp))
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(180.dp))
         Text(
             text = stringResource(R.string.sign_up),
             fontFamily = amazonEmberFamily,
@@ -96,7 +95,7 @@ fun SignUpScreen() {
                 surname = it
             },
             maxLines = 1,
-            placeholder = { Text("Enter your surname") },
+            placeholder = { Text(stringResource(R.string.enter_your_surname)) },
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .border(

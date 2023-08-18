@@ -16,13 +16,17 @@ import com.mertozan.moviescompose.presantation.components.ProfileOptionsCard
 fun ProfileScreen() {
 
     Column(
-        modifier = Modifier.background(Color.Black).fillMaxSize(),
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = "Favorites")
         // Kullanılıcak kadar OptionItem'ı eklenecek
+
+        // TODO Her seferinde kullandığım Text parametresi için hazır bir text oluşturabilirim
 
     }
 }

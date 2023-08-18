@@ -33,7 +33,6 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 @Composable
 fun SignInScreen() {
 
-
     var email by remember {
         mutableStateOf("")
     }
@@ -42,7 +41,6 @@ fun SignInScreen() {
         mutableStateOf("")
     }
 
-    // Sign In Page
     Column(
         modifier = Modifier
             .fillMaxSize()
