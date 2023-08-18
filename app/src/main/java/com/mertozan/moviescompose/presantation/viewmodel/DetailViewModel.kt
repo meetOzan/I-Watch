@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.presantation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.mapper.toMovieItem
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _movieDetailUiState = MutableStateFlow(DetailItem())
@@ -25,16 +27,19 @@ class DetailViewModel @Inject constructor(
     private val _genres = MutableStateFlow(emptyList<Genres>())
     val genres = _genres.asStateFlow()
 
+    val id = savedStateHandle.get<Int>(key = "id")
+    val type = savedStateHandle.get<String>(key = "type")
+
     init {
         viewModelScope.launch {
             getGenres()
         }
     }
 
-    fun getList(type: String, id: Int) {
+    fun getList() {
         when (type) {
-            MovieOrSeries.SERIES.name -> getSingleSeries(id)
-            MovieOrSeries.MOVIE.name -> getSingleMovie(id)
+            MovieOrSeries.SERIES.name -> getSingleSeries(id ?: 0)
+            MovieOrSeries.MOVIE.name -> getSingleMovie(id ?: 0)
         }
     }
 

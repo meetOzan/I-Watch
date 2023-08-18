@@ -51,8 +51,6 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 fun DetailScreen(
     onBackClicked: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
-    id: Int,
-    type: String
 ) {
 
     var isFavorite by rememberSaveable {
@@ -67,12 +65,7 @@ fun DetailScreen(
     val detail = viewModel.movieDetailUiState.collectAsState().value
 
     LaunchedEffect(Unit){
-        // Unit ile 1 kere çalışır
-        // Detay güncellenirse eğer, bütün bir ekran yerine sadece burası güncellenir
-        // Güncellenmeden burası bir daha çalışmaz
-        // Api Call olmaz her seferinde
-        viewModel.getGenres(type)
-        viewModel.getList(id = id, type = type)
+        viewModel.getList()
     }
 
     Column(

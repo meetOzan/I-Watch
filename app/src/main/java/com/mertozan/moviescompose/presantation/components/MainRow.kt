@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.viewmodel.MovieViewModel
 import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
@@ -27,11 +26,8 @@ fun MainRow(
     title: String,
     list: List<DetailItem>,
     type: String,
-    viewModel: MovieViewModel,
     onClick: (Int, String) -> Unit
 ) {
-
-    viewModel.getContents(type)
 
     Row(
         modifier = Modifier.padding(8.dp),

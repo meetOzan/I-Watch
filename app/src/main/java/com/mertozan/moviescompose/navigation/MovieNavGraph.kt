@@ -27,9 +27,11 @@ fun MovieNavHost(
 fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<MovieViewModel>()
+        val movieList = viewModel.popularMovies.collectAsState()
+        val seriesList = viewModel.popularMovies.collectAsState()
         MainScreen(
-            movieList = viewModel.popularMovies.collectAsState().value,
-            seriesList = viewModel.popularSeries.collectAsState().value,
+            movieList = movieList.value,
+            seriesList = seriesList.value,
             navController = navController
         )
     }
@@ -39,15 +41,9 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
     composable(
         route = DetailScreen.routeWithArgs,
         arguments = DetailScreen.args
-    ) { backStackEntry ->
-        backStackEntry.arguments?.let {
-            val id = it.getInt(DetailScreen.argsId)
-            val type = it.getString(DetailScreen.argsType).toString()
-            DetailScreen(
-                onBackClicked = onNavigate,
-                id = id,
-                type = type
-            )
-        }
+    ) {
+        DetailScreen(
+            onBackClicked = onNavigate
+        )
     }
 }
