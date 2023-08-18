@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mertozan.moviescompose.presantation.DetailScreen
 import com.mertozan.moviescompose.presantation.MainScreen
+import com.mertozan.moviescompose.presantation.viewmodel.DetailViewModel
 import com.mertozan.moviescompose.presantation.viewmodel.MovieViewModel
 
 @Composable
@@ -28,7 +29,7 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<MovieViewModel>()
         val movieList = viewModel.popularMovies.collectAsState()
-        val seriesList = viewModel.popularMovies.collectAsState()
+        val seriesList = viewModel.popularSeries.collectAsState()
         MainScreen(
             movieList = movieList.value,
             seriesList = seriesList.value,
@@ -42,8 +43,12 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         route = DetailScreen.routeWithArgs,
         arguments = DetailScreen.args
     ) {
+        val viewModel : DetailViewModel = hiltViewModel()
+        val detail = viewModel.movieDetailUiState.collectAsState()
         DetailScreen(
-            onBackClicked = onNavigate
+            onBackClicked = onNavigate,
+            detail = detail.value,
+            viewModel = viewModel
         )
     }
 }

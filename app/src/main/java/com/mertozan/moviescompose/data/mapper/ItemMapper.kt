@@ -30,6 +30,6 @@ fun Series.toSeriesItem(): DetailItem {
         adult = adult,
         runTime = episodeNumber.toString(),
         originalLanguage = originalLanguage,
-        overview = overview
+        overview = if (overview == "") "No Detail" else overview
     )
 }

@@ -3,6 +3,7 @@ package com.mertozan.moviescompose.di.network
 import android.app.Application
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.mertozan.moviescompose.BuildConfig
+import com.mertozan.moviescompose.common.Constants.TIMEOUT
 import com.mertozan.moviescompose.data.api.MovieService
 import dagger.Module
 import dagger.Provides
@@ -18,8 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-    private const val TIMEOUT = 60L
 
     @Provides
     @Singleton

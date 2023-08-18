@@ -35,5 +35,4 @@ class MovieRepository @Inject constructor(
     suspend fun getSingleSeries(seriesId: Int): Series {
         return movieService.getSingleSeries(seriesId = seriesId)
     }
-
 }

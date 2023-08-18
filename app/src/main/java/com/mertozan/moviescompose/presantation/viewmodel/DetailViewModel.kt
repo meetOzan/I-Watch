@@ -3,6 +3,8 @@ package com.mertozan.moviescompose.presantation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mertozan.moviescompose.common.Constants.ARGS_ID
+import com.mertozan.moviescompose.common.Constants.ARGS_TYPE
 import com.mertozan.moviescompose.data.mapper.toMovieItem
 import com.mertozan.moviescompose.data.mapper.toSeriesItem
 import com.mertozan.moviescompose.data.model.Genres
@@ -27,8 +29,8 @@ class DetailViewModel @Inject constructor(
     private val _genres = MutableStateFlow(emptyList<Genres>())
     val genres = _genres.asStateFlow()
 
-    val id = savedStateHandle.get<Int>(key = "id")
-    val type = savedStateHandle.get<String>(key = "type")
+    private val id = savedStateHandle.get<Int>(key = ARGS_ID)
+    private val type = savedStateHandle.get<String>(key = ARGS_TYPE)
 
     init {
         viewModelScope.launch {
@@ -65,7 +67,7 @@ class DetailViewModel @Inject constructor(
     fun getGenres(type: String) {
         viewModelScope.launch {
             val movieGenresResponse = movieRepository.getMovieGenres()
-            val seriesGenresResponse = movieRepository.getMovieGenres()
+            val seriesGenresResponse = movieRepository.getSeriesGenres()
             when (type) {
                 MovieOrSeries.SERIES.name -> _genres.value = seriesGenresResponse.genres
                 MovieOrSeries.MOVIE.name -> _genres.value = movieGenresResponse.genres
