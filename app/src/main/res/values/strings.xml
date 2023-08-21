@@ -24,4 +24,5 @@
     <string name="generate_button">generate_button</string>
     <string name="card_icon">card_icon</string>
     <string name="enter_your_surname">Enter your surname</string>
+    <string name="is_adult">is_adult</string>
 </resources>

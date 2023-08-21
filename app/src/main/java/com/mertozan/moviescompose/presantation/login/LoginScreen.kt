@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LoginScreen(
-    onLoginNavigate : () -> Unit
+    onLoginNavigate: () -> Unit
 ) {
 
     Box(

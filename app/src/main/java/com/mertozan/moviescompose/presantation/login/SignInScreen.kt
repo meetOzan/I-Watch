@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
@@ -55,7 +56,7 @@ fun SignInScreen(
             fontFamily = amazonEmberFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
-            color = Color.Yellow
+            color = DarkYellow
         )
         Spacer(modifier = Modifier.height(25.dp))
         Text(
@@ -63,7 +64,7 @@ fun SignInScreen(
             fontFamily = amazonEmberFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 28.sp,
-            color = Color.Yellow,
+            color = DarkYellow,
             modifier = Modifier.padding(end = 16.dp)
         )
         Spacer(modifier = Modifier.height(100.dp))
@@ -78,12 +79,12 @@ fun SignInScreen(
                 .border(
                     width = 0.4.dp,
                     shape = MaterialTheme.shapes.medium,
-                    color = Color.Yellow
+                    color = DarkYellow
                 ),
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.White,
-                unfocusedTextColor = Color.Yellow,
+                unfocusedTextColor = DarkYellow,
                 focusedContainerColor = Color.DarkGray,
                 unfocusedContainerColor = Color.Black,
                 focusedIndicatorColor = LightBlack,
@@ -102,12 +103,12 @@ fun SignInScreen(
                 .border(
                     width = 0.4.dp,
                     shape = MaterialTheme.shapes.medium,
-                    color = Color.Yellow
+                    color = DarkYellow
                 ),
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.White,
-                unfocusedTextColor = Color.Yellow,
+                unfocusedTextColor = DarkYellow,
                 focusedContainerColor = Color.DarkGray,
                 unfocusedContainerColor = Color.Black,
                 focusedIndicatorColor = LightBlack,
@@ -118,7 +119,7 @@ fun SignInScreen(
         ElevatedButton(
             onClick = onNavigate,
             colors = ButtonDefaults.elevatedButtonColors(
-                containerColor = Color.Yellow
+                containerColor = DarkYellow
             ),
             modifier = Modifier.width(150.dp)
         ) {

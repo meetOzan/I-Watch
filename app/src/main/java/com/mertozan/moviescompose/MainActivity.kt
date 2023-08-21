@@ -77,13 +77,13 @@ fun BottomNavigationView(navController: NavController) {
         LoginScreen.route -> {
             bottomBarState.value = false
         }
+        DetailScreen.route -> {
+            bottomBarState.value = true
+        }
         MainScreen.route -> {
             bottomBarState.value = true
         }
         ProfileScreen.route -> {
-            bottomBarState.value = true
-        }
-        DetailScreen.route -> {
             bottomBarState.value = true
         }
         GenerateScreen.route -> {
@@ -99,7 +99,6 @@ fun BottomNavigationView(navController: NavController) {
             backgroundColor = DarkYellow,
             contentColor = Dark80
         ) {
-
             items.forEach { item ->
                 BottomNavigationItem(
                     selected = currentRoute == item.route,

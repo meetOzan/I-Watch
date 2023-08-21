@@ -30,7 +30,7 @@ fun MovieNavHost(
         loginScreen { navController.navigate(MainScreen.route) }
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen{}
+        profileScreen()
         detailScreen { navController.navigate(MainScreen.route) }
     }
 }
@@ -87,7 +87,7 @@ fun NavGraphBuilder.generateScreen(){
     }
 }
 
-fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit){
+fun NavGraphBuilder.profileScreen(){
     composable(
         route = ProfileScreen.route
     ){

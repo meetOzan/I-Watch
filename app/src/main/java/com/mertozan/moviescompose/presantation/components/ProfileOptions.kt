@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.ui.theme.Dark80
+import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
@@ -61,7 +62,7 @@ fun ProfileOptionsCard(
                 imageVector = icon,
                 contentDescription = stringResource(R.string.card_icon),
                 modifier = Modifier.padding(end = 24.dp),
-                colorFilter = ColorFilter.tint(Color.White)
+                colorFilter = ColorFilter.tint(DarkYellow)
             )
         }
     }
