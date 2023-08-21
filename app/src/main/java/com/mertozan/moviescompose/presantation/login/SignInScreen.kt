@@ -31,7 +31,9 @@ import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(
+    onNavigate: () -> Unit
+) {
 
     var email by remember {
         mutableStateOf("")
@@ -114,9 +116,11 @@ fun SignInScreen() {
         )
         Spacer(modifier = Modifier.height(24.dp))
         ElevatedButton(
-            onClick = {}, colors = ButtonDefaults.elevatedButtonColors(
+            onClick = onNavigate,
+            colors = ButtonDefaults.elevatedButtonColors(
                 containerColor = Color.Yellow
-            ), modifier = Modifier.width(150.dp)
+            ),
+            modifier = Modifier.width(150.dp)
         ) {
 
             Text(

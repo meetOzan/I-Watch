@@ -14,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLoginNavigate : () -> Unit
+) {
 
     Box(
         modifier = Modifier
@@ -39,8 +41,8 @@ fun LoginScreen() {
                 .background(Color.DarkGray)
                 .align(Alignment.Center)
         ) { page ->
-            SignUpScreen()
-            SignInScreen()
+            SignUpScreen(onLoginNavigate)
+            SignInScreen(onLoginNavigate)
         }
     }
 }
@@ -48,5 +50,5 @@ fun LoginScreen() {
 @Preview
 @Composable
 fun PreviewLogin() {
-    LoginScreen()
+    LoginScreen({})
 }

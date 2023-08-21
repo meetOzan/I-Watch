@@ -33,7 +33,7 @@ coil = "2.4.0"
 retrofit = "2.9.0"
 okhttp = "5.0.0-alpha.2"
 picasso = "2.71828"
-googleMaterial = "1.11.0-alpha01"
+googleMaterial = "1.11.0-alpha02"
 constraintlayout = "2.1.4"
 androidxViewpager2 = "1.0.0"
 skydovesPowerspinner = "1.2.4"
@@ -41,6 +41,8 @@ timber = "4.7.1"
 junit = "4.13.2"
 androidxTestExt = "1.1.5"
 androidxEspresso = "3.5.1"
+lottieVersion = "4.2.0"
+bottomNav = "1.4.0"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -87,6 +89,9 @@ skydoves-powerspinner = { group = "com.github.skydoves", name = "powerspinner", 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExt" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
+com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion"}
+android-compose-ui = {module = "androidx.compose.ui:ui", version.ref = "bottomNav"}
+android-compose-material = {module = "androidx.compose.material:material", version.ref = "bottomNav"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

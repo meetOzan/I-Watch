@@ -16,13 +16,13 @@ data class Movie(
     @SerializedName("genres")
     val genres: List<Genres>,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
     val releaseDate : String,
     @SerializedName("overview")
     val overview : String,
     @SerializedName("runtime")
-    val runtime : Int,
+    val runtime : Int?,
     @SerializedName("original_language")
     val originalLanguage : String
 )

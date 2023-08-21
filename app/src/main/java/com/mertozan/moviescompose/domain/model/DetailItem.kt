@@ -8,9 +8,9 @@ data class DetailItem(
     val popularity: String = "",
     val releaseDate: String = "",
     val genresDto: List<Genres>? = emptyList(),
-    val posterPath: String = "",
+    val posterPath: String? = "",
     val adult: Boolean = false,
-    val runTime: String = "",
+    val runTime: String? = "",
     val originalLanguage: String = "",
     val overview: String = "No Detail"
 )

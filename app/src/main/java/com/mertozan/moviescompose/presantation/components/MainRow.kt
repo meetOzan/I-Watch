@@ -58,7 +58,7 @@ fun MainRow(
                 onCardClick = {
                     onClick(content.id, type)
                 },
-                posterPath = content.posterPath,
+                posterPath = content.posterPath.toString(),
                 title = content.title,
                 number = (list.indexOf(content)) + 1
             )

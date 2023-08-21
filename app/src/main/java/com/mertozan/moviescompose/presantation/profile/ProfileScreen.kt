@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,14 +21,14 @@ fun ProfileScreen() {
         modifier = Modifier
             .background(Color.Black)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = "Favorites")
-        // Kullanılıcak kadar OptionItem'ı eklenecek
+        ProfileOptionsCard(optionName = "Favorites", icon = Icons.Filled.Favorite)
+        ProfileOptionsCard(optionName = "Settings", icon = Icons.Filled.Settings)
+        ProfileOptionsCard(optionName = "Preferred Contents", icon = Icons.Rounded.List)
 
-        // TODO Her seferinde kullandığım Text parametresi için hazır bir text oluşturabilirim
 
     }
 }

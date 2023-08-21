@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation
+package com.mertozan.moviescompose.presantation.detail
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -43,7 +43,6 @@ import coil.compose.AsyncImage
 import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.viewmodel.DetailViewModel
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
@@ -163,7 +162,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 Text(
-                    text = detail.runTime,
+                    text = detail.runTime.toString(),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.viewmodel
+package com.mertozan.moviescompose.presantation.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import com.mertozan.moviescompose.data.mapper.toSeriesItem
 import com.mertozan.moviescompose.data.model.Genres
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.MovieOrSeries
+import com.mertozan.moviescompose.presantation.main.MovieOrSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -61,17 +61,6 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             val series = movieRepository.getSingleSeries(seriesId = seriesId)
             _movieDetailUiState.value = series.toSeriesItem()
-        }
-    }
-
-    fun getGenres(type: String) {
-        viewModelScope.launch {
-            val movieGenresResponse = movieRepository.getMovieGenres()
-            val seriesGenresResponse = movieRepository.getSeriesGenres()
-            when (type) {
-                MovieOrSeries.SERIES.name -> _genres.value = seriesGenresResponse.genres
-                MovieOrSeries.MOVIE.name -> _genres.value = movieGenresResponse.genres
-            }
         }
     }
 }

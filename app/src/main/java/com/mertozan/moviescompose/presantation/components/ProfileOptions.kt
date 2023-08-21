@@ -33,7 +33,7 @@ fun ProfileOptionsCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 24.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
         ),
@@ -43,16 +43,16 @@ fun ProfileOptionsCard(
     ) {
         Row(
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(vertical = 16.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
             Text(
                 text = optionName,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 24.dp),
                 color = Color.White,
                 fontFamily = amazonEmberFamily
             )
@@ -60,6 +60,7 @@ fun ProfileOptionsCard(
             Image(
                 imageVector = icon,
                 contentDescription = stringResource(R.string.card_icon),
+                modifier = Modifier.padding(end = 24.dp),
                 colorFilter = ColorFilter.tint(Color.White)
             )
         }

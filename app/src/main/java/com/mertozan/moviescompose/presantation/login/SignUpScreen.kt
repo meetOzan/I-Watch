@@ -31,7 +31,9 @@ import com.mertozan.moviescompose.ui.theme.LightBlack
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(
+    onNavigate: () -> Unit
+) {
 
     var email by remember {
         mutableStateOf("")
@@ -163,12 +165,12 @@ fun SignUpScreen() {
         )
         Spacer(modifier = Modifier.height(24.dp))
         ElevatedButton(
-            onClick = {}, colors = ButtonDefaults.elevatedButtonColors(
+            onClick = onNavigate,
+            colors = ButtonDefaults.elevatedButtonColors(
                 containerColor = Color.Yellow
-            ), modifier = Modifier.width(150.dp)
+            ),
+            modifier = Modifier.width(150.dp)
         ) {
-
-
             Text(
                 text = stringResource(id = R.string.sign_up),
                 modifier = Modifier.padding(horizontal = 8.dp),
@@ -176,5 +178,4 @@ fun SignUpScreen() {
             )
         }
     }
-
 }
