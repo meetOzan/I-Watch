@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,11 +18,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
-import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun ProfileOptionsCard(
@@ -50,12 +47,11 @@ fun ProfileOptionsCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Text(
+            CustomText(
                 text = optionName,
-                fontSize = 20.sp,
+                fontSize = 20,
                 modifier = Modifier.padding(start = 24.dp),
-                color = Color.White,
-                fontFamily = amazonEmberFamily
+                color = Color.White
             )
 
             Image(

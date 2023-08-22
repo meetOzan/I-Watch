@@ -10,7 +10,7 @@ import com.mertozan.moviescompose.data.mapper.toSeriesItem
 import com.mertozan.moviescompose.data.model.Genres
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.main.MovieOrSeries
+import com.mertozan.moviescompose.util.enums.MovieOrSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

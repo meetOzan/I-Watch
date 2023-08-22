@@ -1,6 +1,7 @@
 package com.mertozan.moviescompose.presantation.splash
 
 import android.view.animation.OvershootInterpolator
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,25 +23,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
+import com.mertozan.moviescompose.presantation.components.CustomText
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(onSplashNavigate: () -> Unit) {
 
     val scale = remember {
-        androidx.compose.animation.core.Animatable(0f)
+        Animatable(0f)
     }
 
-    val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.Url(BuildConfig.SPLASH_LOADING)
+    val splashAnimateComposition by rememberLottieComposition(
+        spec = LottieCompositionSpec.Url(stringResource(R.string.https_lottie_host_a912de36_f4a6_45be_9ea0_c38be42ae12b_lhk4yxwdg9_lottie))
     )
 
     LaunchedEffect(key1 = Unit) {
@@ -78,16 +76,15 @@ fun SplashScreen(onSplashNavigate: () -> Unit) {
         ) {
 
             LottieAnimation(
-                composition = composition,
+                composition = splashAnimateComposition,
                 iterations = LottieConstants.IterateForever,
                 modifier = Modifier.size(86.dp)
             )
 
-            Text(
+            CustomText(
                 text = stringResource(R.string.made_by_meetozan),
-                fontFamily = amazonEmberFamily,
                 color = Color.White,
-                fontSize = 12.sp,
+                fontSize = 12,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }

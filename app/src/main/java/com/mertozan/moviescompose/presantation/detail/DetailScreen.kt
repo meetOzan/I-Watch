@@ -40,10 +40,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
@@ -75,13 +75,13 @@ fun DetailScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = "${BuildConfig.POSTER_BASE_PATH}${detail.posterPath}",
-                contentDescription = stringResource(R.string.movie_poster),
+            CustomAsyncImage(
+                model = detail.posterPath.toString(),
+                contentDescription = stringResource(id = R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
                     .fillMaxSize(1f),
-                alignment = Alignment.Center,
+                alignment = Alignment.Center
             )
             Box(
                 modifier = Modifier
@@ -116,23 +116,21 @@ fun DetailScreen(
             }
 
         }
-        Text(
+        CustomText(
             text = detail.title,
-            fontSize = 22.sp,
+            fontSize = 22,
             modifier = Modifier.padding(vertical = 8.dp),
             color = Color.White,
-            fontFamily = amazonEmberFamily,
             fontWeight = FontWeight.Bold
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(280.dp)
         ) {
-            Text(
+            CustomText(
                 text = detail.popularity,
-                fontSize = 16.sp,
-                color = Color.White,
-                fontFamily = amazonEmberFamily,
+                fontSize = 16,
+                color = Color.White
             )
 
             Image(
@@ -162,24 +160,22 @@ fun DetailScreen(
                     color = Color.White,
                     fontFamily = amazonEmberFamily,
                 )
-                Text(
+                CustomText(
                     text = detail.runTime.toString(),
-                    fontSize = 18.sp,
+                    fontSize = 18,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
+                    color = Color.White
                 )
             }
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
+                CustomText(
                     text = stringResource(R.string.adult),
-                    fontSize = 16.sp,
+                    fontSize = 16,
                     modifier = Modifier.padding(top = 7.dp),
                     color = Color.White,
-                    fontFamily = amazonEmberFamily,
                 )
                 if (detail.adult) {
                     Image(
@@ -206,59 +202,53 @@ fun DetailScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
+                CustomText(
                     text = stringResource(R.string.language),
-                    fontSize = 16.sp,
+                    fontSize = 16,
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
+                    color = Color.White
                 )
-                Text(
+                CustomText(
                     text = detail.originalLanguage.uppercase(),
-                    fontSize = 20.sp,
+                    fontSize = 20,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
+                    color = Color.White
                 )
             }
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
+                CustomText(
                     text = stringResource(R.string.release_date),
-                    fontSize = 16.sp,
+                    fontSize = 16,
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
+                    color = Color.White
                 )
-                Text(
+                CustomText(
                     text = detail.releaseDate,
-                    fontSize = 20.sp,
+                    fontSize = 20,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
+                    color = Color.White
                 )
             }
         }
-        Text(
+        CustomText(
             text = stringResource(R.string.details),
             modifier = Modifier
                 .padding(
                     top = 16.dp
                 ),
-            fontSize = 24.sp,
-            color = Color.White,
-            fontFamily = amazonEmberFamily,
+            fontSize = 24,
+            color = Color.White
         )
-        Text(
+        CustomText(
             text = detail.overview,
             modifier = Modifier.padding(
                 horizontal = 24.dp,
                 vertical = 8.dp
             ),
-            color = Color.White,
-            fontFamily = amazonEmberFamily,
+            color = Color.White
         )
         Spacer(modifier = Modifier.height(75.dp))
     }

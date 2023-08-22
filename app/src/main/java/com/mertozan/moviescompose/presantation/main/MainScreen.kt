@@ -16,6 +16,7 @@ import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.components.MainRow
+import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MainScreen(
@@ -57,9 +58,4 @@ fun MainScreen(
         )
         Spacer(modifier = Modifier.height(64.dp))
     }
-}
-
-enum class MovieOrSeries {
-    MOVIE,
-    SERIES
 }

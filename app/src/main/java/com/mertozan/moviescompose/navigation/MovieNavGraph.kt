@@ -10,18 +10,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
-import com.mertozan.moviescompose.presantation.main.MainScreen
+import com.mertozan.moviescompose.presantation.detail.DetailViewModel
 import com.mertozan.moviescompose.presantation.generate.GenerateContent
+import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
 import com.mertozan.moviescompose.presantation.login.LoginScreen
+import com.mertozan.moviescompose.presantation.main.MainScreen
+import com.mertozan.moviescompose.presantation.main.MovieViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
-import com.mertozan.moviescompose.presantation.detail.DetailViewModel
-import com.mertozan.moviescompose.presantation.main.MovieViewModel
 
 @Composable
 fun MovieNavHost(
     navController: NavHostController,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController, startDestination = SplashScreen.route
@@ -53,7 +54,7 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         route = DetailScreen.routeWithArgs,
         arguments = DetailScreen.args
     ) {
-        val viewModel : DetailViewModel = hiltViewModel()
+        val viewModel: DetailViewModel = hiltViewModel()
         val detail = viewModel.movieDetailUiState.collectAsState()
         DetailScreen(
             onBackClicked = onNavigate,
@@ -63,34 +64,36 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.splashScreen(onNavigate: () -> Unit){
+fun NavGraphBuilder.splashScreen(onNavigate: () -> Unit) {
     composable(
         route = SplashScreen.route
-    ){
+    ) {
         SplashScreen(onSplashNavigate = onNavigate)
     }
 }
 
-fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit){
+fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
-    ){
+    ) {
         LoginScreen(onNavigate)
     }
 }
 
-fun NavGraphBuilder.generateScreen(){
+fun NavGraphBuilder.generateScreen() {
     composable(
         route = GenerateScreen.route
-    ){
-        GenerateContent()
+    ) {
+        val viewModel = hiltViewModel<GenerateViewModel>()
+        val trendList = (viewModel.popularSeries.collectAsState().value).shuffled()
+        GenerateContent(trendList)
     }
 }
 
-fun NavGraphBuilder.profileScreen(){
+fun NavGraphBuilder.profileScreen() {
     composable(
         route = ProfileScreen.route
-    ){
+    ) {
         ProfileScreen()
     }
 }

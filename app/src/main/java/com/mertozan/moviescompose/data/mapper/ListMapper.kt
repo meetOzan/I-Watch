@@ -12,7 +12,7 @@ fun List<Movie>.moviesToList(): List<DetailItem> {
             popularity = it.popularity.toString(),
             releaseDate = it.releaseDate,
             genresDto = it.genres,
-            posterPath = it.posterPath,
+            posterPath = it.posterPath.toString(),
             adult = it.adult,
             runTime = it.runtime.toString(),
             originalLanguage = it.originalLanguage,

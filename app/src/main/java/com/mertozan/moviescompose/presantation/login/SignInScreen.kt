@@ -25,11 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
-import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun SignInScreen(
@@ -51,19 +50,17 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(75.dp))
-        Text(
+        CustomText(
             text = stringResource(R.string.welcome_to_movieapp),
-            fontFamily = amazonEmberFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = 30,
             color = DarkYellow
         )
         Spacer(modifier = Modifier.height(25.dp))
-        Text(
-            text = "Sign In",
-            fontFamily = amazonEmberFamily,
+        CustomText(
+            text = stringResource(R.string.sign_in),
             fontWeight = FontWeight.Bold,
-            fontSize = 28.sp,
+            fontSize = 28,
             color = DarkYellow,
             modifier = Modifier.padding(end = 16.dp)
         )
@@ -123,11 +120,10 @@ fun SignInScreen(
             ),
             modifier = Modifier.width(150.dp)
         ) {
-
-            Text(
+            CustomText(
                 text = stringResource(id = R.string.sign_up),
                 modifier = Modifier.padding(horizontal = 8.dp),
-                color = Color.Black
+                color = Color.Black,
             )
         }
     }

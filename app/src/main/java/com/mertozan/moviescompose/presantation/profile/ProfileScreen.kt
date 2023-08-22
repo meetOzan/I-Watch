@@ -17,19 +17,19 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.components.ProfileOptionsCard
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
-import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun ProfileScreen() {
@@ -53,7 +53,7 @@ fun ProfileScreen() {
         ) {
             Image(
                 imageVector = Icons.Rounded.AccountCircle,
-                contentDescription = "profile_account",
+                contentDescription = stringResource(R.string.profile_account),
                 modifier = Modifier
                     .size(96.dp),
                 colorFilter = ColorFilter.tint(DarkYellow)
@@ -62,10 +62,9 @@ fun ProfileScreen() {
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
+                CustomText(
                     text = "Mert Ozan Kahraman",
-                    fontSize = 24.sp,
-                    fontFamily = amazonEmberFamily,
+                    fontSize = 24,
                     color = DarkWhite80,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
@@ -75,10 +74,9 @@ fun ProfileScreen() {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
+                    CustomText(
                         text = "Watched: ${20} ",
-                        fontSize = 20.sp,
-                        fontFamily = amazonEmberFamily,
+                        fontSize = 20,
                         color = DarkWhite80,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -90,10 +88,9 @@ fun ProfileScreen() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            CustomText(
                 text = "Options",
-                fontSize = 40.sp,
-                fontFamily = amazonEmberFamily,
+                fontSize = 40,
                 color = DarkWhite80,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier

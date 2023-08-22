@@ -25,4 +25,8 @@
     <string name="card_icon">card_icon</string>
     <string name="enter_your_surname">Enter your surname</string>
     <string name="is_adult">is_adult</string>
+    <string name="https_lottie_host_a912de36_f4a6_45be_9ea0_c38be42ae12b_lhk4yxwdg9_lottie">https://lottie.host/a912de36-f4a6-45be-9ea0-c38be42ae12b/lhK4yXwdG9.lottie</string>
+    <string name="generated_image">generated_image</string>
+    <string name="sign_in">Sign In</string>
+    <string name="profile_account">profile_account</string>
 </resources>

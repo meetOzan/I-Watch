@@ -41,8 +41,8 @@ fun LoginScreen(
                 .background(Color.DarkGray)
                 .align(Alignment.Center)
         ) { page ->
-            SignUpScreen(onLoginNavigate)
             SignInScreen(onLoginNavigate)
+            SignUpScreen(onLoginNavigate)
         }
     }
 }
