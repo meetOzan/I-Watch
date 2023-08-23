@@ -31,10 +31,6 @@ class GenerateViewModel @Inject constructor(
         getPopularSeries()
     }
 
-    init {
-        _allContents.value = popularMovies.value.plus(popularSeries.value)
-    }
-
     private fun getPopularMovies() {
         viewModelScope.launch {
             val response = movieRepository.getAllPopularMovies()
@@ -47,5 +43,13 @@ class GenerateViewModel @Inject constructor(
             val response = movieRepository.getAllPopularSeries()
             _popularSeries.value = response.seriesResults.seriesToList()
         }
+    }
+
+    fun getAllContents() {
+        _allContents.value = popularMovies.value.plus(popularSeries.value)
+    }
+
+    fun shuffleList() {
+        _allContents.value = _allContents.value.shuffled()
     }
 }

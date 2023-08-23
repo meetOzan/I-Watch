@@ -5,18 +5,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LoginScreen(
-    onLoginNavigate: () -> Unit
+    onNavigate: () -> Unit,
+    viewModel: LoginViewModel
 ) {
+    val pagerState = rememberPagerState(pageCount = { 2 })
+
 
     Box(
         modifier = Modifier
@@ -35,20 +38,16 @@ fun LoginScreen(
             )
     ) {
         HorizontalPager(
-            pageCount = 2,
+            state = pagerState,
             modifier = Modifier
                 .fillMaxSize(0.96f)
                 .background(Color.DarkGray)
                 .align(Alignment.Center)
         ) { page ->
-            SignInScreen(onLoginNavigate)
-            SignUpScreen(onLoginNavigate)
+            when (page) {
+                0 -> SignInScreen(onNavigate, viewModel)
+                1 -> SignUpScreen(onNavigate, viewModel)
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewLogin() {
-    LoginScreen({})
 }

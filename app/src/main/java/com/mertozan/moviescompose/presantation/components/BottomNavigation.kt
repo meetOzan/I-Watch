@@ -2,6 +2,7 @@ package com.mertozan.moviescompose.presantation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -59,7 +60,8 @@ fun BottomNavigationView(items: List<BottomNavItems>, navController: NavControll
 
     AnimatedVisibility(
         visible = bottomBarState.value,
-        enter = slideInVertically(initialOffsetY = { it })
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { -it })
     ) {
         BottomNavigation(
             backgroundColor = DarkYellow,
@@ -86,7 +88,6 @@ fun BottomNavigationView(items: List<BottomNavItems>, navController: NavControll
                     unselectedContentColor = Color.Black.copy(0.4f),
                     onClick = {
                         navController.navigate(item.route) {
-
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {
                                     saveState = true

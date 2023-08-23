@@ -1,6 +1,7 @@
 package com.mertozan.moviescompose.presantation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,11 +27,13 @@ import com.mertozan.moviescompose.ui.theme.DarkYellow
 fun ProfileOptionsCard(
     optionName: String,
     icon: ImageVector,
+    onClick : () -> Unit = {}
 ) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 24.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp

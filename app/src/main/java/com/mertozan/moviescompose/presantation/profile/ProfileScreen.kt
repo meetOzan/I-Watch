@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
@@ -32,7 +33,10 @@ import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onNavigate: () -> Unit,
+    viewModel: ProfileViewModel
+) {
 
     Column(
         modifier = Modifier
@@ -98,11 +102,30 @@ fun ProfileScreen() {
                     .padding(start = 24.dp, bottom = 24.dp)
             )
 
-            ProfileOptionsCard(optionName = "Favorites", icon = Icons.Filled.Favorite)
-            ProfileOptionsCard(optionName = "Settings", icon = Icons.Filled.Settings)
-            ProfileOptionsCard(optionName = "Preferred Contents", icon = Icons.Rounded.Refresh)
-            ProfileOptionsCard(optionName = "Lists", icon = Icons.Rounded.List)
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.favorites),
+                icon = Icons.Filled.Favorite
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.settings),
+                icon = Icons.Filled.Settings
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.preferred_contents),
+                icon = Icons.Rounded.Refresh
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.lists),
+                icon = Icons.Rounded.List
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.sign_out),
+                icon = Icons.Rounded.ExitToApp,
+                onClick = {
+                    viewModel.signOut()
+                    onNavigate()
+                }
+            )
         }
-
     }
 }
