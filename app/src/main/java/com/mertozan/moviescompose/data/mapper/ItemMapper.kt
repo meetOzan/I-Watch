@@ -36,7 +36,35 @@ fun Series.toDetailItem(): DetailItem {
     )
 }
 
-fun DetailItem.toMovieEntity() : MovieEntity {
+fun MovieEntity.movieEntityToDetailItem(): DetailItem {
+    return DetailItem(
+        id = id,
+        title = title,
+        popularity = popularity.toString(),
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        adult = adult,
+        runTime = runtime.toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun SeriesEntity.seriesEntityToDetailItem(): DetailItem {
+    return DetailItem(
+        id = id,
+        title = title,
+        popularity = popularity.toString(),
+        posterPath = posterPath,
+        releaseDate = firstAirDate,
+        adult = adult,
+        runTime = episodeNumber.toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun DetailItem.toMovieEntity(): MovieEntity {
     return MovieEntity(
         id = id,
         title = title,
@@ -45,11 +73,13 @@ fun DetailItem.toMovieEntity() : MovieEntity {
         releaseDate = releaseDate,
         adult = adult,
         originalLanguage = originalLanguage,
+        isFavorite = isFavorite,
+        runtime = runTime.toInt(),
         overview = if (overview == "") "No Detail" else overview
     )
 }
 
-fun DetailItem.toSeriesEntity() : SeriesEntity {
+fun DetailItem.toSeriesEntity(): SeriesEntity {
     return SeriesEntity(
         id = id,
         title = title,
@@ -57,6 +87,8 @@ fun DetailItem.toSeriesEntity() : SeriesEntity {
         posterPath = posterPath,
         firstAirDate = releaseDate,
         adult = adult,
+        episodeNumber = runTime.toInt(),
+        isFavorite = isFavorite,
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )

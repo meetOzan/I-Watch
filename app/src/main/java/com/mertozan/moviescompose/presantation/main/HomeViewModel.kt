@@ -2,10 +2,6 @@ package com.mertozan.moviescompose.presantation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mertozan.moviescompose.data.mapper.moviesToList
-import com.mertozan.moviescompose.data.mapper.seriesToList
-import com.mertozan.moviescompose.data.model.MovieEntity
-import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,13 +21,6 @@ class HomeViewModel @Inject constructor(
     private val _popularSeries = MutableStateFlow(emptyList<DetailItem>())
     val popularSeries = _popularSeries.asStateFlow()
 
-
-    private val _favSeries = MutableStateFlow(emptyList<DetailItem>())
-    val favSeries = _favSeries.asStateFlow()
-
-    private val _favMovies = MutableStateFlow(emptyList<DetailItem>())
-    val favMovies = _favMovies.asStateFlow()
-
     init {
         getPopularMovies()
         getPopularSeries()
@@ -39,51 +28,26 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            val response = movieRepository.getAllPopularMovies()
-            _popularMovies.value = response.movieResults.moviesToList()
+            _popularMovies.value = movieRepository.getAllLocalMovies()
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            val response = movieRepository.getAllPopularSeries()
-            _popularSeries.value = response.seriesResults.seriesToList()
+            _popularSeries.value = movieRepository.getAllLocalSeries()
         }
     }
 
-    fun getMoviesFromFavorites() {
+    fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch {
-            _favMovies.value = movieRepository.getAllLocalMovies()
+            movieRepository.updateMovieFavorite(movieId = id, isFavorite = isFavorite)
         }
     }
 
-    fun getSeriesFromFavorites() {
+    fun updateSeriesFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch {
-            _favSeries.value = movieRepository.getAllLocalSeries()
+            movieRepository.updateSeriesFavorite(seriesId = id, isFavorite = isFavorite)
         }
     }
 
-    fun addMovieToFavorites(movieEntity: MovieEntity) {
-        viewModelScope.launch {
-            movieRepository.addMoviesToFavorites(movieEntity)
-        }
-    }
-
-    fun addSeriesToFavorites(seriesEntity: SeriesEntity) {
-        viewModelScope.launch {
-            movieRepository.addSeriesToFavorites(seriesEntity)
-        }
-    }
-
-    fun deleteMoviesFromFavorites(movieEntity: MovieEntity) {
-        viewModelScope.launch {
-            movieRepository.deleteMoviesFromFavorites(movieEntity)
-        }
-    }
-
-    fun deleteSeriesFromFavorites(seriesEntity: SeriesEntity) {
-        viewModelScope.launch {
-            movieRepository.deleteSeriesFromFavorites(seriesEntity)
-        }
-    }
 }

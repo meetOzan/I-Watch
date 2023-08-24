@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.common.Constants.ARGS_ID
 import com.mertozan.moviescompose.common.Constants.ARGS_TYPE
-import com.mertozan.moviescompose.data.mapper.toDetailItem
+import com.mertozan.moviescompose.data.mapper.movieEntityToDetailItem
+import com.mertozan.moviescompose.data.mapper.seriesEntityToDetailItem
 import com.mertozan.moviescompose.data.model.Genres
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
@@ -51,15 +52,15 @@ class DetailViewModel @Inject constructor(
 
     private fun getSingleMovie(movieId: Int) {
         viewModelScope.launch {
-            val movie = movieRepository.getSingleMovie(movieId = movieId)
-            _movieDetailUiState.value = movie.toDetailItem()
+            _movieDetailUiState.value =
+                movieRepository.getSingleLocalMovie(movieId = movieId).movieEntityToDetailItem()
         }
     }
 
     private fun getSingleSeries(seriesId: Int) {
         viewModelScope.launch {
-            val series = movieRepository.getSingleSeries(seriesId = seriesId)
-            _movieDetailUiState.value = series.toDetailItem()
+            _movieDetailUiState.value =
+                movieRepository.getSingleLocalSeries(seriesId = seriesId).seriesEntityToDetailItem()
         }
     }
 }

@@ -2,8 +2,6 @@ package com.mertozan.moviescompose.presantation.generate
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mertozan.moviescompose.data.mapper.moviesToList
-import com.mertozan.moviescompose.data.mapper.seriesToList
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +16,10 @@ class GenerateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _popularMovies = MutableStateFlow(emptyList<DetailItem>())
-    val popularMovies = _popularMovies.asStateFlow()
+    private val popularMovies = _popularMovies.asStateFlow()
 
     private var _popularSeries = MutableStateFlow(emptyList<DetailItem>())
-    val popularSeries = _popularSeries.asStateFlow()
+    private val popularSeries = _popularSeries.asStateFlow()
 
     private val _allContents = MutableStateFlow(emptyList<DetailItem>())
     val allContents = _allContents.asStateFlow()
@@ -33,15 +31,13 @@ class GenerateViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            val response = movieRepository.getAllPopularMovies()
-            _popularMovies.value = response.movieResults.moviesToList()
+            _popularMovies.value = movieRepository.getAllLocalMovies()
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            val response = movieRepository.getAllPopularSeries()
-            _popularSeries.value = response.seriesResults.seriesToList()
+            _popularSeries.value = movieRepository.getAllLocalSeries()
         }
     }
 
@@ -52,4 +48,5 @@ class GenerateViewModel @Inject constructor(
     fun shuffleList() {
         _allContents.value = _allContents.value.shuffled()
     }
+
 }

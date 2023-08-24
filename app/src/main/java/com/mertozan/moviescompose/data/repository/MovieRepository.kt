@@ -3,13 +3,15 @@ package com.mertozan.moviescompose.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.mertozan.moviescompose.data.FavoritesDao
 import com.mertozan.moviescompose.data.api.MovieService
+import com.mertozan.moviescompose.data.mapper.moviesToDetailItemList
+import com.mertozan.moviescompose.data.mapper.seriesToDetailItemList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToMovieEntityList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToSeriesEntityList
 import com.mertozan.moviescompose.data.mapper.toMoviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.toSeriesDetailItemList
 import com.mertozan.moviescompose.data.model.GenresResponse
-import com.mertozan.moviescompose.data.model.Movie
 import com.mertozan.moviescompose.data.model.MovieEntity
 import com.mertozan.moviescompose.data.model.MovieResponse
-import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.data.model.SeriesResponse
 import com.mertozan.moviescompose.domain.model.DetailItem
@@ -23,11 +25,16 @@ class MovieRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val roomDao: FavoritesDao,
 ) {
-    suspend fun getAllPopularMovies(): MovieResponse {
+
+    init {
+        transferToLocal()
+    }
+
+    private suspend fun getAllPopularMovies(): MovieResponse {
         return movieService.getPopularMovies()
     }
 
-    suspend fun getAllPopularSeries(): SeriesResponse {
+    private suspend fun getAllPopularSeries(): SeriesResponse {
         return movieService.getPopularSeries()
     }
 
@@ -37,14 +44,6 @@ class MovieRepository @Inject constructor(
 
     suspend fun getSeriesGenres(): GenresResponse {
         return movieService.getSeriesGenres()
-    }
-
-    suspend fun getSingleMovie(movieId: Int): Movie {
-        return movieService.getSingleMovie(movieId = movieId)
-    }
-
-    suspend fun getSingleSeries(seriesId: Int): Series {
-        return movieService.getSingleSeries(seriesId = seriesId)
     }
 
     fun signOut() {
@@ -61,19 +60,34 @@ class MovieRepository @Inject constructor(
         return roomDao.getAllSeries().toSeriesDetailItemList()
     }
 
-    fun addMoviesToFavorites(movieEntity: MovieEntity) {
-        roomDao.addMovieFavorites(movieEntity)
+    private fun addMoviesToLocal(movieItem: List<DetailItem>) {
+        roomDao.addMovieFavorites(movieItem.toDetailItemToMovieEntityList())
     }
 
-    fun addSeriesToFavorites(seriesEntity: SeriesEntity) {
-        roomDao.addSeriesFavorites(seriesEntity)
+    private fun addSeriesToLocal(seriesItem: List<DetailItem>) {
+        roomDao.addSeriesFavorites(seriesItem.toDetailItemToSeriesEntityList())
     }
 
-    fun deleteMoviesFromFavorites(movieEntity: MovieEntity) {
-        roomDao.deleteMovie(movieEntity)
+    fun getSingleLocalMovie(movieId: Int): MovieEntity {
+        return roomDao.getSingleLocalMovie(movieId = movieId)
     }
 
-    fun deleteSeriesFromFavorites(seriesEntity: SeriesEntity) {
-        roomDao.deleteSeries(seriesEntity)
+    fun getSingleLocalSeries(seriesId: Int): SeriesEntity {
+        return roomDao.getSingleLocalSeries(seriesId = seriesId)
+    }
+
+    fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
+        roomDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)
+    }
+
+    fun updateSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
+        roomDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
+    }
+
+    private fun transferToLocal() {
+        CoroutineScope(Dispatchers.IO).launch {
+            addMoviesToLocal(getAllPopularMovies().movieResults.moviesToDetailItemList())
+            addSeriesToLocal(getAllPopularSeries().seriesResults.seriesToDetailItemList())
+        }
     }
 }

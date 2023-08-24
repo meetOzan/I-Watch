@@ -34,8 +34,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.data.mapper.toMovieEntity
-import com.mertozan.moviescompose.data.mapper.toSeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.presantation.main.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.Dark80
@@ -106,28 +104,12 @@ fun MovieItem(
                     .size(28.dp)
                     .padding(bottom = 4.dp)
                     .clickable {
-                        isFavorite = !isFavorite
-                        if (isFavorite) {
-                            if (type == MovieOrSeries.MOVIE.name) {
-                                viewModel.addMovieToFavorites(
-                                    content.toMovieEntity()
-                                )
-                            } else {
-                                viewModel.addSeriesToFavorites(
-                                    content.toSeriesEntity()
-                                )
-                            }
-                        } else {
-                            if (type == MovieOrSeries.MOVIE.name) {
-                                viewModel.deleteMoviesFromFavorites(
-                                    content.toMovieEntity()
-                                )
-                            } else {
-                                viewModel.deleteSeriesFromFavorites(
-                                    content.toSeriesEntity()
-                                )
-                            }
+                        if(type == MovieOrSeries.MOVIE.name) (
+                            viewModel.updateMovieFavorite(content.id,content.isFavorite)
+                        )else{
+                            viewModel.updateSeriesFavorite(content.id,content.isFavorite)
                         }
+                        isFavorite = !isFavorite
                     },
                 alignment = Alignment.TopStart
             )

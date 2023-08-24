@@ -6,7 +6,7 @@ import com.mertozan.moviescompose.data.model.Series
 import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
 
-fun List<Movie>.moviesToList(): List<DetailItem> {
+fun List<Movie>.moviesToDetailItemList(): List<DetailItem> {
     return this.map {
         DetailItem(
             id = it.id,
@@ -23,7 +23,7 @@ fun List<Movie>.moviesToList(): List<DetailItem> {
     }
 }
 
-fun List<Series>.seriesToList(): List<DetailItem> {
+fun List<Series>.seriesToDetailItemList(): List<DetailItem> {
     return this.map {
         DetailItem(
             id = it.id,
@@ -49,7 +49,7 @@ fun List<MovieEntity>.toMoviesToDetailItemList(): List<DetailItem> {
             releaseDate = it.releaseDate,
             posterPath = it.posterPath.toString(),
             adult = it.adult,
-            isFavorite = true,
+            isFavorite = it.isFavorite,
             runTime = it.runtime.toString(),
             originalLanguage = it.originalLanguage,
             overview = it.overview,
@@ -66,8 +66,40 @@ fun List<SeriesEntity>.toSeriesDetailItemList(): List<DetailItem> {
             releaseDate = it.firstAirDate,
             posterPath = it.posterPath.toString(),
             adult = it.adult,
-            isFavorite = true,
+            isFavorite = it.isFavorite,
             runTime = it.episodeNumber.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<DetailItem>.toDetailItemToMovieEntityList(): List<MovieEntity> {
+    return this.map {
+        MovieEntity(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toFloat(),
+            releaseDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<DetailItem>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
+    return this.map {
+        SeriesEntity(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toFloat(),
+            firstAirDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
             originalLanguage = it.originalLanguage,
             overview = it.overview,
         )

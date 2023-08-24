@@ -61,7 +61,7 @@ fun BottomNavigationView(items: List<BottomNavItems>, navController: NavControll
     AnimatedVisibility(
         visible = bottomBarState.value,
         enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { -it })
+        exit = slideOutVertically(targetOffsetY = { it })
     ) {
         BottomNavigation(
             backgroundColor = DarkYellow,

@@ -23,7 +23,7 @@ data class Movie(
     @SerializedName("overview")
     val overview : String,
     @SerializedName("runtime")
-    val runtime : Int?,
+    val runtime : Int,
     @SerializedName("original_language")
     val originalLanguage : String
 )
