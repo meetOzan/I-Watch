@@ -104,6 +104,8 @@ dependencies {
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
     implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.stdlib)
 
     // Coil
     implementation(libs.coil.kt.compose)

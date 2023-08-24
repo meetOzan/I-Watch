@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.presantation.main.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
@@ -23,7 +24,8 @@ fun MainRow(
     title: String,
     list: List<DetailItem>,
     type: String,
-    onClick: (Int, String) -> Unit
+    onClick: (Int, String) -> Unit,
+    viewModel: HomeViewModel
 ) {
 
     Row(
@@ -54,9 +56,10 @@ fun MainRow(
                 onCardClick = {
                     onClick(content.id, type)
                 },
-                posterPath = content.posterPath.toString(),
-                title = content.title,
-                number = (list.indexOf(content)) + 1
+                content = content,
+                number = (list.indexOf(content)) + 1,
+                viewModel = viewModel,
+                type = type
             )
         }
     }

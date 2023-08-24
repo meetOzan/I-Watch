@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.mapper.moviesToList
 import com.mertozan.moviescompose.data.mapper.seriesToList
+import com.mertozan.moviescompose.data.model.MovieEntity
+import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
@@ -22,6 +24,13 @@ class MovieViewModel @Inject constructor(
 
     private val _popularSeries = MutableStateFlow(emptyList<DetailItem>())
     val popularSeries = _popularSeries.asStateFlow()
+
+
+    private val _favSeries = MutableStateFlow(emptyList<DetailItem>())
+    val favSeries = _favSeries.asStateFlow()
+
+    private val _favMovies = MutableStateFlow(emptyList<DetailItem>())
+    val favMovies = _favMovies.asStateFlow()
 
     init {
         getPopularMovies()
@@ -39,6 +48,42 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             val response = movieRepository.getAllPopularSeries()
             _popularSeries.value = response.seriesResults.seriesToList()
+        }
+    }
+
+    fun getMoviesFromFavorites() {
+        viewModelScope.launch {
+            _favMovies.value = movieRepository.getAllLocalMovies()
+        }
+    }
+
+    fun getSeriesFromFavorites() {
+        viewModelScope.launch {
+            _favSeries.value = movieRepository.getAllLocalSeries()
+        }
+    }
+
+    fun addMovieToFavorites(movieEntity: MovieEntity) {
+        viewModelScope.launch {
+            movieRepository.addMoviesToFavorites(movieEntity)
+        }
+    }
+
+    fun addSeriesToFavorites(seriesEntity: SeriesEntity) {
+        viewModelScope.launch {
+            movieRepository.addSeriesToFavorites(seriesEntity)
+        }
+    }
+
+    fun deleteMoviesFromFavorites(movieEntity: MovieEntity) {
+        viewModelScope.launch {
+            movieRepository.deleteMoviesFromFavorites(movieEntity)
+        }
+    }
+
+    fun deleteSeriesFromFavorites(seriesEntity: SeriesEntity) {
+        viewModelScope.launch {
+            movieRepository.deleteSeriesFromFavorites(seriesEntity)
         }
     }
 }

@@ -1,10 +1,12 @@
 package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.Movie
+import com.mertozan.moviescompose.data.model.MovieEntity
 import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
 
-fun Movie.toMovieItem(): DetailItem {
+fun Movie.toDetailItem(): DetailItem {
     return DetailItem(
         id = id,
         title = title,
@@ -19,7 +21,7 @@ fun Movie.toMovieItem(): DetailItem {
     )
 }
 
-fun Series.toSeriesItem(): DetailItem {
+fun Series.toDetailItem(): DetailItem {
     return DetailItem(
         id = id,
         title = name,
@@ -29,6 +31,32 @@ fun Series.toSeriesItem(): DetailItem {
         releaseDate = firstAirDate,
         adult = adult,
         runTime = episodeNumber.toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun DetailItem.toMovieEntity() : MovieEntity {
+    return MovieEntity(
+        id = id,
+        title = title,
+        popularity = popularity.toFloat(),
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        adult = adult,
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun DetailItem.toSeriesEntity() : SeriesEntity {
+    return SeriesEntity(
+        id = id,
+        title = title,
+        popularity = popularity.toFloat(),
+        posterPath = posterPath,
+        firstAirDate = releaseDate,
+        adult = adult,
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )

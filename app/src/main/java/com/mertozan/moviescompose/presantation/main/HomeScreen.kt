@@ -19,10 +19,11 @@ import com.mertozan.moviescompose.presantation.components.MainRow
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
-fun MainScreen(
+fun HomeScreen(
     movieList: List<DetailItem>,
     seriesList: List<DetailItem>,
-    navController: NavController
+    navController: NavController,
+    viewModel: HomeViewModel
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +42,8 @@ fun MainScreen(
                         MovieOrSeries.MOVIE.name
                     )
                 )
-            }
+            },
+            viewModel = viewModel
         )
         MainRow(
             title = stringResource(R.string.top_20_tv_series_on_this_week),
@@ -54,7 +56,8 @@ fun MainScreen(
                         MovieOrSeries.SERIES.name
                     )
                 )
-            }
+            },
+            viewModel = viewModel
         )
         Spacer(modifier = Modifier.height(64.dp))
     }

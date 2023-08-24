@@ -34,20 +34,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.data.mapper.toMovieEntity
+import com.mertozan.moviescompose.data.mapper.toSeriesEntity
+import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.presantation.main.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
+import com.mertozan.moviescompose.util.enums.MovieOrSeries
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
 fun MovieItem(
     onCardClick: () -> Unit,
-    posterPath: String,
-    title: String,
-    number: Int
+    content: DetailItem,
+    number: Int,
+    type: String,
+    viewModel: HomeViewModel
 ) {
 
     var isFavorite by rememberSaveable {
-        mutableStateOf(false)
+        mutableStateOf(content.isFavorite)
     }
 
     val animateFavColor: Color by animateColorAsState(
@@ -69,7 +75,7 @@ fun MovieItem(
     ) {
         Box {
             CustomAsyncImage(
-                model = posterPath,
+                model = content.posterPath.toString(),
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -99,12 +105,35 @@ fun MovieItem(
                 modifier = Modifier
                     .size(28.dp)
                     .padding(bottom = 4.dp)
-                    .clickable { isFavorite = !isFavorite },
+                    .clickable {
+                        isFavorite = !isFavorite
+                        if (isFavorite) {
+                            if (type == MovieOrSeries.MOVIE.name) {
+                                viewModel.addMovieToFavorites(
+                                    content.toMovieEntity()
+                                )
+                            } else {
+                                viewModel.addSeriesToFavorites(
+                                    content.toSeriesEntity()
+                                )
+                            }
+                        } else {
+                            if (type == MovieOrSeries.MOVIE.name) {
+                                viewModel.deleteMoviesFromFavorites(
+                                    content.toMovieEntity()
+                                )
+                            } else {
+                                viewModel.deleteSeriesFromFavorites(
+                                    content.toSeriesEntity()
+                                )
+                            }
+                        }
+                    },
                 alignment = Alignment.TopStart
             )
         }
         Text(
-            title.isLongerThan(),
+            content.title.isLongerThan(),
             fontSize = 15.sp,
             modifier = Modifier
                 .fillMaxWidth()

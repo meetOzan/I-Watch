@@ -1,7 +1,9 @@
 package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.Movie
+import com.mertozan.moviescompose.data.model.MovieEntity
 import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.SeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
 
 fun List<Movie>.moviesToList(): List<DetailItem> {
@@ -31,6 +33,40 @@ fun List<Series>.seriesToList(): List<DetailItem> {
             genresDto = it.genres,
             posterPath = it.posterPath,
             adult = it.adult,
+            runTime = it.episodeNumber.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<MovieEntity>.toMoviesToDetailItemList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toString(),
+            releaseDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = true,
+            runTime = it.runtime.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<SeriesEntity>.toSeriesDetailItemList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toString(),
+            releaseDate = it.firstAirDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = true,
             runTime = it.episodeNumber.toString(),
             originalLanguage = it.originalLanguage,
             overview = it.overview,

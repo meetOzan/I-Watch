@@ -15,8 +15,8 @@ import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
 import com.mertozan.moviescompose.presantation.login.LoginScreen
 import com.mertozan.moviescompose.presantation.login.LoginViewModel
-import com.mertozan.moviescompose.presantation.main.MainScreen
-import com.mertozan.moviescompose.presantation.main.MovieViewModel
+import com.mertozan.moviescompose.presantation.main.HomeScreen
+import com.mertozan.moviescompose.presantation.main.HomeViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
@@ -40,13 +40,14 @@ fun MovieNavHost(
 
 fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
-        val viewModel = hiltViewModel<MovieViewModel>()
+        val viewModel = hiltViewModel<HomeViewModel>()
         val movieList = viewModel.popularMovies.collectAsState()
         val seriesList = viewModel.popularSeries.collectAsState()
-        MainScreen(
+        HomeScreen(
             movieList = movieList.value,
             seriesList = seriesList.value,
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
         )
     }
 }
