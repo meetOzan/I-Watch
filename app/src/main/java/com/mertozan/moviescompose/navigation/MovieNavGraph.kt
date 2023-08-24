@@ -80,7 +80,7 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     ) {
         val loginViewModel = hiltViewModel<LoginViewModel>()
 
-        LoginScreen(onNavigate,loginViewModel)
+        LoginScreen(onNavigate, loginViewModel)
     }
 }
 

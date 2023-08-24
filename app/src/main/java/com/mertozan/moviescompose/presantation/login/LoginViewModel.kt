@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mertozan.moviescompose.data.model.User
 import com.mertozan.moviescompose.domain.model.UserItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -42,44 +41,31 @@ class LoginViewModel @Inject constructor(
     }
 
     fun createUserInFirebase(
-        user: User
+        name: String,
+        surname: String,
+        email: String,
+        password: String
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                if (user.email.isNotEmpty() || user.name.isNotEmpty() || user.surname.isNotEmpty() || user.password.isNotEmpty()) {
-                    firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
+                if (email.isNotEmpty() || name.isNotEmpty() || surname.isNotEmpty() || password.isNotEmpty()) {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
-                            firebaseFirestore.collection("users")
-                                .document(firebaseAuth.uid.toString())
-                                .set(UserItem(user.name, user.surname, user.email, user.password))
-                                .addOnCompleteListener {
-                                    Log.e(
-                                        "Firebase Auth msg:",
-                                        "${
-                                            UserItem(
-                                                user.name,
-                                                user.surname,
-                                                user.email,
-                                                user.password
-                                            )
-                                        } logged."
+                            saveUser(name, surname, email, password)
+                        }
+                        .addOnFailureListener {
+                            Log.e(
+                                "Firebase Firestore ERROR:",
+                                "${
+                                    UserItem(
+                                        name,
+                                        surname,
+                                        email,
+                                        password
                                     )
-                                    checkLogged()
-                                }
-                                .addOnFailureListener {
-                                    Log.e(
-                                        "Firebase Auth ERROR:",
-                                        "${
-                                            UserItem(
-                                                user.name,
-                                                user.surname,
-                                                user.email,
-                                                user.password
-                                            )
-                                        } can't logged."
-                                    )
-                                }
-                        }.await()
+                                } can't logged."
+                            )
+                        }
                 } else {
                     Log.e("Please fill blanks", "")
                 }
@@ -89,6 +75,44 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun saveUser(
+        name: String,
+        surname: String,
+        email: String,
+        password: String
+    ) {
+        firebaseFirestore.collection("users")
+            .document(firebaseAuth.uid.toString())
+            .set(UserItem(name, surname, email, password))
+            .addOnCompleteListener {
+                checkLogged()
+                Log.e(
+                    "Firebase Auth SUCCESS:",
+                    "${
+                        UserItem(
+                            name,
+                            surname,
+                            email,
+                            password
+                        )
+                    } can't logged."
+                )
+            }
+            .addOnFailureListener {
+                Log.e(
+                    "Firebase Auth ERROR:",
+                    "${
+                        UserItem(
+                            name,
+                            surname,
+                            email,
+                            password
+                        )
+                    } can't logged."
+                )
+            }
     }
 
     fun signInFirebase(
@@ -126,28 +150,28 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun changeItemName(it: String) {
-        userItem.value = userItem.value.copy(name = it)
+    fun changeItemName(name: String) {
+        userItem.value = userItem.value.copy(name = name)
     }
 
-    fun changeItemSurname(it: String) {
-        userItem.value = userItem.value.copy(surname = it)
+    fun changeItemSurname(surname: String) {
+        userItem.value = userItem.value.copy(surname = surname)
     }
 
-    fun changeItemSignInEmail(it: String) {
-        userItem.value = userItem.value.copy(signInEmail = it)
+    fun changeItemSignInEmail(email: String) {
+        userItem.value = userItem.value.copy(signInEmail = email)
     }
 
-    fun changeItemSignUpEmail(it: String) {
-        userItem.value = userItem.value.copy(signUpEmail = it)
+    fun changeItemSignUpEmail(email: String) {
+        userItem.value = userItem.value.copy(signUpEmail = email)
     }
 
-    fun changeItemSignInPassword(it: String) {
-        userItem.value = userItem.value.copy(signInPassword = it)
+    fun changeItemSignInPassword(password: String) {
+        userItem.value = userItem.value.copy(signInPassword = password)
     }
 
 
-    fun changeItemSignUpPassword(it: String) {
-        userItem.value = userItem.value.copy(signUpPassword = it)
+    fun changeItemSignUpPassword(password: String) {
+        userItem.value = userItem.value.copy(signUpPassword = password)
     }
 }

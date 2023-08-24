@@ -8,4 +8,6 @@ object Constants {
 
     const val TIMEOUT = 60L
 
+    const val PAGER_STATE = 2
+
 }

@@ -1,7 +1,6 @@
 package com.mertozan.moviescompose.data.repository
 
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.mertozan.moviescompose.data.api.MovieService
 import com.mertozan.moviescompose.data.model.GenresResponse
 import com.mertozan.moviescompose.data.model.Movie
@@ -14,10 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-    private val movieService: MovieService
+    private val movieService: MovieService,
+    private val auth: FirebaseAuth
 ) {
-
-    private val auth = Firebase.auth
 
     suspend fun getAllPopularMovies(): MovieResponse {
         return movieService.getPopularMovies()
@@ -43,7 +41,7 @@ class MovieRepository @Inject constructor(
         return movieService.getSingleSeries(seriesId = seriesId)
     }
 
-    fun firebaseSignOut() {
+    fun signOut() {
         CoroutineScope(Dispatchers.IO).launch {
             auth.signOut()
         }

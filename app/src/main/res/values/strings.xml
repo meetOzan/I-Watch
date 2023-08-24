@@ -39,4 +39,5 @@
     <string name="preferred_contents">Preferred Contents</string>
     <string name="settings">Settings</string>
     <string name="favorites">Favorites</string>
+    <string name="click_button_to_prefer">Click button to prefer</string>
 </resources>

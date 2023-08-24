@@ -70,5 +70,5 @@ fun ProfileOptionsCard(
 @Preview(showBackground = true)
 @Composable
 fun PreviewOptionCard() {
-    ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = "Favorites")
+    ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = stringResource(id = R.string.favorites))
 }

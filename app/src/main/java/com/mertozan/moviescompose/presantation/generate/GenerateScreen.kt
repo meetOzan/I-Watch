@@ -90,7 +90,7 @@ fun GenerateContent(
                             .alpha(0.7f)
                     )
                     CustomText(
-                        text = "Click button to prefer",
+                        text = stringResource(R.string.click_button_to_prefer),
                         fontSize = 18,
                         modifier = Modifier.padding(start = 8.dp, top = 12.dp)
                     )

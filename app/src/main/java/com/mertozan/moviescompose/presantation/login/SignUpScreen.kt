@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +22,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.data.model.User
 import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.components.CustomTextField
 import com.mertozan.moviescompose.ui.theme.DarkYellow
@@ -36,10 +36,11 @@ fun SignUpScreen(
     val userId = viewModel.userItem.collectAsState().value
     val userCurrent = viewModel.checkCurrentUser.collectAsState().value
 
-    val name = userId.name
-    val surname = userId.surname
-    val email = userId.signUpEmail
-    val password = userId.signUpPassword
+    LaunchedEffect(userCurrent) {
+        if (userCurrent) {
+            onNavigate()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -61,25 +62,27 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 36.dp)
         ) {
             CustomTextField(
-                name, stringResource(R.string.enter_your_name),
+                userId.name
+                , stringResource(R.string.enter_your_name),
                 onChangeValue = {
                     viewModel.changeItemName(it)
-                },
+                }
             )
             CustomTextField(
-                surname, stringResource(R.string.enter_your_surname),
+                userId.surname, stringResource(R.string.enter_your_surname),
                 onChangeValue = {
                     viewModel.changeItemSurname(it)
-                },
+                }
             )
             CustomTextField(
-                email, stringResource(R.string.enter_your_e_mail), onChangeValue = {
+                userId.signUpEmail, stringResource(R.string.enter_your_e_mail),
+                onChangeValue = {
                     viewModel.changeItemSignUpEmail(it)
                 },
                 keyboardType = KeyboardType.Email
             )
             CustomTextField(
-                password, stringResource(R.string.enter_your_password),
+                userId.signUpPassword, stringResource(R.string.enter_your_password),
                 onChangeValue = {
                     viewModel.changeItemSignUpPassword(it)
                 },
@@ -90,7 +93,10 @@ fun SignUpScreen(
             ElevatedButton(
                 onClick = {
                     viewModel.createUserInFirebase(
-                        User(name, surname, email, password)
+                        name = userId.name,
+                        surname = userId.surname,
+                        email = userId.signUpEmail,
+                        password = userId.signUpPassword
                     )
                     if (userCurrent) onNavigate()
                 },

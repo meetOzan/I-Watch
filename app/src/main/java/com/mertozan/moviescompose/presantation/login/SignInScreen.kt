@@ -44,13 +44,11 @@ fun SignInScreen(
     val userCurrent = viewModel.checkCurrentUser.collectAsState().value
 
     val email = userId.signInEmail
-    val password = userId.signUpPassword
+    val password = userId.signInPassword
 
     LaunchedEffect(userCurrent){
         if(userCurrent){
             onNavigate()
-        }else{
-            //
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import com.mertozan.moviescompose.common.Constants.PAGER_STATE
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -18,8 +19,7 @@ fun LoginScreen(
     onNavigate: () -> Unit,
     viewModel: LoginViewModel
 ) {
-    val pagerState = rememberPagerState(pageCount = { 2 })
-
+    val pagerState = rememberPagerState(pageCount = { PAGER_STATE })
 
     Box(
         modifier = Modifier
