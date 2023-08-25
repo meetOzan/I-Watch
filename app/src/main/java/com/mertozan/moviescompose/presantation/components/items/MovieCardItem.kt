@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.components.items
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -35,7 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.main.HomeViewModel
+import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
@@ -115,7 +116,7 @@ fun MovieItem(
             )
         }
         Text(
-            content.title.isLongerThan(),
+            content.title.isLongerThan(22),
             fontSize = 15.sp,
             modifier = Modifier
                 .fillMaxWidth()

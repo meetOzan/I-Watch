@@ -24,11 +24,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -42,8 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.components.components.CustomText
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
@@ -53,18 +49,10 @@ fun DetailScreen(
     viewModel: DetailViewModel
 ) {
 
-    var isFavorite by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Yellow else Color.White,
+        if (detail.isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.getList()
-    }
 
     Column(
         modifier = Modifier
@@ -132,14 +120,19 @@ fun DetailScreen(
                 fontSize = 16,
                 color = Color.White
             )
-
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable { isFavorite = !isFavorite },
+                    .clickable {/*
+                        if (type == MovieOrSeries.MOVIE.name) {
+                            viewModel.updateMovieFavorite(detail.id, detail.isFavorite)
+                        } else {
+                            viewModel.updateSeriesFavorite(detail.id, detail.isFavorite)
+                        }*/
+                    },
             )
         }
         Row(
@@ -161,7 +154,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 CustomText(
-                    text = detail.runTime.toString(),
+                    text = detail.runTime,
                     fontSize = 18,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

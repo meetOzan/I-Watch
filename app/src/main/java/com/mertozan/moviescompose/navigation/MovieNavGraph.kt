@@ -1,6 +1,7 @@
 package com.mertozan.moviescompose.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,8 +16,8 @@ import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
 import com.mertozan.moviescompose.presantation.login.LoginScreen
 import com.mertozan.moviescompose.presantation.login.LoginViewModel
-import com.mertozan.moviescompose.presantation.main.HomeScreen
-import com.mertozan.moviescompose.presantation.main.HomeViewModel
+import com.mertozan.moviescompose.presantation.home.HomeScreen
+import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
@@ -32,7 +33,7 @@ fun MovieNavHost(
         splashScreen { navController.navigate(LoginScreen.route) }
         loginScreen { navController.navigate(MainScreen.route) }
         mainScreen(navController = navController)
-        generateScreen()
+        generateScreen(navController = navController)
         profileScreen { navController.navigate(LoginScreen.route) }
         detailScreen { navController.navigate(MainScreen.route) }
     }
@@ -41,11 +42,15 @@ fun MovieNavHost(
 fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<HomeViewModel>()
-        val movieList = viewModel.popularMovies.collectAsState()
-        val seriesList = viewModel.popularSeries.collectAsState()
+        val popularMovieList = viewModel.popularMovies.collectAsState()
+        val popularSeriesList = viewModel.popularSeries.collectAsState()
+        val topRatedMovieList = viewModel.topRatedMovies.collectAsState()
+        val topRatedSeriesList = viewModel.topRatedSeries.collectAsState()
         HomeScreen(
-            movieList = movieList.value,
-            seriesList = seriesList.value,
+            popularMovieList = popularMovieList.value,
+            popularSeriesList = popularSeriesList.value,
+            topRatedMovieList  = topRatedMovieList.value,
+            topRatedSeriesList = topRatedSeriesList.value,
             navController = navController,
             viewModel = viewModel
         )
@@ -59,6 +64,11 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
     ) {
         val viewModel: DetailViewModel = hiltViewModel()
         val detail = viewModel.movieDetailUiState.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.getDetail()
+        }
+
         DetailScreen(
             onBackClicked = onNavigate,
             detail = detail.value,
@@ -85,13 +95,13 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.generateScreen() {
+fun NavGraphBuilder.generateScreen(navController: NavController) {
     composable(
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
         viewModel.getAllContents()
-        GenerateContent(viewModel)
+        GenerateContent(viewModel, navController = navController)
     }
 }
 

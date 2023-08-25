@@ -7,13 +7,19 @@ import com.mertozan.moviescompose.data.mapper.moviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.seriesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.toDetailItemToMovieEntityList
 import com.mertozan.moviescompose.data.mapper.toDetailItemToSeriesEntityList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToTopMovieEntityList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToTopSeriesEntityList
 import com.mertozan.moviescompose.data.mapper.toMoviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.toSeriesDetailItemList
-import com.mertozan.moviescompose.data.model.GenresResponse
-import com.mertozan.moviescompose.data.model.MovieEntity
-import com.mertozan.moviescompose.data.model.MovieResponse
-import com.mertozan.moviescompose.data.model.SeriesEntity
-import com.mertozan.moviescompose.data.model.SeriesResponse
+import com.mertozan.moviescompose.data.mapper.toTopMoviesToDetailItemList
+import com.mertozan.moviescompose.data.mapper.toTopSeriesDetailItemList
+import com.mertozan.moviescompose.data.model.entity.MovieEntity
+import com.mertozan.moviescompose.data.model.entity.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
+import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
+import com.mertozan.moviescompose.data.model.response.GenresResponse
+import com.mertozan.moviescompose.data.model.response.MovieResponse
+import com.mertozan.moviescompose.data.model.response.SeriesResponse
 import com.mertozan.moviescompose.domain.model.DetailItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +36,7 @@ class MovieRepository @Inject constructor(
         transferToLocal()
     }
 
+    // Get Network
     private suspend fun getAllPopularMovies(): MovieResponse {
         return movieService.getPopularMovies()
     }
@@ -38,6 +45,15 @@ class MovieRepository @Inject constructor(
         return movieService.getPopularSeries()
     }
 
+    private suspend fun getAllTopRatedMovies(): MovieResponse {
+        return movieService.getTopRatedMovies()
+    }
+
+    private suspend fun getAllTopRatedSeries(): SeriesResponse {
+        return movieService.getTopRatedSeries()
+    }
+
+    // Get Genres
     suspend fun getMovieGenres(): GenresResponse {
         return movieService.getMovieGenres()
     }
@@ -46,28 +62,48 @@ class MovieRepository @Inject constructor(
         return movieService.getSeriesGenres()
     }
 
+    // Sign Out
     fun signOut() {
         CoroutineScope(Dispatchers.IO).launch {
             auth.signOut()
         }
     }
 
-    fun getAllLocalMovies(): List<DetailItem> {
-        return roomDao.getAllMovies().toMoviesToDetailItemList()
+    // Get Local
+    fun getAllPopularLocalMovies(): List<DetailItem> {
+        return roomDao.getPopularMovies().toMoviesToDetailItemList()
     }
 
-    fun getAllLocalSeries(): List<DetailItem> {
-        return roomDao.getAllSeries().toSeriesDetailItemList()
+    fun getAllPopularLocalSeries(): List<DetailItem> {
+        return roomDao.getPopularSeries().toSeriesDetailItemList()
     }
 
-    private fun addMoviesToLocal(movieItem: List<DetailItem>) {
-        roomDao.addMovieFavorites(movieItem.toDetailItemToMovieEntityList())
+    fun getAllTopRatedLocalMovies(): List<DetailItem> {
+        return roomDao.getTopMovies().toTopMoviesToDetailItemList()
     }
 
-    private fun addSeriesToLocal(seriesItem: List<DetailItem>) {
-        roomDao.addSeriesFavorites(seriesItem.toDetailItemToSeriesEntityList())
+    fun getAllTopRatedLocalSeries(): List<DetailItem> {
+        return roomDao.getTopSeries().toTopSeriesDetailItemList()
     }
 
+    // Add to Local
+    private fun addPopularMoviesToLocal(movieItem: List<DetailItem>) {
+        roomDao.addMovieToLocal(movieItem.toDetailItemToMovieEntityList())
+    }
+
+    private fun addPopularSeriesToLocal(seriesItem: List<DetailItem>) {
+        roomDao.addSeriesToLocal(seriesItem.toDetailItemToSeriesEntityList())
+    }
+
+    private fun addTopRatedMoviesToLocal(movieItem: List<DetailItem>) {
+        roomDao.addTopMoviesToLocal(movieItem.toDetailItemToTopMovieEntityList())
+    }
+
+    private fun addTopRatedSeriesToLocal(seriesItem: List<DetailItem>) {
+        roomDao.addTopSeriesToLocal(seriesItem.toDetailItemToTopSeriesEntityList())
+    }
+
+    // Get single
     fun getSingleLocalMovie(movieId: Int): MovieEntity {
         return roomDao.getSingleLocalMovie(movieId = movieId)
     }
@@ -76,6 +112,15 @@ class MovieRepository @Inject constructor(
         return roomDao.getSingleLocalSeries(seriesId = seriesId)
     }
 
+    fun getSingleTopLocalMovies(movieId: Int): TopMovieEntity {
+        return roomDao.getTopSingleLocalMovie(movieId)
+    }
+
+    fun getSingleTopLocalSeries(seriesId: Int): TopSeriesEntity {
+        return roomDao.getTopSingleLocalSeries(seriesId)
+    }
+
+    // Update
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         roomDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)
     }
@@ -84,10 +129,51 @@ class MovieRepository @Inject constructor(
         roomDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
     }
 
+    // Transfer
     private fun transferToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
-            addMoviesToLocal(getAllPopularMovies().movieResults.moviesToDetailItemList())
-            addSeriesToLocal(getAllPopularSeries().seriesResults.seriesToDetailItemList())
+
+            addPopularMoviesToLocal(
+                getAllPopularMovies()
+                    .movieResults.moviesToDetailItemList()
+            )
+            addPopularSeriesToLocal(
+                getAllPopularSeries()
+                    .seriesResults.seriesToDetailItemList()
+            )
+            addTopRatedMoviesToLocal(
+                getAllTopRatedMovies()
+                    .movieResults.moviesToDetailItemList()
+            )
+            addTopRatedSeriesToLocal(
+                getAllTopRatedSeries()
+                    .seriesResults.seriesToDetailItemList()
+            )
+
+            if (getAllPopularLocalMovies().isEmpty()) {
+                addPopularMoviesToLocal(
+                    getAllPopularMovies()
+                        .movieResults.moviesToDetailItemList()
+                )
+            }
+            if (getAllPopularLocalSeries().isNotEmpty()) {
+                addPopularSeriesToLocal(
+                    getAllPopularSeries()
+                        .seriesResults.seriesToDetailItemList()
+                )
+            }
+            if (getAllTopRatedLocalMovies().isEmpty()) {
+                addTopRatedMoviesToLocal(
+                    getAllTopRatedMovies()
+                        .movieResults.moviesToDetailItemList()
+                )
+            }
+            if (getAllTopRatedLocalSeries().isNotEmpty()) {
+                addTopRatedSeriesToLocal(
+                    getAllTopRatedSeries()
+                        .seriesResults.seriesToDetailItemList()
+                )
+            }
         }
     }
 }

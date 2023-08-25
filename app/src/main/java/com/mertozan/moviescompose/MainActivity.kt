@@ -8,7 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.mertozan.moviescompose.navigation.MovieNavHost
-import com.mertozan.moviescompose.presantation.components.BottomNavigationView
+import com.mertozan.moviescompose.presantation.components.layouts.BottomNavigationView
 import com.mertozan.moviescompose.ui.theme.MoviesComposeTheme
 import com.mertozan.moviescompose.util.enums.BottomNavItems
 import dagger.hilt.android.AndroidEntryPoint

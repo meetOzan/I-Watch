@@ -1,40 +1,10 @@
 package com.mertozan.moviescompose.data.mapper
 
-import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.MovieEntity
-import com.mertozan.moviescompose.data.model.Series
-import com.mertozan.moviescompose.data.model.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.MovieEntity
+import com.mertozan.moviescompose.data.model.entity.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
+import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
-
-fun Movie.toDetailItem(): DetailItem {
-    return DetailItem(
-        id = id,
-        title = title,
-        popularity = popularity.toString(),
-        genresDto = genres,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        adult = adult,
-        runTime = runtime.toString(),
-        originalLanguage = originalLanguage,
-        overview = if (overview == "") "No Detail" else overview
-    )
-}
-
-fun Series.toDetailItem(): DetailItem {
-    return DetailItem(
-        id = id,
-        title = name,
-        popularity = popularity.toString(),
-        genresDto = genres,
-        posterPath = posterPath,
-        releaseDate = firstAirDate,
-        adult = adult,
-        runTime = episodeNumber.toString(),
-        originalLanguage = originalLanguage,
-        overview = if (overview == "") "No Detail" else overview
-    )
-}
 
 fun MovieEntity.movieEntityToDetailItem(): DetailItem {
     return DetailItem(
@@ -64,31 +34,29 @@ fun SeriesEntity.seriesEntityToDetailItem(): DetailItem {
     )
 }
 
-fun DetailItem.toMovieEntity(): MovieEntity {
-    return MovieEntity(
+fun TopMovieEntity.topMovieEntityToDetailItem(): DetailItem {
+    return DetailItem(
         id = id,
         title = title,
-        popularity = popularity.toFloat(),
+        popularity = popularity.toString(),
         posterPath = posterPath,
         releaseDate = releaseDate,
         adult = adult,
+        runTime = runtime.toString(),
         originalLanguage = originalLanguage,
-        isFavorite = isFavorite,
-        runtime = runTime.toInt(),
         overview = if (overview == "") "No Detail" else overview
     )
 }
 
-fun DetailItem.toSeriesEntity(): SeriesEntity {
-    return SeriesEntity(
+fun TopSeriesEntity.topSeriesEntityToDetailItem(): DetailItem {
+    return DetailItem(
         id = id,
         title = title,
-        popularity = popularity.toFloat(),
+        popularity = popularity.toString(),
         posterPath = posterPath,
-        firstAirDate = releaseDate,
+        releaseDate = releaseDate,
         adult = adult,
-        episodeNumber = runTime.toInt(),
-        isFavorite = isFavorite,
+        runTime = runtime.toString(),
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )

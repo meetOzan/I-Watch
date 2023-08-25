@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.model
+package com.mertozan.moviescompose.data.model.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -31,6 +31,6 @@ data class MovieEntity(
 
     @ColumnInfo(name = "movie_runtime") val runtime: Int = 0,
 
-    @ColumnInfo(name = "fav_movie_Language") val originalLanguage: String = ""
+    @ColumnInfo(name = "movie_language") val originalLanguage: String = ""
 
 ) : Parcelable

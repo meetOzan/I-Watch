@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.components.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

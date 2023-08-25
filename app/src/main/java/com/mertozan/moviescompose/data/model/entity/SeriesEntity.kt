@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.model
+package com.mertozan.moviescompose.data.model.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -19,18 +19,20 @@ data class SeriesEntity(
 
     @ColumnInfo(name = "series_adult") val adult: Boolean,
 
-    // @ColumnInfo(name = "eries_genres") val genres: List<Genres>,
+    // @ColumnInfo(name = "series_genres") val genres: List<Genres>,
 
     @ColumnInfo(name = "series_posterPath") val posterPath: String? = "",
 
     @ColumnInfo(name = "series_is_favorite") val isFavorite : Boolean,
 
-    @ColumnInfo(name = "series_airDate") val firstAirDate: String = "",
+    @ColumnInfo(name = "series_date") val firstAirDate: String = "",
 
-    @ColumnInfo(name = "series_note_overview") val overview: String = "",
+    @ColumnInfo(name = "series_overview") val overview: String = "",
 
-    @ColumnInfo(name = "series_episode") val episodeNumber: Int? = 0,
+    @ColumnInfo(name = "series_runtime") val episodeNumber: Int? = 0,
 
-    @ColumnInfo(name = "series_originalLanguage") val originalLanguage: String = ""
+    @ColumnInfo(name = "series_language") val originalLanguage: String = "",
+
+    @ColumnInfo(name = "series_type") val listType: String = ""
 
 ) : Parcelable

@@ -1,9 +1,11 @@
 package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.MovieEntity
+import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.Series
-import com.mertozan.moviescompose.data.model.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
+import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
 
 fun List<Movie>.moviesToDetailItemList(): List<DetailItem> {
@@ -74,6 +76,40 @@ fun List<SeriesEntity>.toSeriesDetailItemList(): List<DetailItem> {
     }
 }
 
+fun List<TopMovieEntity>.toTopMoviesToDetailItemList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toString(),
+            releaseDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
+            runTime = it.runtime.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<TopSeriesEntity>.toTopSeriesDetailItemList(): List<DetailItem> {
+    return this.map {
+        DetailItem(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toString(),
+            releaseDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
+            runTime = it.runtime.toString(),
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
 fun List<DetailItem>.toDetailItemToMovieEntityList(): List<MovieEntity> {
     return this.map {
         MovieEntity(
@@ -97,6 +133,38 @@ fun List<DetailItem>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
             title = it.title,
             popularity = it.popularity.toFloat(),
             firstAirDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<DetailItem>.toDetailItemToTopMovieEntityList(): List<TopMovieEntity> {
+    return this.map {
+        TopMovieEntity(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toFloat(),
+            releaseDate = it.releaseDate,
+            posterPath = it.posterPath.toString(),
+            adult = it.adult,
+            isFavorite = it.isFavorite,
+            originalLanguage = it.originalLanguage,
+            overview = it.overview,
+        )
+    }
+}
+
+fun List<DetailItem>.toDetailItemToTopSeriesEntityList(): List<TopSeriesEntity> {
+    return this.map {
+        TopSeriesEntity(
+            id = it.id,
+            title = it.title,
+            popularity = it.popularity.toFloat(),
+            releaseDate = it.releaseDate,
             posterPath = it.posterPath.toString(),
             adult = it.adult,
             isFavorite = it.isFavorite,

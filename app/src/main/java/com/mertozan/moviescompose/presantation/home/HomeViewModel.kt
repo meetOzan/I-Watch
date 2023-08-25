@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.main
+package com.mertozan.moviescompose.presantation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,20 +21,43 @@ class HomeViewModel @Inject constructor(
     private val _popularSeries = MutableStateFlow(emptyList<DetailItem>())
     val popularSeries = _popularSeries.asStateFlow()
 
+    private val _topRatedMovies = MutableStateFlow(emptyList<DetailItem>())
+    val topRatedMovies = _topRatedMovies.asStateFlow()
+
+    private val _topRatedSeries = MutableStateFlow(emptyList<DetailItem>())
+    val topRatedSeries = _topRatedSeries.asStateFlow()
+
     init {
         getPopularMovies()
         getPopularSeries()
     }
 
+    init {
+        getTopRatedMovies()
+        getTopRatedSeries()
+    }
+
     private fun getPopularMovies() {
         viewModelScope.launch {
-            _popularMovies.value = movieRepository.getAllLocalMovies()
+            _popularMovies.value = movieRepository.getAllPopularLocalMovies()
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            _popularSeries.value = movieRepository.getAllLocalSeries()
+            _popularSeries.value = movieRepository.getAllPopularLocalSeries()
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        viewModelScope.launch {
+            _topRatedMovies.value = movieRepository.getAllTopRatedLocalMovies()
+        }
+    }
+
+    private fun getTopRatedSeries() {
+        viewModelScope.launch {
+            _topRatedSeries.value = movieRepository.getAllTopRatedLocalSeries()
         }
     }
 

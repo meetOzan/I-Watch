@@ -21,28 +21,52 @@ class GenerateViewModel @Inject constructor(
     private var _popularSeries = MutableStateFlow(emptyList<DetailItem>())
     private val popularSeries = _popularSeries.asStateFlow()
 
+    private val _topRatedMovies = MutableStateFlow(emptyList<DetailItem>())
+    private val topRatedMovies = _topRatedMovies.asStateFlow()
+
+    private val _topRatedSeries = MutableStateFlow(emptyList<DetailItem>())
+    private val topRatedSeries = _topRatedSeries.asStateFlow()
+
     private val _allContents = MutableStateFlow(emptyList<DetailItem>())
     val allContents = _allContents.asStateFlow()
 
     init {
         getPopularMovies()
         getPopularSeries()
+        getTopRatedMovies()
+        getTopRatedSeries()
     }
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            _popularMovies.value = movieRepository.getAllLocalMovies()
+            _popularMovies.value = movieRepository.getAllPopularLocalMovies()
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            _popularSeries.value = movieRepository.getAllLocalSeries()
+            _popularSeries.value = movieRepository.getAllPopularLocalSeries()
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        viewModelScope.launch {
+            _topRatedMovies.value = movieRepository.getAllTopRatedLocalMovies()
+        }
+    }
+
+    private fun getTopRatedSeries() {
+        viewModelScope.launch {
+            _topRatedSeries.value = movieRepository.getAllTopRatedLocalSeries()
         }
     }
 
     fun getAllContents() {
-        _allContents.value = popularMovies.value.plus(popularSeries.value)
+        _allContents.value =
+            popularMovies.value
+                .plus(popularSeries.value)
+                .plus(topRatedMovies.value)
+                .plus(topRatedSeries.value)
     }
 
     fun shuffleList() {

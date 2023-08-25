@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.components.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions

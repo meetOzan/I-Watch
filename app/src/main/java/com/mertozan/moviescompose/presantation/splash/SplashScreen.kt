@@ -28,7 +28,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomText
 import kotlinx.coroutines.delay
 
 @Composable

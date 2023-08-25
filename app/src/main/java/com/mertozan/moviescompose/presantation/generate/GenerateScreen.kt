@@ -35,15 +35,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.components.components.CustomText
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
 fun GenerateContent(
-    viewModel: GenerateViewModel
+    viewModel: GenerateViewModel,
+    navController: NavController
 ) {
 
     var isPreferred by remember {
@@ -71,6 +73,7 @@ fun GenerateContent(
                         .fillMaxWidth(0.9f)
                         .fillMaxHeight(0.6f)
                         .background(LightBlack),
+                    // TODO clickable eklemesi için tabloların tek tablo olması lazım
                     alignment = Alignment.Center
                 )
             } else {
@@ -98,9 +101,11 @@ fun GenerateContent(
             }
         }
         AnimatedVisibility(visible = isPreferred) {
-            Button(onClick = {}, modifier = Modifier
-                .width(200.dp)
-                .padding(vertical = 36.dp)) {
+            Button(
+                onClick = {}, modifier = Modifier
+                    .width(200.dp)
+                    .padding(vertical = 36.dp)
+            ) {
                 Text(text = stringResource(R.string.add_to_your_watch_list))
             }
         }
