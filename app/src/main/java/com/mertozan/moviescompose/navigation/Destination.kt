@@ -16,13 +16,28 @@ object MainScreen : Destination {
 
 object DetailScreen : Destination {
     override val route = "detail_screen"
-    fun navigateWithArgs(id: Int, type: String, listType: String): String = "$route/$id/$type/$listType"
+    fun navigateWithArgs(
+        id: Int, type: String, listType: String
+    ): String = "$route/$id/$type/$listType"
+
     val routeWithArgs = "$route/{$ARGS_ID}/{$ARGS_TYPE}/{$ARGS_LIST_TYPE}"
     val args = listOf(
         navArgument(ARGS_ID) { type = NavType.IntType },
         navArgument(ARGS_TYPE) { type = NavType.StringType },
         navArgument(ARGS_LIST_TYPE) { type = NavType.StringType }
     )
+}
+
+object ContentListScreen : Destination {
+    override val route = "content_list_screen"
+    fun navigateWithArgs(
+        type: String
+    ): String = "$route/$type"
+    val routeWithArgs = "$route/{$ARGS_TYPE}"
+    val args = listOf(
+        navArgument(ARGS_TYPE) { type = NavType.StringType },
+    )
+
 }
 
 object SplashScreen : Destination {

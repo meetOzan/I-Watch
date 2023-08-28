@@ -4,12 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.presantation.detail.ContentList
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.DetailViewModel
 import com.mertozan.moviescompose.presantation.generate.GenerateContent
@@ -21,10 +24,12 @@ import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
+import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MovieNavHost(
     navController: NavHostController,
+    // TODO burada unused ama Scaffold'da padding vermem lazım mecbur vermem lazım mı ?
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -36,6 +41,7 @@ fun MovieNavHost(
         generateScreen(navController = navController)
         profileScreen { navController.navigate(LoginScreen.route) }
         detailScreen { navController.navigate(MainScreen.route) }
+        contentList(navController = navController)
     }
 }
 
@@ -72,6 +78,34 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         DetailScreen(
             onBackClicked = onNavigate,
             detail = detail.value
+        )
+    }
+}
+
+fun NavGraphBuilder.contentList(navController: NavController) {
+    composable(
+        route = ContentListScreen.routeWithArgs,
+        arguments = ContentListScreen.args
+    ) {
+        val viewModel: HomeViewModel = hiltViewModel()
+        val contentList = viewModel.topRatedContents.collectAsState()
+        val contentTitle = viewModel.contentListTitle.collectAsState().value
+        
+        LaunchedEffect(Unit){
+            viewModel.getContentList()
+        }
+
+        val title =
+            if (contentTitle == MovieOrSeries.MOVIE.name)
+                stringResource(id = R.string.top_rated_movies)
+            else
+                stringResource(id = R.string.top_rated_series)
+
+        ContentList(
+            contentList = contentList.value,
+            type = contentTitle,
+            title = title,
+            navController = navController
         )
     }
 }

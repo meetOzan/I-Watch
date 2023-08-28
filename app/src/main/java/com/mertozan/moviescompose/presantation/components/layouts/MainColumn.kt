@@ -1,6 +1,7 @@
 package com.mertozan.moviescompose.presantation.components.layouts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -28,7 +29,8 @@ fun MainColumn(
     list: List<DetailItem>,
     type: String,
     listType: String,
-    onClick: (Int, String, String) -> Unit,
+    onToDetailClick: (Int, String, String) -> Unit,
+    onToContentListClick : (String) -> Unit,
     title: String
 ) {
     Row(
@@ -58,7 +60,10 @@ fun MainColumn(
             text = stringResource(R.string.see_more),
             fontSize = 18,
             fontWeight = FontWeight.Normal,
-            color = Color.White
+            color = Color.White,
+            modifier = Modifier.clickable {
+                onToContentListClick(type)
+            }
         )
     }
     LazyColumn(
@@ -72,7 +77,7 @@ fun MainColumn(
                     title = content.title,
                     number = (list.indexOf(content)) + 1,
                     onNavigate = {
-                        onClick(content.id, type, listType)
+                        onToDetailClick(content.id, type, listType)
                     }
                 )
             }

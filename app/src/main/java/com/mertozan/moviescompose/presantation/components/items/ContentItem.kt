@@ -21,28 +21,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.components.CustomText
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
+import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
 fun ContentItem(
+    id: Int,
     title: String,
     posterPath: String,
     voteAverage: String,
+    type: String,
     detail: String,
-    onNavigate: () -> Unit
+    navController: NavController
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onNavigate() }
+            .clickable {
+                navController.navigate(
+                    DetailScreen.navigateWithArgs(
+                        id,
+                        type,
+                        ListType.TOP_RATED.name
+                    )
+                )
+            }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
@@ -116,15 +128,4 @@ fun ContentItem(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewOfContent() {
-    ContentItem(
-        title = "Forrest Gump",
-        posterPath = "/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
-        "8.7",
-        "nofdnsjaogndogndfognadoskngodfnsgoasnognosadnggojnsdkogndsaognojkadsnagojndsagojnsadojgnjsoadgnfdoasjnfogkndsag"
-    ) {}
 }
