@@ -15,6 +15,10 @@ data class Series(
     val popularity: Float?,
     @SerializedName("first_air_date")
     val firstAirDate: String,
+    @SerializedName("vote_average")
+    val voteAverage: Float,
+    @SerializedName("vote_count")
+    val voteNumber: Int,
     @SerializedName("genres")
     val genres: List<Genres>,
     @SerializedName("episode_number")

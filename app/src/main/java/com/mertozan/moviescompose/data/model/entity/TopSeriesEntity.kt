@@ -25,6 +25,10 @@ data class TopSeriesEntity(
 
     @ColumnInfo(name = "top_series_is_favorite") val isFavorite: Boolean,
 
+    @ColumnInfo(name = "top_series_vote_average") val voteAverage: Float? = 0f,
+
+    @ColumnInfo(name = "top_series_vote_count") val voteCount: Int? = 0,
+
     @ColumnInfo(name = "top_series_date") val releaseDate: String = "",
 
     @ColumnInfo(name = "top_series_overview") val overview: String = "",

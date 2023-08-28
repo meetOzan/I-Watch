@@ -9,7 +9,7 @@ import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 
 @Database(
     entities = [SeriesEntity::class, MovieEntity::class, TopMovieEntity::class, TopSeriesEntity::class],
-    version = 13,
+    version = 14,
     exportSchema = false
 )
 abstract class FavoritesDatabase : RoomDatabase() {

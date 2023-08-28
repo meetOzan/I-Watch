@@ -27,6 +27,10 @@ data class SeriesEntity(
 
     @ColumnInfo(name = "series_date") val firstAirDate: String = "",
 
+    @ColumnInfo(name = "series_vote_average") val voteAverage: Float? = 0f,
+
+    @ColumnInfo(name = "series_vote_count") val voteCount: Int? = 0,
+
     @ColumnInfo(name = "series_overview") val overview: String = "",
 
     @ColumnInfo(name = "series_runtime") val episodeNumber: Int? = 0,

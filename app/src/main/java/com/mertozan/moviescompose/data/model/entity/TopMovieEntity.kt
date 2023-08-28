@@ -25,6 +25,10 @@ data class TopMovieEntity(
 
     @ColumnInfo(name = "top_movie_is_favorite") val isFavorite: Boolean,
 
+    @ColumnInfo(name = "top_movie_vote_average") val voteAverage: Float? = 0f,
+
+    @ColumnInfo(name = "top_movie_vote_count") val voteCount: Int? = 0,
+
     @ColumnInfo(name = "top_movie_date") val releaseDate: String = "",
 
     @ColumnInfo(name = "top_movie_overview") val overview: String = "",

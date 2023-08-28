@@ -10,6 +10,8 @@ data class DetailItem(
     val genresDto: List<Genres>? = emptyList(),
     val posterPath: String? = "",
     val adult: Boolean = false,
+    val voteAverage : String = "",
+    val voteCount : String = "",
     val runTime: String = "",
     val isFavorite: Boolean = false,
     val originalLanguage: String = "",

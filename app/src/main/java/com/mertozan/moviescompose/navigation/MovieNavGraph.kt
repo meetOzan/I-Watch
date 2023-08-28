@@ -14,10 +14,10 @@ import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.DetailViewModel
 import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
-import com.mertozan.moviescompose.presantation.login.LoginScreen
-import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.home.HomeScreen
 import com.mertozan.moviescompose.presantation.home.HomeViewModel
+import com.mertozan.moviescompose.presantation.login.LoginScreen
+import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
@@ -49,7 +49,7 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
         HomeScreen(
             popularMovieList = popularMovieList.value,
             popularSeriesList = popularSeriesList.value,
-            topRatedMovieList  = topRatedMovieList.value,
+            topRatedMovieList = topRatedMovieList.value,
             topRatedSeriesList = topRatedSeriesList.value,
             navController = navController,
             viewModel = viewModel
@@ -71,8 +71,7 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
 
         DetailScreen(
             onBackClicked = onNavigate,
-            detail = detail.value,
-            viewModel = viewModel
+            detail = detail.value
         )
     }
 }

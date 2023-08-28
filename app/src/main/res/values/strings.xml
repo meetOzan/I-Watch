@@ -44,4 +44,6 @@
     <string name="see_details">See Details</string>
     <string name="top_rated_series">Top Rated Series</string>
     <string name="see_more">See more</string>
+    <string name="liked">liked</string>
+    <string name="custom_content_item_poster">custom_content_item_poster</string>
 </resources>

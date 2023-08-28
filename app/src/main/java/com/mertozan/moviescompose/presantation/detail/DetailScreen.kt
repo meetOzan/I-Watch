@@ -21,6 +21,8 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,13 +42,13 @@ import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun DetailScreen(
     onBackClicked: () -> Unit,
-    detail: DetailItem,
-    viewModel: DetailViewModel
+    detail: DetailItem
 ) {
 
     val animateFavColor: Color by animateColorAsState(
@@ -102,7 +104,6 @@ fun DetailScreen(
                         .clickable(onClick = onBackClicked),
                 )
             }
-
         }
         CustomText(
             text = detail.title,
@@ -113,13 +114,41 @@ fun DetailScreen(
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(280.dp)
+            horizontalArrangement = Arrangement.spacedBy(180.dp)
         ) {
-            CustomText(
-                text = detail.popularity,
-                fontSize = 16,
-                color = Color.White
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    Image(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = stringResource(R.string.liked),
+                        colorFilter = ColorFilter.tint(
+                            DarkYellow
+                        )
+                    )
+                    CustomText(
+                        text = detail.voteAverage,
+                        fontSize = 16,
+                        color = Color.White
+                    )
+                    Image(
+                        imageVector = Icons.Filled.ThumbUp,
+                        contentDescription = stringResource(R.string.liked),
+                        colorFilter = ColorFilter.tint(
+                            DarkYellow
+                        )
+                    )
+                    CustomText(
+                        text = detail.voteCount,
+                        fontSize = 16,
+                        color = Color.White
+                    )
+                }
+            }
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),

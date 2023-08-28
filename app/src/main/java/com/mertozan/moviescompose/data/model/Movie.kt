@@ -14,6 +14,10 @@ data class Movie(
     val popularity: Float,
     @SerializedName("adult")
     val adult: Boolean,
+    @SerializedName("vote_average")
+    val voteAverage: Float,
+    @SerializedName("vote_count")
+    val voteNumber: Int,
     @SerializedName("genres")
     val genres: List<Genres>,
     @SerializedName("poster_path")
