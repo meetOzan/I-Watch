@@ -14,9 +14,11 @@ import com.mertozan.moviescompose.presantation.detail.DetailViewModel
 import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
 import com.mertozan.moviescompose.presantation.login.LoginScreen
+import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.main.MainScreen
 import com.mertozan.moviescompose.presantation.main.MovieViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
+import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
 
 @Composable
@@ -31,7 +33,7 @@ fun MovieNavHost(
         loginScreen { navController.navigate(MainScreen.route) }
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen()
+        profileScreen { navController.navigate(LoginScreen.route) }
         detailScreen { navController.navigate(MainScreen.route) }
     }
 }
@@ -76,7 +78,9 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
     ) {
-        LoginScreen(onNavigate)
+        val loginViewModel = hiltViewModel<LoginViewModel>()
+
+        LoginScreen(onNavigate, loginViewModel)
     }
 }
 
@@ -85,15 +89,19 @@ fun NavGraphBuilder.generateScreen() {
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
-        val trendList = (viewModel.popularSeries.collectAsState().value).shuffled()
-        GenerateContent(trendList)
+        viewModel.getAllContents()
+        GenerateContent(viewModel)
     }
 }
 
-fun NavGraphBuilder.profileScreen() {
+fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
     composable(
         route = ProfileScreen.route
     ) {
-        ProfileScreen()
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        ProfileScreen(
+            onNavigate = onNavigate,
+            viewModel = profileViewModel
+        )
     }
 }

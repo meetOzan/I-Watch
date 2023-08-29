@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.androidx.navigation.safe.args)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -119,5 +120,11 @@ dependencies {
 
     // Lottie
     implementation(libs.com.airbnb.android.lottie)
+
+    // Firebase - Auth
+    implementation(libs.com.firebase.auth.ktx)
+
+    // Firebase - Firestore
+    implementation(libs.firebase.firestore.ktx)
 
 }

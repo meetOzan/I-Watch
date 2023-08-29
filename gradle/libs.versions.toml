@@ -1,9 +1,11 @@
 [versions]
-android-target-sdk = "33"
-android-compile-sdk = "33"
+android-target-sdk = "34"
+android-compile-sdk = "34"
 android-min-sdk = "24"
+firebaseAuthKtx = "22.1.1"
 jvmTarget = "17"
 androidFoundation = "1.4.1"
+googleService = "4.3.15"
 version-name = "1.0"
 versionCode = "1"
 namespace = "com.mertozan.moviescompose"
@@ -13,7 +15,7 @@ androidGradlePlugin = "8.1.0"
 coreKtx = "1.10.1"
 kotlin = "1.9.0"
 androidx-activity-compose = "1.7.2"
-androidx-compose-bom = "2023.06.01"
+androidx-compose-bom = "2023.08.00"
 androidx-lifecycle-compose = "2.6.1"
 androidx-lifecycle-runtime-compose = "2.6.1"
 androidxHiltNavigationCompose = "1.0.0"
@@ -23,7 +25,7 @@ androidxCore = "1.10.1"
 androidxActivity = "2.6.1"
 androidxAppCompat = "1.7.2"
 androidxLifecycle = "2.6.1"
-androidxNavigation = "2.6.0" # '2.7.0' is only available for sdk version 34
+androidxNavigation = "2.7.0" # '2.7.0' is only available for sdk version 34
 navigationViewModel = "2.6.1"
 kotlinxCoroutines = "1.7.1"
 hilt = "2.47"
@@ -42,7 +44,8 @@ junit = "4.13.2"
 androidxTestExt = "1.1.5"
 androidxEspresso = "3.5.1"
 lottieVersion = "4.2.0"
-bottomNav = "1.4.0"
+bottomNav = "1.5.0"
+firebaseFirestore = "24.7.0"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -62,6 +65,7 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 com-github-chuckerteam-chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+com-firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 androidx-lifecyle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
@@ -92,6 +96,7 @@ androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espres
 com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion"}
 android-compose-ui = {module = "androidx.compose.ui:ui", version.ref = "bottomNav"}
 android-compose-material = {module = "androidx.compose.material:material", version.ref = "bottomNav"}
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -101,3 +106,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+google-services = {id = "com.google.gms.google-services", version.ref = "googleService"}

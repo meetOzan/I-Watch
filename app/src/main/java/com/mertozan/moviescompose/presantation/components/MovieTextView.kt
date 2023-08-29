@@ -11,11 +11,11 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun CustomText(
-    modifier: Modifier = Modifier,
     text: String,
     fontSize: Int = 16,
     color: Color = DarkWhite80,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
