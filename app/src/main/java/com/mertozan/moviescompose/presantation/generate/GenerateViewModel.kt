@@ -15,62 +15,41 @@ class GenerateViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    private var _popularMovies = MutableStateFlow(emptyList<DetailItem>())
-    private val popularMovies = _popularMovies.asStateFlow()
-
-    private var _popularSeries = MutableStateFlow(emptyList<DetailItem>())
-    private val popularSeries = _popularSeries.asStateFlow()
-
-    private val _topRatedMovies = MutableStateFlow(emptyList<DetailItem>())
-    private val topRatedMovies = _topRatedMovies.asStateFlow()
-
-    private val _topRatedSeries = MutableStateFlow(emptyList<DetailItem>())
-    private val topRatedSeries = _topRatedSeries.asStateFlow()
-
-    private val _allContents = MutableStateFlow(emptyList<DetailItem>())
+    private val _allContents = MutableStateFlow(mutableListOf<DetailItem>())
     val allContents = _allContents.asStateFlow()
-
-    init {
-        getPopularMovies()
-        getPopularSeries()
-        getTopRatedMovies()
-        getTopRatedSeries()
-    }
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            _popularMovies.value = movieRepository.getAllPopularLocalMovies()
+            _allContents.value.addAll(movieRepository.getAllPopularLocalMovies())
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            _popularSeries.value = movieRepository.getAllPopularLocalSeries()
+            _allContents.value.addAll(movieRepository.getAllPopularLocalSeries())
         }
     }
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            _topRatedMovies.value = movieRepository.getAllTopRatedLocalMovies()
+            _allContents.value.addAll(movieRepository.getAllTopRatedLocalMovies())
         }
     }
 
     private fun getTopRatedSeries() {
         viewModelScope.launch {
-            _topRatedSeries.value = movieRepository.getAllTopRatedLocalSeries()
+            _allContents.value.addAll(movieRepository.getAllTopRatedLocalSeries())
         }
     }
 
     fun getAllContents() {
-        _allContents.value =
-            popularMovies.value
-                .plus(popularSeries.value)
-                .plus(topRatedMovies.value)
-                .plus(topRatedSeries.value)
+        getTopRatedMovies()
+        getTopRatedSeries()
+        getPopularSeries()
+        getPopularMovies()
     }
 
     fun shuffleList() {
-        _allContents.value = _allContents.value.shuffled()
+        _allContents.value = _allContents.value.shuffled() as MutableList<DetailItem>
     }
-
 }

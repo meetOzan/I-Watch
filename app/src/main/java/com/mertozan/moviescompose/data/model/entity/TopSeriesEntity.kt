@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TopSeriesEntity(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "top_series_id") val id: Int = 0,
 
     @ColumnInfo(name = "top_series_title") val title: String = "",

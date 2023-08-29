@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.components.CustomText
@@ -44,8 +43,7 @@ import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
 fun GenerateContent(
-    viewModel: GenerateViewModel,
-    navController: NavController
+    viewModel: GenerateViewModel
 ) {
 
     var isPreferred by remember {
@@ -65,7 +63,7 @@ fun GenerateContent(
         ) {
             if (isPreferred) {
                 CustomAsyncImage(
-                    model = trendList[0].posterPath.toString(),
+                    model = trendList[0].posterPath,
                     contentDescription = stringResource(
                         R.string.generated_image
                     ),
@@ -73,7 +71,6 @@ fun GenerateContent(
                         .fillMaxWidth(0.9f)
                         .fillMaxHeight(0.6f)
                         .background(LightBlack),
-                    // TODO clickable eklemesi için tabloların tek tablo olması lazım
                     alignment = Alignment.Center
                 )
             } else {

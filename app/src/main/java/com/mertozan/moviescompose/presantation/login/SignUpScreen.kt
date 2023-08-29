@@ -62,14 +62,15 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 36.dp)
         ) {
             CustomTextField(
-                userId.name
-                , stringResource(R.string.enter_your_name),
+                userId.name,
+                stringResource(R.string.enter_your_name),
                 onChangeValue = {
                     viewModel.changeItemName(it)
                 }
             )
             CustomTextField(
-                userId.surname, stringResource(R.string.enter_your_surname),
+                userId.surname,
+                stringResource(R.string.enter_your_surname),
                 onChangeValue = {
                     viewModel.changeItemSurname(it)
                 }

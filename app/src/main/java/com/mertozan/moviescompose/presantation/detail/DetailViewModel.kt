@@ -44,14 +44,28 @@ class DetailViewModel @Inject constructor(
     }
 
     fun getDetail() {
-        when(listType){
+        when (listType) {
             ListType.POPULAR.name -> when (type) {
                 MovieOrSeries.SERIES.name -> getSingleSeries(id ?: 0)
                 MovieOrSeries.MOVIE.name -> getSingleMovie(id ?: 0)
             }
+
             ListType.TOP_RATED.name -> when (type) {
                 MovieOrSeries.SERIES.name -> getSingleTopSeries(id ?: 0)
                 MovieOrSeries.MOVIE.name -> getSingleTopMovies(id ?: 0)
+            }
+        }
+    }
+
+    fun updateFavorite(isFavorite: Boolean) {
+        when (listType) {
+            ListType.POPULAR.name -> when (type) {
+                MovieOrSeries.SERIES.name -> updateSeriesFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.MOVIE.name -> updateMovieFavorite(id ?: 0, isFavorite)
+            }
+            ListType.TOP_RATED.name -> when (type) {
+                MovieOrSeries.SERIES.name -> updateTopSeriesFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.MOVIE.name -> updateTopMovieFavorite(id ?: 0, isFavorite)
             }
         }
     }
@@ -82,22 +96,34 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getSingleTopSeries(seriesId: Int) {
+    private fun getSingleTopSeries(seriesId: Int) {
         viewModelScope.launch {
             _movieDetailUiState.value =
                 movieRepository.getSingleTopLocalSeries(seriesId).topSeriesEntityToDetailItem()
         }
     }
 
-    fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+    private fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch {
             movieRepository.updateMovieFavorite(movieId = id, isFavorite = isFavorite)
         }
     }
 
-    fun updateSeriesFavorite(id: Int, isFavorite: Boolean) {
+    private fun updateSeriesFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch {
             movieRepository.updateSeriesFavorite(seriesId = id, isFavorite = isFavorite)
+        }
+    }
+
+    private fun updateTopSeriesFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateTopSeriesFavorite(seriesId = id, isFavorite = isFavorite)
+        }
+    }
+
+    private fun updateTopMovieFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateTopMovieFavorite(movieId = id, isFavorite = isFavorite)
         }
     }
 }

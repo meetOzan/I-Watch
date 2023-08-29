@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.presantation.components.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +35,9 @@ fun CustomTextField(
                 color = DarkWhite80.copy(alpha = 0.7f)
             )
         },
-        modifier = Modifier.padding(bottom = 16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 36.dp),
         shape = MaterialTheme.shapes.medium,
         colors = TextFieldDefaults.colors(
             focusedTextColor = LightBlack,

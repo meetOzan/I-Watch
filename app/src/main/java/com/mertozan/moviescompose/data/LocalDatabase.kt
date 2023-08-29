@@ -8,12 +8,17 @@ import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 
 @Database(
-    entities = [SeriesEntity::class, MovieEntity::class, TopMovieEntity::class, TopSeriesEntity::class],
-    version = 14,
+    entities = [
+        SeriesEntity::class,
+        MovieEntity::class,
+        TopMovieEntity::class,
+        TopSeriesEntity::class
+    ],
+    version = 1,
     exportSchema = false
 )
-abstract class FavoritesDatabase : RoomDatabase() {
+abstract class LocalDatabase : RoomDatabase() {
 
-    abstract fun favoritesDao(): FavoritesDao
+    abstract fun favoritesDao(): LocalDao
 
 }

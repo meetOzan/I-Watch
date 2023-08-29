@@ -46,11 +46,7 @@ fun ContentList(
         ) {
             items(contentList) { content ->
                 ContentItem(
-                    id = content.id,
-                    title = content.title,
-                    posterPath = content.posterPath.toString(),
-                    voteAverage = content.voteAverage,
-                    detail = content.overview,
+                    content = content,
                     navController = navController,
                     type = type
                 )

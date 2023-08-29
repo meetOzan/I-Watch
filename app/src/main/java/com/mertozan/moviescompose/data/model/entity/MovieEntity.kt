@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity("movies_entity")
 data class MovieEntity(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "movie_id") val id: Int = 0,
 
     @ColumnInfo(name = "movie_title") val title: String = "",
@@ -21,9 +21,9 @@ data class MovieEntity(
 
     // @ColumnInfo(name = "movie_genres") val genres: List<Genres>,
 
-    @ColumnInfo(name = "movie_posterPath") val posterPath: String? = "",
+    @ColumnInfo(name = "movie_posterPath") val posterPath: String = "",
 
-    @ColumnInfo(name = "movie_vote_average") val voteAverage: Float? = 0f,
+    @ColumnInfo(name = "movie_vote_average") val voteAverage: Float = 0f,
 
     @ColumnInfo(name = "movie_vote_count") val voteCount: Int? = 0,
 

@@ -48,7 +48,8 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 @Composable
 fun DetailScreen(
     onBackClicked: () -> Unit,
-    detail: DetailItem
+    detail: DetailItem,
+    viewModel: DetailViewModel
 ) {
 
     val animateFavColor: Color by animateColorAsState(
@@ -66,7 +67,7 @@ fun DetailScreen(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             CustomAsyncImage(
-                model = detail.posterPath.toString(),
+                model = detail.posterPath,
                 contentDescription = stringResource(id = R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -155,12 +156,8 @@ fun DetailScreen(
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable {/*
-                        if (type == MovieOrSeries.MOVIE.name) {
-                            viewModel.updateMovieFavorite(detail.id, detail.isFavorite)
-                        } else {
-                            viewModel.updateSeriesFavorite(detail.id, detail.isFavorite)
-                        }*/
+                    .clickable {
+                        viewModel.updateFavorite(detail.isFavorite)
                     },
             )
         }

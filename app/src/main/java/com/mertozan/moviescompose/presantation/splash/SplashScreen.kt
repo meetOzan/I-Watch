@@ -39,7 +39,7 @@ fun SplashScreen(onSplashNavigate: () -> Unit) {
     }
 
     val splashAnimateComposition by rememberLottieComposition(
-        spec = LottieCompositionSpec.Url(stringResource(R.string.https_lottie_host_a912de36_f4a6_45be_9ea0_c38be42ae12b_lhk4yxwdg9_lottie))
+        spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_loading_link))
     )
 
     LaunchedEffect(key1 = Unit) {
@@ -78,7 +78,7 @@ fun SplashScreen(onSplashNavigate: () -> Unit) {
             LottieAnimation(
                 composition = splashAnimateComposition,
                 iterations = LottieConstants.IterateForever,
-                modifier = Modifier.size(86.dp)
+                modifier = Modifier.size(72.dp).padding(bottom = 8.dp)
             )
 
             CustomText(

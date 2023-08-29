@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +21,6 @@ import com.mertozan.moviescompose.presantation.components.layouts.MainRow
 import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     popularMovieList: List<DetailItem>,

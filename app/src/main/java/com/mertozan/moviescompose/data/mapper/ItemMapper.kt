@@ -5,13 +5,16 @@ import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.util.extensions.orFalse
+import com.mertozan.moviescompose.util.extensions.orZero
+import com.mertozan.moviescompose.util.extensions.orZeroFloat
 
 fun MovieEntity.movieEntityToDetailItem(): DetailItem {
     return DetailItem(
         id = id,
         title = title,
         popularity = popularity.toString(),
-        posterPath = posterPath,
+        posterPath = posterPath.orEmpty(),
         voteAverage = voteAverage.toString(),
         voteCount = voteCount.toString(),
         releaseDate = releaseDate,
@@ -27,12 +30,12 @@ fun SeriesEntity.seriesEntityToDetailItem(): DetailItem {
         id = id,
         title = title,
         popularity = popularity.toString(),
-        posterPath = posterPath,
-        releaseDate = firstAirDate,
-        voteAverage = voteAverage.toString(),
-        voteCount = voteCount.toString(),
-        adult = adult,
-        runTime = episodeNumber.toString(),
+        posterPath = posterPath.orEmpty(),
+        releaseDate = firstAirDate.orEmpty(),
+        voteAverage = voteAverage.orZeroFloat().toString(),
+        voteCount = voteCount.orZero().toString(),
+        adult = adult.orFalse(),
+        runTime = episodeNumber.orZero().toString(),
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )
@@ -43,12 +46,12 @@ fun TopMovieEntity.topMovieEntityToDetailItem(): DetailItem {
         id = id,
         title = title,
         popularity = popularity.toString(),
-        posterPath = posterPath,
+        posterPath = posterPath.orEmpty(),
         releaseDate = releaseDate,
-        voteAverage = voteAverage.toString(),
-        voteCount = voteCount.toString(),
-        adult = adult,
-        runTime = runtime.toString(),
+        voteAverage = voteAverage.orZeroFloat().toString(),
+        voteCount = voteCount.orZero().toString(),
+        adult = adult.orFalse(),
+        runTime = runtime.orZero().toString(),
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )
@@ -59,7 +62,7 @@ fun TopSeriesEntity.topSeriesEntityToDetailItem(): DetailItem {
         id = id,
         title = title,
         popularity = popularity.toString(),
-        posterPath = posterPath,
+        posterPath = posterPath.orEmpty(),
         releaseDate = releaseDate,
         voteAverage = voteAverage.toString(),
         voteCount = voteCount.toString(),

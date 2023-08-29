@@ -3,7 +3,6 @@ package com.mertozan.moviescompose.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,17 +27,16 @@ import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MovieNavHost(
-    navController: NavHostController,
-    // TODO burada unused ama Scaffold'da padding vermem lazım mecbur vermem lazım mı ?
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
+
     NavHost(
         navController = navController, startDestination = SplashScreen.route
     ) {
         splashScreen { navController.navigate(LoginScreen.route) }
         loginScreen { navController.navigate(MainScreen.route) }
         mainScreen(navController = navController)
-        generateScreen(navController = navController)
+        generateScreen()
         profileScreen { navController.navigate(LoginScreen.route) }
         detailScreen { navController.navigate(MainScreen.route) }
         contentList(navController = navController)
@@ -77,7 +75,8 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
 
         DetailScreen(
             onBackClicked = onNavigate,
-            detail = detail.value
+            detail = detail.value,
+            viewModel = viewModel
         )
     }
 }
@@ -90,8 +89,8 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         val viewModel: HomeViewModel = hiltViewModel()
         val contentList = viewModel.topRatedContents.collectAsState()
         val contentTitle = viewModel.contentListTitle.collectAsState().value
-        
-        LaunchedEffect(Unit){
+
+        LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
 
@@ -128,13 +127,17 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.generateScreen(navController: NavController) {
+fun NavGraphBuilder.generateScreen() {
     composable(
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
-        viewModel.getAllContents()
-        GenerateContent(viewModel, navController = navController)
+
+        LaunchedEffect(Unit) {
+            viewModel.getAllContents()
+        }
+
+        GenerateContent(viewModel)
     }
 }
 

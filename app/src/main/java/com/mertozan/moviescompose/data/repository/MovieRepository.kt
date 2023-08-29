@@ -1,7 +1,10 @@
 package com.mertozan.moviescompose.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.mertozan.moviescompose.data.FavoritesDao
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
+import com.mertozan.moviescompose.data.LocalDao
 import com.mertozan.moviescompose.data.api.MovieService
 import com.mertozan.moviescompose.data.mapper.moviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.seriesToDetailItemList
@@ -21,15 +24,18 @@ import com.mertozan.moviescompose.data.model.response.GenresResponse
 import com.mertozan.moviescompose.data.model.response.MovieResponse
 import com.mertozan.moviescompose.data.model.response.SeriesResponse
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.domain.model.UserItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     private val movieService: MovieService,
     private val auth: FirebaseAuth,
-    private val roomDao: FavoritesDao,
+    private val db: FirebaseFirestore,
+    private val roomDao: LocalDao,
 ) {
 
     init {
@@ -129,10 +135,17 @@ class MovieRepository @Inject constructor(
         roomDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
     }
 
+    fun updateTopMovieFavorite(movieId: Int, isFavorite: Boolean) {
+        roomDao.updateTopMovieFavoriteState(topMovieId = movieId, isFavorite = !isFavorite)
+    }
+
+    fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
+        roomDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
+    }
+
     // Transfer
     private fun transferToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
-
             addPopularMoviesToLocal(
                 getAllPopularMovies()
                     .movieResults.moviesToDetailItemList()
@@ -176,4 +189,19 @@ class MovieRepository @Inject constructor(
             }
         }
     }
+
+    // Firestore Operations
+    fun getUser(user: MutableStateFlow<UserItem>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            db.collection("users").document(auth.currentUser?.uid.toString())
+                .get().addOnSuccessListener {
+                    if (it.exists()) {
+                        user.value = it.toObject<UserItem>()!!
+                    } else {
+                        Log.e("Get User Error: ", "User doesn't exist")
+                    }
+                }
+        }
+    }
+
 }

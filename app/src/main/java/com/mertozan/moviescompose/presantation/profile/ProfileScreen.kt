@@ -17,8 +17,8 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +44,6 @@ fun ProfileScreen(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,7 +66,7 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CustomText(
-                    text = "Mert Ozan Kahraman",
+                    text = viewModel.userFullName.collectAsState().value,
                     fontSize = 24,
                     color = DarkWhite80,
                     fontWeight = FontWeight.SemiBold,
@@ -109,10 +108,6 @@ fun ProfileScreen(
             ProfileOptionsCard(
                 optionName = stringResource(R.string.settings),
                 icon = Icons.Filled.Settings
-            )
-            ProfileOptionsCard(
-                optionName = stringResource(R.string.preferred_contents),
-                icon = Icons.Rounded.Refresh
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.lists),

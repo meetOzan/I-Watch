@@ -19,7 +19,6 @@ object DetailScreen : Destination {
     fun navigateWithArgs(
         id: Int, type: String, listType: String
     ): String = "$route/$id/$type/$listType"
-
     val routeWithArgs = "$route/{$ARGS_ID}/{$ARGS_TYPE}/{$ARGS_LIST_TYPE}"
     val args = listOf(
         navArgument(ARGS_ID) { type = NavType.IntType },
@@ -37,7 +36,6 @@ object ContentListScreen : Destination {
     val args = listOf(
         navArgument(ARGS_TYPE) { type = NavType.StringType },
     )
-
 }
 
 object SplashScreen : Destination {

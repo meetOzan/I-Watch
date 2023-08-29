@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.components.CustomText
@@ -35,12 +36,8 @@ import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
 fun ContentItem(
-    id: Int,
-    title: String,
-    posterPath: String,
-    voteAverage: String,
+    content : DetailItem,
     type: String,
-    detail: String,
     navController: NavController
 ) {
     Card(
@@ -49,7 +46,7 @@ fun ContentItem(
             .clickable {
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
-                        id,
+                        content.id,
                         type,
                         ListType.TOP_RATED.name
                     )
@@ -71,7 +68,7 @@ fun ContentItem(
                 modifier = Modifier.weight(1f)
             ) {
                 CustomAsyncImage(
-                    model = posterPath,
+                    model = content.posterPath,
                     contentDescription = stringResource(R.string.custom_content_item_poster),
                     modifier = Modifier
                         .padding(8.dp)
@@ -89,7 +86,7 @@ fun ContentItem(
                     horizontalAlignment = Alignment.Start
                 ) {
                     CustomText(
-                        text = title.isLongerThan(18),
+                        text = content.title.isLongerThan(18),
                         fontSize = 24,
                         color = DarkWhite80,
                         FontWeight.SemiBold,
@@ -97,7 +94,7 @@ fun ContentItem(
                             .padding(top = 16.dp)
                     )
                     CustomText(
-                        text = detail.isLongerThan(60),
+                        text = content.overview.isLongerThan(60),
                         fontSize = 14,
                         color = DarkWhite80,
                         FontWeight.SemiBold,
@@ -110,7 +107,7 @@ fun ContentItem(
                         modifier = Modifier.align(Alignment.End)
                     ) {
                         CustomText(
-                            text = voteAverage,
+                            text = content.voteAverage,
                             fontSize = 16,
                             color = Color.White,
                             modifier = Modifier.padding(4.dp)
@@ -128,4 +125,6 @@ fun ContentItem(
             }
         }
     }
+
+    // TODO navigation kullanımına bak projeye navController paslamadan nasıl yapabilirim.
 }

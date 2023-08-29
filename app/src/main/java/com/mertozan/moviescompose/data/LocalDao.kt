@@ -10,7 +10,7 @@ import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 
 @Dao
-interface FavoritesDao {
+interface LocalDao {
 
     @Upsert
     fun addMovieToLocal(movieList: List<MovieEntity>)
@@ -36,12 +36,6 @@ interface FavoritesDao {
     @Query("SELECT * FROM top_series")
     fun getTopSeries(): List<TopSeriesEntity>
 
-    // TODO iki tabloyu birleştime sorgusu
-    /*@RewriteQueriesToDropUnusedColumns
-    @Query("SELECT * FROM movies_entity INNER JOIN series_entity " +
-            "ON movies_entity.movie_id = series_id WHERE movie_id = :contentId")
-    fun getCombinedData(contentId: Int): CombinedEntity*/
-
     @Query("SELECT * FROM movies_entity WHERE movie_id = :movieId")
     fun getSingleLocalMovie(movieId: Int): MovieEntity
 
@@ -59,6 +53,12 @@ interface FavoritesDao {
 
     @Query("UPDATE series_entity SET series_is_favorite = :isFavorite WHERE series_id = :seriesId")
     fun updateSeriesFavoriteState(seriesId: Int, isFavorite: Boolean)
+
+    @Query("UPDATE top_movies SET top_movie_is_favorite = :isFavorite WHERE top_movie_id = :topMovieId")
+    fun updateTopMovieFavoriteState(topMovieId: Int, isFavorite: Boolean)
+
+    @Query("UPDATE top_series SET top_series_is_favorite = :isFavorite WHERE top_series_id = :topSeriesId")
+    fun updateTopSeriesFavoriteState(topSeriesId: Int, isFavorite: Boolean)
 
     @Delete
     fun deleteMovie(movie: MovieEntity)
