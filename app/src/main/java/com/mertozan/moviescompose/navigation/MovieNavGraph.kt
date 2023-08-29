@@ -3,6 +3,7 @@ package com.mertozan.moviescompose.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -33,18 +34,36 @@ fun MovieNavHost(
     NavHost(
         navController = navController, startDestination = SplashScreen.route
     ) {
-        splashScreen { navController.navigate(LoginScreen.route) }
-        loginScreen { navController.navigate(MainScreen.route) }
+        splashScreen {
+            navController.navigate(LoginScreen.route) {
+                popUpTo(SplashScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
+        loginScreen {
+            navController.navigate(MainScreen.route) {
+                popUpTo(LoginScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen { navController.navigate(LoginScreen.route) }
+        profileScreen {
+            navController.navigate(LoginScreen.route) {
+                navController.popBackStack(route = MainScreen.route, inclusive = true)
+            }
+        }
         detailScreen { navController.navigate(MainScreen.route) }
         contentList(navController = navController)
     }
 }
 
 fun NavGraphBuilder.mainScreen(navController: NavController) {
-    composable(route = MainScreen.route) {
+    composable(
+        route = MainScreen.route
+    ) {
         val viewModel = hiltViewModel<HomeViewModel>()
         val popularMovieList = viewModel.popularMovies.collectAsState()
         val popularSeriesList = viewModel.popularSeries.collectAsState()
@@ -123,7 +142,10 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     ) {
         val loginViewModel = hiltViewModel<LoginViewModel>()
 
-        LoginScreen(onNavigate, loginViewModel)
+        LoginScreen(
+            onNavigate = onNavigate,
+            viewModel = loginViewModel
+        )
     }
 }
 
@@ -135,6 +157,7 @@ fun NavGraphBuilder.generateScreen() {
 
         LaunchedEffect(Unit) {
             viewModel.getAllContents()
+            viewModel.shuffleList()
         }
 
         GenerateContent(viewModel)
@@ -146,9 +169,13 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val userItem by profileViewModel.user.collectAsState()
+
         ProfileScreen(
+            fullName = userItem.fullName,
+            watched = userItem.watched,
             onNavigate = onNavigate,
-            viewModel = profileViewModel
+            onSignOutClick = profileViewModel::signOut,
         )
     }
 }

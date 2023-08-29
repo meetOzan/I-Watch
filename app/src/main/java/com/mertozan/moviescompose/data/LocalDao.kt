@@ -8,6 +8,7 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
+import com.mertozan.moviescompose.data.model.entity.UserEntity
 
 @Dao
 interface LocalDao {
@@ -24,6 +25,9 @@ interface LocalDao {
     @Upsert
     fun addTopSeriesToLocal(topSeries: List<TopSeriesEntity>)
 
+    @Upsert
+    fun addUserToLocal(user: UserEntity)
+
     @Query("SELECT * FROM movies_entity")
     fun getPopularMovies(): List<MovieEntity>
 
@@ -35,6 +39,9 @@ interface LocalDao {
 
     @Query("SELECT * FROM top_series")
     fun getTopSeries(): List<TopSeriesEntity>
+
+    @Query("SELECT * FROM user_entity")
+    fun getSingleUser(): UserEntity
 
     @Query("SELECT * FROM movies_entity WHERE movie_id = :movieId")
     fun getSingleLocalMovie(movieId: Int): MovieEntity

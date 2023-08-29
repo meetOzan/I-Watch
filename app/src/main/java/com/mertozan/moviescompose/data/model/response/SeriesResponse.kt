@@ -1,7 +1,7 @@
 package com.mertozan.moviescompose.data.model.response
 
 import com.google.gson.annotations.SerializedName
-import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.dto.Series
 
 data class SeriesResponse(
     @SerializedName("page")

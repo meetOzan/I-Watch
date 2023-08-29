@@ -2,8 +2,11 @@ package com.mertozan.moviescompose.presantation.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mertozan.moviescompose.data.model.User
+import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.UserItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
+    private val repository: MovieRepository
 ) : ViewModel() {
 
     private var _checkCurrentUser = MutableStateFlow(false)
@@ -40,24 +44,32 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun transferUserToLocal(){
+        viewModelScope.launch {
+            repository.transferUserToLocal()
+        }
+    }
+
     fun createUserInFirebase(
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        watched: Int
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if (email.isNotEmpty() || name.isNotEmpty() || surname.isNotEmpty() || password.isNotEmpty()) {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
-                            saveUser(name, surname, email, password)
+                            saveUser(name, surname, email, password,watched)
                         }
                         .addOnFailureListener {
                             Log.e(
                                 "Firebase Firestore ERROR:",
                                 "${
                                     UserItem(
+                                        1,
                                         name,
                                         surname,
                                         email,
@@ -81,21 +93,22 @@ class LoginViewModel @Inject constructor(
         name: String,
         surname: String,
         email: String,
-        password: String
+        password: String,
+        watched: Int
     ) {
         firebaseFirestore.collection("users")
             .document(firebaseAuth.uid.toString())
-            .set(UserItem(name, surname, email, password))
+            .set(User(name, surname, email, password,watched))
             .addOnCompleteListener {
                 checkLogged()
                 Log.e(
                     "Firebase Auth SUCCESS:",
                     "${
-                        UserItem(
+                        User(
                             name,
                             surname,
                             email,
-                            password
+                            password, watched
                         )
                     } can't logged."
                 )
@@ -105,6 +118,7 @@ class LoginViewModel @Inject constructor(
                     "Firebase Auth ERROR:",
                     "${
                         UserItem(
+                            1,
                             name,
                             surname,
                             email,
@@ -169,7 +183,6 @@ class LoginViewModel @Inject constructor(
     fun changeItemSignInPassword(password: String) {
         userItem.value = userItem.value.copy(signInPassword = password)
     }
-
 
     fun changeItemSignUpPassword(password: String) {
         userItem.value = userItem.value.copy(signUpPassword = password)

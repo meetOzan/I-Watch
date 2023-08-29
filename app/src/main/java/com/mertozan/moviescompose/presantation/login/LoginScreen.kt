@@ -45,8 +45,15 @@ fun LoginScreen(
                 .align(Alignment.Center)
         ) { page ->
             when (page) {
-                0 -> SignInScreen(onNavigate, viewModel)
-                1 -> SignUpScreen(onNavigate, viewModel)
+                0 -> SignInScreen(
+                    onNavigate = onNavigate,
+                    viewModel = viewModel
+                )
+
+                1 -> SignUpScreen(
+                    onNavigate = onNavigate,
+                    viewModel = viewModel,
+                )
             }
         }
     }

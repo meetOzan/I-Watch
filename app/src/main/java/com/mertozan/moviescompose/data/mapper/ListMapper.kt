@@ -1,7 +1,7 @@
 package com.mertozan.moviescompose.data.mapper
 
-import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.dto.Movie
+import com.mertozan.moviescompose.data.model.dto.Series
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity

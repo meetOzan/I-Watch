@@ -48,6 +48,7 @@ fun SignInScreen(
 
     LaunchedEffect(userCurrent){
         if(userCurrent){
+            viewModel.transferUserToLocal()
             onNavigate()
         }
     }
@@ -97,9 +98,10 @@ fun SignInScreen(
             )
             ElevatedButton(
                 onClick = {
-                    viewModel.signInFirebase(email, password)
+                    viewModel.signInFirebase(email,password)
                     if (userCurrent) {
                         onNavigate()
+                        viewModel.transferUserToLocal()
                     }
                 },
                 colors = ButtonDefaults.elevatedButtonColors(

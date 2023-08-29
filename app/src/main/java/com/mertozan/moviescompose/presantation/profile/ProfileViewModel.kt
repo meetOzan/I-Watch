@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.presantation.profile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.repository.MovieRepository
@@ -16,25 +17,27 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(UserItem())
-    private val user = _user.asStateFlow()
-
-    private val _userFullName = MutableStateFlow("")
-    val userFullName = _userFullName.asStateFlow()
+    val user = _user.asStateFlow()
 
     init {
         getUser()
-        _userFullName.value = user.value.name + " " + user.value.surname
     }
 
     private fun getUser() {
         viewModelScope.launch {
-            repository.getUser(_user)
+            val userItem = repository.getSingleLocalUser()
+            Log.d("TestO", userItem.toString())
+            _user.value = userItem
+            _user.value = _user.value.copy(
+                fullName = userItem.name + " " + userItem.surname
+            )
         }
     }
 
     fun signOut() {
         viewModelScope.launch {
             repository.signOut()
+            _user.value.name = ""
         }
     }
 }

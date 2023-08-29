@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.data.repository
 
+import android.content.res.Resources.NotFoundException
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,10 +17,13 @@ import com.mertozan.moviescompose.data.mapper.toMoviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.toSeriesDetailItemList
 import com.mertozan.moviescompose.data.mapper.toTopMoviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.toTopSeriesDetailItemList
+import com.mertozan.moviescompose.data.mapper.toUserEntityToUserItem
+import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
+import com.mertozan.moviescompose.data.model.entity.UserEntity
 import com.mertozan.moviescompose.data.model.response.GenresResponse
 import com.mertozan.moviescompose.data.model.response.MovieResponse
 import com.mertozan.moviescompose.data.model.response.SeriesResponse
@@ -27,9 +31,10 @@ import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.domain.model.UserItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class MovieRepository @Inject constructor(
     private val movieService: MovieService,
@@ -109,6 +114,12 @@ class MovieRepository @Inject constructor(
         roomDao.addTopSeriesToLocal(seriesItem.toDetailItemToTopSeriesEntityList())
     }
 
+    private fun addUserToLocal(user: UserEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            roomDao.addUserToLocal(user)
+        }
+    }
+
     // Get single
     fun getSingleLocalMovie(movieId: Int): MovieEntity {
         return roomDao.getSingleLocalMovie(movieId = movieId)
@@ -124,6 +135,10 @@ class MovieRepository @Inject constructor(
 
     fun getSingleTopLocalSeries(seriesId: Int): TopSeriesEntity {
         return roomDao.getTopSingleLocalSeries(seriesId)
+    }
+
+    fun getSingleLocalUser(): UserItem {
+        return roomDao.getSingleUser().toUserEntityToUserItem()
     }
 
     // Update
@@ -143,25 +158,33 @@ class MovieRepository @Inject constructor(
         roomDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
     }
 
+    // Firestore Operations
+    private suspend fun getUserFromNetwork() = suspendCoroutine { continuation ->
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .get().addOnSuccessListener {
+                if (it.exists()) {
+                    val user = it.toObject<UserItem>()!!
+                    continuation.resumeWith(Result.success(user))
+                } else {
+                    Log.e("Get User Error: ", "User doesn't exist")
+                    continuation.resumeWithException(NotFoundException())
+                }
+            }.addOnFailureListener {
+                Log.e("Get User Exception: ", it.message.orEmpty())
+                continuation.resumeWithException(it)
+            }
+    }
+
+    suspend fun transferUserToLocal() {
+        val user = getUserFromNetwork()
+        addUserToLocal(
+            user.toUserItemToUserEntity()
+        )
+    }
+
     // Transfer
     private fun transferToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
-            addPopularMoviesToLocal(
-                getAllPopularMovies()
-                    .movieResults.moviesToDetailItemList()
-            )
-            addPopularSeriesToLocal(
-                getAllPopularSeries()
-                    .seriesResults.seriesToDetailItemList()
-            )
-            addTopRatedMoviesToLocal(
-                getAllTopRatedMovies()
-                    .movieResults.moviesToDetailItemList()
-            )
-            addTopRatedSeriesToLocal(
-                getAllTopRatedSeries()
-                    .seriesResults.seriesToDetailItemList()
-            )
 
             if (getAllPopularLocalMovies().isEmpty()) {
                 addPopularMoviesToLocal(
@@ -169,7 +192,7 @@ class MovieRepository @Inject constructor(
                         .movieResults.moviesToDetailItemList()
                 )
             }
-            if (getAllPopularLocalSeries().isNotEmpty()) {
+            if (getAllPopularLocalSeries().isEmpty()) {
                 addPopularSeriesToLocal(
                     getAllPopularSeries()
                         .seriesResults.seriesToDetailItemList()
@@ -181,7 +204,7 @@ class MovieRepository @Inject constructor(
                         .movieResults.moviesToDetailItemList()
                 )
             }
-            if (getAllTopRatedLocalSeries().isNotEmpty()) {
+            if (getAllTopRatedLocalSeries().isEmpty()) {
                 addTopRatedSeriesToLocal(
                     getAllTopRatedSeries()
                         .seriesResults.seriesToDetailItemList()
@@ -189,19 +212,4 @@ class MovieRepository @Inject constructor(
             }
         }
     }
-
-    // Firestore Operations
-    fun getUser(user: MutableStateFlow<UserItem>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            db.collection("users").document(auth.currentUser?.uid.toString())
-                .get().addOnSuccessListener {
-                    if (it.exists()) {
-                        user.value = it.toObject<UserItem>()!!
-                    } else {
-                        Log.e("Get User Error: ", "User doesn't exist")
-                    }
-                }
-        }
-    }
-
 }

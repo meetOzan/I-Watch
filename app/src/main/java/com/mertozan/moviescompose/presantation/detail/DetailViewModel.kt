@@ -10,7 +10,7 @@ import com.mertozan.moviescompose.data.mapper.movieEntityToDetailItem
 import com.mertozan.moviescompose.data.mapper.seriesEntityToDetailItem
 import com.mertozan.moviescompose.data.mapper.topMovieEntityToDetailItem
 import com.mertozan.moviescompose.data.mapper.topSeriesEntityToDetailItem
-import com.mertozan.moviescompose.data.model.Genres
+import com.mertozan.moviescompose.data.model.dto.Genres
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.util.enums.ListType

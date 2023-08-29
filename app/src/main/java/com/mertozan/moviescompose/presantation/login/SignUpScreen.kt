@@ -39,6 +39,7 @@ fun SignUpScreen(
     LaunchedEffect(userCurrent) {
         if (userCurrent) {
             onNavigate()
+            viewModel.transferUserToLocal()
         }
     }
 
@@ -97,9 +98,13 @@ fun SignUpScreen(
                         name = userId.name,
                         surname = userId.surname,
                         email = userId.signUpEmail,
-                        password = userId.signUpPassword
+                        password = userId.signUpPassword,
+                        watched = userId.watched
                     )
-                    if (userCurrent) onNavigate()
+                    if (userCurrent) {
+                        onNavigate()
+                        viewModel.transferUserToLocal()
+                    }
                 },
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = DarkYellow

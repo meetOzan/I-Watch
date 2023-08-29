@@ -18,7 +18,6 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,7 +34,9 @@ import com.mertozan.moviescompose.ui.theme.DarkYellow
 @Composable
 fun ProfileScreen(
     onNavigate: () -> Unit,
-    viewModel: ProfileViewModel
+    onSignOutClick: () -> Unit,
+    fullName: String,
+    watched: Int
 ) {
 
     Column(
@@ -66,7 +67,7 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CustomText(
-                    text = viewModel.userFullName.collectAsState().value,
+                    text = fullName,
                     fontSize = 24,
                     color = DarkWhite80,
                     fontWeight = FontWeight.SemiBold,
@@ -78,7 +79,7 @@ fun ProfileScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     CustomText(
-                        text = "Watched: ${20} ",
+                        text = "Watched: $watched ",
                         fontSize = 20,
                         color = DarkWhite80,
                         modifier = Modifier
@@ -117,7 +118,7 @@ fun ProfileScreen(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
-                    viewModel.signOut()
+                    onSignOutClick
                     onNavigate()
                 }
             )
