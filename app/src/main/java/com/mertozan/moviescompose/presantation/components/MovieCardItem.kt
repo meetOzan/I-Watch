@@ -33,8 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
@@ -70,8 +68,8 @@ fun MovieItem(
             .background(Dark80)
     ) {
         Box {
-            AsyncImage(
-                model = "${BuildConfig.POSTER_BASE_PATH}${posterPath}",
+            CustomAsyncImage(
+                model = posterPath,
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)

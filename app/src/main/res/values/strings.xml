@@ -14,4 +14,19 @@
     <string name="release_date">Release Date</string>
     <string name="no_adult">no_adult</string>
     <string name="details">Details</string>
+    <string name="splash_icon">splash_icon</string>
+    <string name="made_by_meetozan">Made by meetOzan</string>
+    <string name="welcome_to_movieapp">Welcome to MovieApp</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_e_mail">Enter your e-mail</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="generate_button">generate_button</string>
+    <string name="card_icon">card_icon</string>
+    <string name="enter_your_surname">Enter your surname</string>
+    <string name="is_adult">is_adult</string>
+    <string name="https_lottie_host_a912de36_f4a6_45be_9ea0_c38be42ae12b_lhk4yxwdg9_lottie">https://lottie.host/a912de36-f4a6-45be-9ea0-c38be42ae12b/lhK4yXwdG9.lottie</string>
+    <string name="generated_image">generated_image</string>
+    <string name="sign_in">Sign In</string>
+    <string name="profile_account">profile_account</string>
 </resources>

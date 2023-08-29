@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.viewmodel
+package com.mertozan.moviescompose.presantation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

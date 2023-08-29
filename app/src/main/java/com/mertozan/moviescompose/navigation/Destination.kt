@@ -21,5 +21,20 @@ object DetailScreen : Destination {
         navArgument(ARGS_ID) { type = NavType.IntType },
         navArgument(ARGS_TYPE) { type = NavType.StringType }
     )
+}
 
+object SplashScreen : Destination {
+    override val route = "splash_screen"
+}
+
+object LoginScreen : Destination {
+    override val route = "login_screen"
+}
+
+object ProfileScreen : Destination {
+    override val route = "profile_screen"
+}
+
+object GenerateScreen : Destination {
+    override val route = "generate_screen"
 }

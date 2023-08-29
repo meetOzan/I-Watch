@@ -25,9 +25,10 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField ("String", "API_KEY", "\"3852bf2a5fec7d1433a266636bcb0302\"")
-        buildConfigField("String","MOVIE_BASE_URL", "\"https://api.themoviedb.org/3/\"")
-        buildConfigField("String","POSTER_BASE_PATH", "\"https://image.tmdb.org/t/p/original\"")
+        buildConfigField("String", "API_KEY", "\"3852bf2a5fec7d1433a266636bcb0302\"")
+        buildConfigField("String", "MOVIE_BASE_URL", "\"https://api.themoviedb.org/3/\"")
+        buildConfigField("String", "POSTER_BASE_PATH", "\"https://image.tmdb.org/t/p/original\"")
+
     }
 
     android {
@@ -85,6 +86,8 @@ dependencies {
     androidTestImplementation(libs.junit)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.android.compose.ui)
+    implementation(libs.android.compose.material)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -113,5 +116,8 @@ dependencies {
 
     // Chucker
     implementation(libs.com.github.chuckerteam.chucker)
+
+    // Lottie
+    implementation(libs.com.airbnb.android.lottie)
 
 }
