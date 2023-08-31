@@ -1,16 +1,15 @@
 package com.mertozan.moviescompose.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.detail.ContentList
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.DetailViewModel
@@ -23,18 +22,18 @@ import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
-import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MovieNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    context: Context
 ) {
 
     NavHost(
         navController = navController, startDestination = SplashScreen.route
     ) {
         splashScreen { navController.navigate(LoginScreen.route) }
-        loginScreen { navController.navigate(MainScreen.route) }
+        loginScreen(context = context, onNavigate = { navController.navigate(MainScreen.route) })
         mainScreen(navController = navController)
         generateScreen()
         profileScreen { navController.navigate(LoginScreen.route) }
@@ -88,22 +87,16 @@ fun NavGraphBuilder.contentList(navController: NavController) {
     ) {
         val viewModel: HomeViewModel = hiltViewModel()
         val contentList = viewModel.topRatedContents.collectAsState()
-        val contentTitle = viewModel.contentListTitle.collectAsState().value
+        val contentListType = viewModel.contentListType.collectAsState().value
+        val contentTitle = viewModel.contentTitle.collectAsState().value
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
-
-        val title =
-            if (contentTitle == MovieOrSeries.MOVIE.name)
-                stringResource(id = R.string.top_rated_movies)
-            else
-                stringResource(id = R.string.top_rated_series)
-
         ContentList(
             contentList = contentList.value,
-            type = contentTitle,
-            title = title,
+            type = contentListType,
+            title = contentTitle,
             navController = navController
         )
     }
@@ -117,13 +110,13 @@ fun NavGraphBuilder.splashScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
+fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit, context: Context) {
     composable(
         route = LoginScreen.route
     ) {
         val loginViewModel = hiltViewModel<LoginViewModel>()
 
-        LoginScreen(onNavigate, loginViewModel)
+        LoginScreen(onNavigate, loginViewModel, context = context)
     }
 }
 
@@ -146,9 +139,11 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val name = profileViewModel.userFullName.collectAsState().value
         ProfileScreen(
             onNavigate = onNavigate,
-            viewModel = profileViewModel
+            viewModel = profileViewModel,
+            name = name
         )
     }
 }

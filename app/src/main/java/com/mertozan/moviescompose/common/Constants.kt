@@ -12,4 +12,10 @@ object Constants {
 
     const val PAGER_STATE = 2
 
+    const val COLLECTION_NAME = "users"
+
+    const val DATABASE_NAME = "note_database.db"
+
+    const val CONTENT_LIST = 10
+
 }

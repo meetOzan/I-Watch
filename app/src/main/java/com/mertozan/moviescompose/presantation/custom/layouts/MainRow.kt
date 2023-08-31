@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.layouts
+package com.mertozan.moviescompose.presantation.custom.layouts
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.presantation.components.items.MovieItem
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.items.MovieItem
 import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
@@ -59,7 +59,7 @@ fun MainRow(
                     onClick(content.id, type, listType)
                 },
                 content = content,
-                number = (list.indexOf(content)) + 1,
+                number = (list.indexOf(content)).plus(1),
                 viewModel = viewModel,
                 type = type
             )

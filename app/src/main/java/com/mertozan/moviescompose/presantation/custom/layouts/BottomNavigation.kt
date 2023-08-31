@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.layouts
+package com.mertozan.moviescompose.presantation.custom.layouts
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
