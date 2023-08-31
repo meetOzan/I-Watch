@@ -1,13 +1,13 @@
 package com.mertozan.moviescompose.data.repository
 
-import android.content.res.Resources.NotFoundException
-import android.util.Log
+import android.content.res.Resources
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.mertozan.moviescompose.common.Constants.COLLECTION_NAME
 import com.mertozan.moviescompose.dao.MovieDao
 import com.mertozan.moviescompose.dao.SeriesDao
+import com.mertozan.moviescompose.dao.UserDao
 import com.mertozan.moviescompose.data.api.MovieService
 import com.mertozan.moviescompose.data.mapper.moviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.seriesToDetailItemList
@@ -45,7 +45,8 @@ class MovieRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
     private val movieDao: MovieDao,
-    private val seriesDao: SeriesDao
+    private val seriesDao: SeriesDao,
+    private val userDao: UserDao
 ) {
 
     init {
@@ -121,7 +122,7 @@ class MovieRepository @Inject constructor(
 
     private fun addUserToLocal(user: UserEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            roomDao.addUserToLocal(user)
+            userDao.addUserToLocal(user)
         }
     }
 
@@ -143,7 +144,7 @@ class MovieRepository @Inject constructor(
     }
 
     fun getSingleLocalUser(): UserItem {
-        return roomDao.getSingleUser().toUserEntityToUserItem()
+        return userDao.getSingleUser().toUserEntityToUserItem()
     }
 
     // Update
@@ -163,7 +164,7 @@ class MovieRepository @Inject constructor(
         seriesDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
     }
 
-    /*// Firestore Operations
+    // Firestore Operations
     private suspend fun getUserFromNetwork() = suspendCoroutine { continuation ->
         db.collection("users").document(auth.currentUser?.uid.toString())
             .get().addOnSuccessListener {
@@ -171,14 +172,12 @@ class MovieRepository @Inject constructor(
                     val user = it.toObject<UserItem>()!!
                     continuation.resumeWith(Result.success(user))
                 } else {
-                    Log.e("Get User Error: ", "User doesn't exist")
-                    continuation.resumeWithException(NotFoundException())
+                    continuation.resumeWithException(Resources.NotFoundException())
                 }
             }.addOnFailureListener {
-                Log.e("Get User Exception: ", it.message.orEmpty())
                 continuation.resumeWithException(it)
             }
-    }*/
+    }
 
     suspend fun transferUserToLocal() {
         val user = getUserFromNetwork()

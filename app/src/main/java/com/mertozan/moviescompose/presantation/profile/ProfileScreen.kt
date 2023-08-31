@@ -18,7 +18,6 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -119,7 +118,7 @@ fun ProfileScreen(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
-                    onSignOutClick
+                    onSignOutClick()
                     onNavigate()
                 }
             )

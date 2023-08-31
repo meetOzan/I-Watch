@@ -1,6 +1,5 @@
 package com.mertozan.moviescompose.presantation.profile
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.repository.MovieRepository
@@ -27,7 +26,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _user.value = repository.getUser()
             _user.value = _user.value.copy(
-                fullName = userItem.name + " " + userItem.surname
+                fullName = _user.value.name + " " + _user.value.surname
             )
         }
     }

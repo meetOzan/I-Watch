@@ -1,6 +1,5 @@
 package com.mertozan.moviescompose.data.mapper
 
-import com.mertozan.moviescompose.data.model.User
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
@@ -76,7 +75,7 @@ fun TopSeriesEntity.topSeriesEntityToDetailItem(): DetailItem {
     )
 }
 
-fun UserEntity.toUserEntityToUserItem() : UserItem{
+fun UserEntity.toUserEntityToUserItem(): UserItem {
     return UserItem(
         name = name,
         surname = surname,
@@ -85,9 +84,9 @@ fun UserEntity.toUserEntityToUserItem() : UserItem{
     )
 }
 
-fun UserItem.toUserItemToUserEntity() : UserEntity{
+fun UserItem.toUserItemToUserEntity(): UserEntity {
     return UserEntity(
-        id = id,
+        id = 1,
         name = name,
         surname = surname,
         email = signInEmail,

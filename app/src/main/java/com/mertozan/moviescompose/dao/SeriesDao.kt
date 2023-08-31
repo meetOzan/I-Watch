@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.Upsert
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
-import com.mertozan.moviescompose.data.model.entity.UserEntity
 
 @Dao
 interface SeriesDao {
@@ -17,24 +16,11 @@ interface SeriesDao {
     @Upsert
     fun addTopSeriesToLocal(topSeries: List<TopSeriesEntity>)
 
-    @Query("SELECT * FROM movies_entity")
-    fun getPopularMovies(): List<MovieEntity>
-
     @Query("SELECT * FROM series_entity")
     fun getPopularSeries(): List<SeriesEntity>
 
     @Query("SELECT * FROM top_series")
     fun getTopSeries(): List<TopSeriesEntity>
-
-    // TODO UserDao
-    @Query("SELECT * FROM user_entity")
-    fun getSingleUser(): UserEntity
-
-    @Upsert
-    fun addUserToLocal(user: UserEntity)
-
-    @Query("SELECT * FROM movies_entity WHERE movie_id = :movieId")
-    fun getSingleLocalMovie(movieId: Int): MovieEntity
 
     @Query("SELECT * FROM series_entity WHERE series_id = :seriesId")
     fun getSingleLocalSeries(seriesId: Int): SeriesEntity

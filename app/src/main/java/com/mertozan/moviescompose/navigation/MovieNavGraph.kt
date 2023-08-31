@@ -5,14 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.detail.ContentList
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.DetailViewModel
@@ -25,7 +23,6 @@ import com.mertozan.moviescompose.presantation.login.LoginViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
-import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MovieNavHost(
@@ -43,13 +40,14 @@ fun MovieNavHost(
                 }
             }
         }
-        loginScreen {
+        loginScreen(context = context, onNavigate = {
             navController.navigate(MainScreen.route) {
                 popUpTo(LoginScreen.route) {
                     inclusive = true
                 }
+                navController.popBackStack(route = MainScreen.route, inclusive = true)
             }
-        }
+        })
         mainScreen(navController = navController)
         generateScreen()
         profileScreen {
@@ -57,7 +55,13 @@ fun MovieNavHost(
                 navController.popBackStack(route = MainScreen.route, inclusive = true)
             }
         }
-        detailScreen { navController.navigate(MainScreen.route) }
+        detailScreen {
+            navController.navigate(MainScreen.route) {
+                popUpTo(DetailScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
         contentList(navController = navController)
     }
 }
@@ -138,9 +142,10 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit, context: Context) {
 
         LoginScreen(
             onNavigate = onNavigate,
-            viewModel = loginViewModel
+            viewModel = loginViewModel,
+            context = context
         )
-        LoginScreen(onNavigate, loginViewModel, context = context)
+        LoginScreen(onNavigate = onNavigate, viewModel = loginViewModel, context = context)
     }
 }
 
