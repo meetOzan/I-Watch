@@ -50,8 +50,9 @@ fun SignInScreen(
     val email = user.signInEmail
     val password = user.signInPassword
 
-    LaunchedEffect(userCurrent) {
-        if (userCurrent) {
+    LaunchedEffect(userCurrent){
+        if(userCurrent){
+            viewModel.transferUserToLocal()
             onNavigate()
         }
     }
@@ -101,9 +102,10 @@ fun SignInScreen(
             )
             ElevatedButton(
                 onClick = {
-                    viewModel.signInFirebase(email, password)
+                    viewModel.signInFirebase(email,password)
                     if (userCurrent) {
                         onNavigate()
+                        viewModel.transferUserToLocal()
                         Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()

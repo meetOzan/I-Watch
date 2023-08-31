@@ -16,25 +16,25 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _user = MutableStateFlow(UserItem())
-    private val user = _user.asStateFlow()
-
-    private val _userFullName = MutableStateFlow("")
-    val userFullName = _userFullName.asStateFlow()
+    val user = _user.asStateFlow()
 
     init {
         getUser()
-        _userFullName.value = user.value.name + " " + user.value.surname
     }
 
     private fun getUser() {
         viewModelScope.launch {
             _user.value = repository.getUser()
+            _user.value = _user.value.copy(
+                fullName = _user.value.name + " " + _user.value.surname
+            )
         }
     }
 
     fun signOut() {
         viewModelScope.launch {
             repository.signOut()
+            _user.value.name = ""
         }
     }
 }

@@ -34,8 +34,9 @@ import com.mertozan.moviescompose.ui.theme.DarkYellow
 @Composable
 fun ProfileScreen(
     onNavigate: () -> Unit,
-    viewModel: ProfileViewModel,
-    name: String
+    onSignOutClick: () -> Unit,
+    fullName: String,
+    watched: Int
 ) {
 
     Column(
@@ -66,7 +67,7 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CustomText(
-                    text = name,
+                    text = fullName,
                     fontSize = 24,
                     color = DarkWhite80,
                     fontWeight = FontWeight.SemiBold,
@@ -78,7 +79,7 @@ fun ProfileScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     CustomText(
-                        text = "Watched: ${20} ",
+                        text = "Watched: $watched ",
                         fontSize = 20,
                         color = DarkWhite80,
                         modifier = Modifier
@@ -117,7 +118,7 @@ fun ProfileScreen(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
-                    viewModel.signOut()
+                    onSignOutClick()
                     onNavigate()
                 }
             )

@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.mertozan.moviescompose.common.Constants.DATABASE_NAME
 import com.mertozan.moviescompose.dao.MovieDao
 import com.mertozan.moviescompose.dao.SeriesDao
+import com.mertozan.moviescompose.dao.UserDao
 import com.mertozan.moviescompose.data.LocalDatabase
 import dagger.Module
 import dagger.Provides
@@ -37,5 +38,11 @@ object RoomModule {
     @Singleton
     fun provideSeriesDao(localDatabase: LocalDatabase): SeriesDao {
         return localDatabase.seriesDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(localDatabase: LocalDatabase): UserDao {
+        return localDatabase.userDao()
     }
 }

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.model
+package com.mertozan.moviescompose.data.model.dto
 
 import com.google.gson.annotations.SerializedName
 

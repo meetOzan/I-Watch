@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -32,12 +33,35 @@ fun MovieNavHost(
     NavHost(
         navController = navController, startDestination = SplashScreen.route
     ) {
-        splashScreen { navController.navigate(LoginScreen.route) }
-        loginScreen(context = context, onNavigate = { navController.navigate(MainScreen.route) })
+        splashScreen {
+            navController.navigate(LoginScreen.route) {
+                popUpTo(SplashScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
+        loginScreen(context = context, onNavigate = {
+            navController.navigate(MainScreen.route) {
+                popUpTo(LoginScreen.route) {
+                    inclusive = true
+                }
+                navController.popBackStack(route = MainScreen.route, inclusive = true)
+            }
+        })
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen { navController.navigate(LoginScreen.route) }
-        detailScreen { navController.navigate(MainScreen.route) }
+        profileScreen {
+            navController.navigate(LoginScreen.route) {
+                navController.popBackStack(route = MainScreen.route, inclusive = true)
+            }
+        }
+        detailScreen {
+            navController.navigate(MainScreen.route) {
+                popUpTo(DetailScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
         contentList(navController = navController)
     }
 }
@@ -116,7 +140,12 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit, context: Context) {
     ) {
         val loginViewModel = hiltViewModel<LoginViewModel>()
 
-        LoginScreen(onNavigate, loginViewModel, context = context)
+        LoginScreen(
+            onNavigate = onNavigate,
+            viewModel = loginViewModel,
+            context = context
+        )
+        LoginScreen(onNavigate = onNavigate, viewModel = loginViewModel, context = context)
     }
 }
 
@@ -128,6 +157,7 @@ fun NavGraphBuilder.generateScreen() {
 
         LaunchedEffect(Unit) {
             viewModel.getAllContents()
+            viewModel.shuffleList()
         }
 
         GenerateContent(viewModel)
@@ -139,11 +169,13 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
-        val name = profileViewModel.userFullName.collectAsState().value
+        val userItem by profileViewModel.user.collectAsState()
+
         ProfileScreen(
+            fullName = userItem.fullName,
+            watched = userItem.watched,
             onNavigate = onNavigate,
-            viewModel = profileViewModel,
-            name = name
+            onSignOutClick = profileViewModel::signOut,
         )
     }
 }

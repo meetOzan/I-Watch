@@ -1,6 +1,6 @@
 package com.mertozan.moviescompose.domain.model
 
-import com.mertozan.moviescompose.data.model.Genres
+import com.mertozan.moviescompose.data.model.dto.Genres
 
 data class DetailItem(
     val id : Int = 0,

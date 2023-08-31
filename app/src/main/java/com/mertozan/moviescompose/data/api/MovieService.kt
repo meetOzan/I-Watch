@@ -2,9 +2,9 @@ package com.mertozan.moviescompose.data.api
 
 import com.mertozan.moviescompose.BuildConfig
 import com.mertozan.moviescompose.data.model.response.GenresResponse
-import com.mertozan.moviescompose.data.model.Movie
+import com.mertozan.moviescompose.data.model.dto.Movie
 import com.mertozan.moviescompose.data.model.response.MovieResponse
-import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.dto.Series
 import com.mertozan.moviescompose.data.model.response.SeriesResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -43,6 +43,7 @@ fun SignUpScreen(
     LaunchedEffect(userCurrent) {
         if (userCurrent) {
             onNavigate()
+            viewModel.transferUserToLocal()
         }
     }
 
@@ -101,10 +102,12 @@ fun SignUpScreen(
                         name = userId.name,
                         surname = userId.surname,
                         email = userId.signUpEmail,
-                        password = userId.signUpPassword
+                        password = userId.signUpPassword,
+                        watched = userId.watched
                     )
                     if (userCurrent) {
                         onNavigate()
+                        viewModel.transferUserToLocal()
                         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()

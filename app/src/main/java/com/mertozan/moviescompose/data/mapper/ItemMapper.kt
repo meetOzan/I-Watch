@@ -4,7 +4,9 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
+import com.mertozan.moviescompose.data.model.entity.UserEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.domain.model.UserItem
 import com.mertozan.moviescompose.util.extensions.orFalse
 import com.mertozan.moviescompose.util.extensions.orZero
 import com.mertozan.moviescompose.util.extensions.orZeroFloat
@@ -14,7 +16,7 @@ fun MovieEntity.movieEntityToDetailItem(): DetailItem {
         id = id,
         title = title,
         popularity = popularity.toString(),
-        posterPath = posterPath.orEmpty(),
+        posterPath = posterPath,
         voteAverage = voteAverage.toString(),
         voteCount = voteCount.toString(),
         releaseDate = releaseDate,
@@ -70,5 +72,24 @@ fun TopSeriesEntity.topSeriesEntityToDetailItem(): DetailItem {
         runTime = runtime.toString(),
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun UserEntity.toUserEntityToUserItem(): UserItem {
+    return UserItem(
+        name = name,
+        surname = surname,
+        signInEmail = email,
+        watched = watched.orZero()
+    )
+}
+
+fun UserItem.toUserItemToUserEntity(): UserEntity {
+    return UserEntity(
+        id = 1,
+        name = name,
+        surname = surname,
+        email = signInEmail,
+        watched = watched
     )
 }
