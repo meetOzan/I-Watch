@@ -5,7 +5,9 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.mertozan.moviescompose.data.LocalDao
+import com.mertozan.moviescompose.common.Constants.COLLECTION_NAME
+import com.mertozan.moviescompose.dao.MovieDao
+import com.mertozan.moviescompose.dao.SeriesDao
 import com.mertozan.moviescompose.data.api.MovieService
 import com.mertozan.moviescompose.data.mapper.moviesToDetailItemList
 import com.mertozan.moviescompose.data.mapper.seriesToDetailItemList
@@ -31,7 +33,9 @@ import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.domain.model.UserItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -40,7 +44,8 @@ class MovieRepository @Inject constructor(
     private val movieService: MovieService,
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
-    private val roomDao: LocalDao,
+    private val movieDao: MovieDao,
+    private val seriesDao: SeriesDao
 ) {
 
     init {
@@ -48,19 +53,19 @@ class MovieRepository @Inject constructor(
     }
 
     // Get Network
-    private suspend fun getAllPopularMovies(): MovieResponse {
+    private suspend fun getAllPopularNetworkMovies(): MovieResponse {
         return movieService.getPopularMovies()
     }
 
-    private suspend fun getAllPopularSeries(): SeriesResponse {
+    private suspend fun getAllPopularNetworkSeries(): SeriesResponse {
         return movieService.getPopularSeries()
     }
 
-    private suspend fun getAllTopRatedMovies(): MovieResponse {
+    private suspend fun getAllTopRatedNetworkMovies(): MovieResponse {
         return movieService.getTopRatedMovies()
     }
 
-    private suspend fun getAllTopRatedSeries(): SeriesResponse {
+    private suspend fun getAllNetworkTopRatedSeries(): SeriesResponse {
         return movieService.getTopRatedSeries()
     }
 
@@ -81,37 +86,37 @@ class MovieRepository @Inject constructor(
     }
 
     // Get Local
-    fun getAllPopularLocalMovies(): List<DetailItem> {
-        return roomDao.getPopularMovies().toMoviesToDetailItemList()
+    fun getAllPopularMovies(): List<DetailItem> {
+        return movieDao.getPopularMovies().toMoviesToDetailItemList()
     }
 
-    fun getAllPopularLocalSeries(): List<DetailItem> {
-        return roomDao.getPopularSeries().toSeriesDetailItemList()
+    fun getAllPopularSeries(): List<DetailItem> {
+        return seriesDao.getPopularSeries().toSeriesDetailItemList()
     }
 
-    fun getAllTopRatedLocalMovies(): List<DetailItem> {
-        return roomDao.getTopMovies().toTopMoviesToDetailItemList()
+    fun getAllTopRatedMovies(): List<DetailItem> {
+        return movieDao.getTopMovies().toTopMoviesToDetailItemList()
     }
 
-    fun getAllTopRatedLocalSeries(): List<DetailItem> {
-        return roomDao.getTopSeries().toTopSeriesDetailItemList()
+    fun getAllTopRatedSeries(): List<DetailItem> {
+        return seriesDao.getTopSeries().toTopSeriesDetailItemList()
     }
 
     // Add to Local
     private fun addPopularMoviesToLocal(movieItem: List<DetailItem>) {
-        roomDao.addMovieToLocal(movieItem.toDetailItemToMovieEntityList())
+        movieDao.addMovieToLocal(movieItem.toDetailItemToMovieEntityList())
     }
 
     private fun addPopularSeriesToLocal(seriesItem: List<DetailItem>) {
-        roomDao.addSeriesToLocal(seriesItem.toDetailItemToSeriesEntityList())
+        seriesDao.addSeriesToLocal(seriesItem.toDetailItemToSeriesEntityList())
     }
 
     private fun addTopRatedMoviesToLocal(movieItem: List<DetailItem>) {
-        roomDao.addTopMoviesToLocal(movieItem.toDetailItemToTopMovieEntityList())
+        movieDao.addTopMoviesToLocal(movieItem.toDetailItemToTopMovieEntityList())
     }
 
-    private fun addTopRatedSeriesToLocal(seriesItem: List<DetailItem>) {
-        roomDao.addTopSeriesToLocal(seriesItem.toDetailItemToTopSeriesEntityList())
+    private fun addTopRatedSeries(seriesItem: List<DetailItem>) {
+        seriesDao.addTopSeriesToLocal(seriesItem.toDetailItemToTopSeriesEntityList())
     }
 
     private fun addUserToLocal(user: UserEntity) {
@@ -121,20 +126,20 @@ class MovieRepository @Inject constructor(
     }
 
     // Get single
-    fun getSingleLocalMovie(movieId: Int): MovieEntity {
-        return roomDao.getSingleLocalMovie(movieId = movieId)
+    fun getSingleMovie(movieId: Int): MovieEntity {
+        return movieDao.getSingleMovie(movieId = movieId)
     }
 
-    fun getSingleLocalSeries(seriesId: Int): SeriesEntity {
-        return roomDao.getSingleLocalSeries(seriesId = seriesId)
+    fun getSingleSeries(seriesId: Int): SeriesEntity {
+        return seriesDao.getSingleLocalSeries(seriesId = seriesId)
     }
 
-    fun getSingleTopLocalMovies(movieId: Int): TopMovieEntity {
-        return roomDao.getTopSingleLocalMovie(movieId)
+    fun getSingleTopMovies(movieId: Int): TopMovieEntity {
+        return movieDao.getTopSingleMovie(movieId)
     }
 
-    fun getSingleTopLocalSeries(seriesId: Int): TopSeriesEntity {
-        return roomDao.getTopSingleLocalSeries(seriesId)
+    fun getSingleTopSeries(seriesId: Int): TopSeriesEntity {
+        return seriesDao.getTopSingleLocalSeries(seriesId)
     }
 
     fun getSingleLocalUser(): UserItem {
@@ -143,22 +148,22 @@ class MovieRepository @Inject constructor(
 
     // Update
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
-        roomDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)
+        movieDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)
     }
 
     fun updateSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
-        roomDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
+        seriesDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
     }
 
     fun updateTopMovieFavorite(movieId: Int, isFavorite: Boolean) {
-        roomDao.updateTopMovieFavoriteState(topMovieId = movieId, isFavorite = !isFavorite)
+        movieDao.updateTopMovieFavoriteState(topMovieId = movieId, isFavorite = !isFavorite)
     }
 
     fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
-        roomDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
+        seriesDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
     }
 
-    // Firestore Operations
+    /*// Firestore Operations
     private suspend fun getUserFromNetwork() = suspendCoroutine { continuation ->
         db.collection("users").document(auth.currentUser?.uid.toString())
             .get().addOnSuccessListener {
@@ -173,7 +178,7 @@ class MovieRepository @Inject constructor(
                 Log.e("Get User Exception: ", it.message.orEmpty())
                 continuation.resumeWithException(it)
             }
-    }
+    }*/
 
     suspend fun transferUserToLocal() {
         val user = getUserFromNetwork()
@@ -185,31 +190,60 @@ class MovieRepository @Inject constructor(
     // Transfer
     private fun transferToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
+            addPopularMoviesToLocal(
+                getAllPopularNetworkMovies()
+                    .movieResults.moviesToDetailItemList()
+            )
+            addPopularSeriesToLocal(
+                getAllPopularNetworkSeries()
+                    .seriesResults.seriesToDetailItemList()
+            )
+            addTopRatedMoviesToLocal(
+                getAllTopRatedNetworkMovies()
+                    .movieResults.moviesToDetailItemList()
+            )
+            addTopRatedSeries(
+                getAllNetworkTopRatedSeries()
+                    .seriesResults.seriesToDetailItemList()
+            )
 
-            if (getAllPopularLocalMovies().isEmpty()) {
+            if (getAllPopularMovies().isEmpty()) {
                 addPopularMoviesToLocal(
-                    getAllPopularMovies()
+                    getAllPopularNetworkMovies()
                         .movieResults.moviesToDetailItemList()
                 )
             }
-            if (getAllPopularLocalSeries().isEmpty()) {
+            if (getAllPopularSeries().isNotEmpty()) {
                 addPopularSeriesToLocal(
-                    getAllPopularSeries()
+                    getAllPopularNetworkSeries()
                         .seriesResults.seriesToDetailItemList()
                 )
             }
-            if (getAllTopRatedLocalMovies().isEmpty()) {
+            if (getAllTopRatedMovies().isEmpty()) {
                 addTopRatedMoviesToLocal(
-                    getAllTopRatedMovies()
+                    getAllTopRatedNetworkMovies()
                         .movieResults.moviesToDetailItemList()
                 )
             }
-            if (getAllTopRatedLocalSeries().isEmpty()) {
-                addTopRatedSeriesToLocal(
-                    getAllTopRatedSeries()
+            if (getAllTopRatedSeries().isNotEmpty()) {
+                addTopRatedSeries(
+                    getAllNetworkTopRatedSeries()
                         .seriesResults.seriesToDetailItemList()
                 )
             }
         }
     }
+
+    // Firestore Operations
+    suspend fun getUser(): UserItem {
+        return CoroutineScope(Dispatchers.IO).async {
+            try {
+                db.collection(COLLECTION_NAME).document(auth.currentUser?.uid.toString())
+                    .get().await().toObject<UserItem>() ?: UserItem()
+            } catch (e: Exception) {
+                UserItem()
+            }
+        }.await()
+    }
 }
+

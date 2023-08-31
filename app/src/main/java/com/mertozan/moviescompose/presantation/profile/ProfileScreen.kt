@@ -18,6 +18,7 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.presantation.components.items.ProfileOptionsCard
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.items.ProfileOptionsCard
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 

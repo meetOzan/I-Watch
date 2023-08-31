@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.presantation.components.items.ContentItem
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.items.ContentItem
 
 @Composable
 fun ContentList(

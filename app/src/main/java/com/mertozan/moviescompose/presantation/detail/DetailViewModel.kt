@@ -15,6 +15,7 @@ import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
+import com.mertozan.moviescompose.util.extensions.orZero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,13 +47,12 @@ class DetailViewModel @Inject constructor(
     fun getDetail() {
         when (listType) {
             ListType.POPULAR.name -> when (type) {
-                MovieOrSeries.SERIES.name -> getSingleSeries(id ?: 0)
-                MovieOrSeries.MOVIE.name -> getSingleMovie(id ?: 0)
+                MovieOrSeries.SERIES.name -> getSingleSeries(id.orZero())
+                MovieOrSeries.MOVIE.name -> getSingleMovie(id.orZero())
             }
-
             ListType.TOP_RATED.name -> when (type) {
-                MovieOrSeries.SERIES.name -> getSingleTopSeries(id ?: 0)
-                MovieOrSeries.MOVIE.name -> getSingleTopMovies(id ?: 0)
+                MovieOrSeries.SERIES.name -> getSingleTopSeries(id.orZero())
+                MovieOrSeries.MOVIE.name -> getSingleTopMovies(id.orZero())
             }
         }
     }
@@ -60,12 +60,12 @@ class DetailViewModel @Inject constructor(
     fun updateFavorite(isFavorite: Boolean) {
         when (listType) {
             ListType.POPULAR.name -> when (type) {
-                MovieOrSeries.SERIES.name -> updateSeriesFavorite(id ?: 0, isFavorite)
-                MovieOrSeries.MOVIE.name -> updateMovieFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.SERIES.name -> updateSeriesFavorite(id.orZero(), isFavorite)
+                MovieOrSeries.MOVIE.name -> updateMovieFavorite(id.orZero(), isFavorite)
             }
             ListType.TOP_RATED.name -> when (type) {
-                MovieOrSeries.SERIES.name -> updateTopSeriesFavorite(id ?: 0, isFavorite)
-                MovieOrSeries.MOVIE.name -> updateTopMovieFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.SERIES.name -> updateTopSeriesFavorite(id.orZero(), isFavorite)
+                MovieOrSeries.MOVIE.name -> updateTopMovieFavorite(id.orZero(), isFavorite)
             }
         }
     }
@@ -78,28 +78,28 @@ class DetailViewModel @Inject constructor(
     private fun getSingleMovie(movieId: Int) {
         viewModelScope.launch {
             _movieDetailUiState.value =
-                movieRepository.getSingleLocalMovie(movieId = movieId).movieEntityToDetailItem()
+                movieRepository.getSingleMovie(movieId = movieId).movieEntityToDetailItem()
         }
     }
 
     private fun getSingleSeries(seriesId: Int) {
         viewModelScope.launch {
             _movieDetailUiState.value =
-                movieRepository.getSingleLocalSeries(seriesId = seriesId).seriesEntityToDetailItem()
+                movieRepository.getSingleSeries(seriesId = seriesId).seriesEntityToDetailItem()
         }
     }
 
     private fun getSingleTopMovies(movieId: Int) {
         viewModelScope.launch {
             _movieDetailUiState.value =
-                movieRepository.getSingleTopLocalMovies(movieId).topMovieEntityToDetailItem()
+                movieRepository.getSingleTopMovies(movieId).topMovieEntityToDetailItem()
         }
     }
 
     private fun getSingleTopSeries(seriesId: Int) {
         viewModelScope.launch {
             _movieDetailUiState.value =
-                movieRepository.getSingleTopLocalSeries(seriesId).topSeriesEntityToDetailItem()
+                movieRepository.getSingleTopSeries(seriesId).topSeriesEntityToDetailItem()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,7 +29,8 @@ import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun MovieNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    context: Context
 ) {
 
     NavHost(
@@ -61,9 +63,7 @@ fun MovieNavHost(
 }
 
 fun NavGraphBuilder.mainScreen(navController: NavController) {
-    composable(
-        route = MainScreen.route
-    ) {
+    composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<HomeViewModel>()
         val popularMovieList = viewModel.popularMovies.collectAsState()
         val popularSeriesList = viewModel.popularSeries.collectAsState()
@@ -107,22 +107,16 @@ fun NavGraphBuilder.contentList(navController: NavController) {
     ) {
         val viewModel: HomeViewModel = hiltViewModel()
         val contentList = viewModel.topRatedContents.collectAsState()
-        val contentTitle = viewModel.contentListTitle.collectAsState().value
+        val contentListType = viewModel.contentListType.collectAsState().value
+        val contentTitle = viewModel.contentTitle.collectAsState().value
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
-
-        val title =
-            if (contentTitle == MovieOrSeries.MOVIE.name)
-                stringResource(id = R.string.top_rated_movies)
-            else
-                stringResource(id = R.string.top_rated_series)
-
         ContentList(
             contentList = contentList.value,
-            type = contentTitle,
-            title = title,
+            type = contentListType,
+            title = contentTitle,
             navController = navController
         )
     }
@@ -136,7 +130,7 @@ fun NavGraphBuilder.splashScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
+fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit, context: Context) {
     composable(
         route = LoginScreen.route
     ) {
@@ -146,6 +140,7 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
             onNavigate = onNavigate,
             viewModel = loginViewModel
         )
+        LoginScreen(onNavigate, loginViewModel, context = context)
     }
 }
 

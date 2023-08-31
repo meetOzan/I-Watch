@@ -16,8 +16,8 @@ import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.navigation.ContentListScreen
 import com.mertozan.moviescompose.navigation.DetailScreen
-import com.mertozan.moviescompose.presantation.components.layouts.MainColumn
-import com.mertozan.moviescompose.presantation.components.layouts.MainRow
+import com.mertozan.moviescompose.presantation.custom.layouts.MainColumn
+import com.mertozan.moviescompose.presantation.custom.layouts.MainRow
 import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
 

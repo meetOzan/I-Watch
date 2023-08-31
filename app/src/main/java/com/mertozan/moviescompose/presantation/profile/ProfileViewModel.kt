@@ -25,9 +25,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getUser() {
         viewModelScope.launch {
-            val userItem = repository.getSingleLocalUser()
-            Log.d("TestO", userItem.toString())
-            _user.value = userItem
+            _user.value = repository.getUser()
             _user.value = _user.value.copy(
                 fullName = userItem.name + " " + userItem.surname
             )

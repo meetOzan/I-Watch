@@ -12,7 +12,7 @@ import com.mertozan.moviescompose.util.extensions.orFalse
 import com.mertozan.moviescompose.util.extensions.orZero
 
 fun List<Movie>.moviesToDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.title,
@@ -31,7 +31,7 @@ fun List<Movie>.moviesToDetailItemList(): List<DetailItem> {
 }
 
 fun List<Series>.seriesToDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.name,
@@ -50,7 +50,7 @@ fun List<Series>.seriesToDetailItemList(): List<DetailItem> {
 }
 
 fun List<MovieEntity>.toMoviesToDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.title,
@@ -68,7 +68,7 @@ fun List<MovieEntity>.toMoviesToDetailItemList(): List<DetailItem> {
 }
 
 fun List<SeriesEntity>.toSeriesDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.title,
@@ -87,7 +87,7 @@ fun List<SeriesEntity>.toSeriesDetailItemList(): List<DetailItem> {
 }
 
 fun List<TopMovieEntity>.toTopMoviesToDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.title,
@@ -106,7 +106,7 @@ fun List<TopMovieEntity>.toTopMoviesToDetailItemList(): List<DetailItem> {
 }
 
 fun List<TopSeriesEntity>.toTopSeriesDetailItemList(): List<DetailItem> {
-    return this.map {
+    return map {
         DetailItem(
             id = it.id,
             title = it.title,
@@ -125,7 +125,7 @@ fun List<TopSeriesEntity>.toTopSeriesDetailItemList(): List<DetailItem> {
 }
 
 fun List<DetailItem>.toDetailItemToMovieEntityList(): List<MovieEntity> {
-    return this.map {
+    return map {
         MovieEntity(
             id = it.id,
             title = it.title,
@@ -143,7 +143,7 @@ fun List<DetailItem>.toDetailItemToMovieEntityList(): List<MovieEntity> {
 }
 
 fun List<DetailItem>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
-    return this.map {
+    return map {
         SeriesEntity(
             id = it.id,
             title = it.title,
@@ -161,7 +161,7 @@ fun List<DetailItem>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
 }
 
 fun List<DetailItem>.toDetailItemToTopMovieEntityList(): List<TopMovieEntity> {
-    return this.map {
+    return map {
         TopMovieEntity(
             id = it.id,
             title = it.title,
@@ -179,7 +179,7 @@ fun List<DetailItem>.toDetailItemToTopMovieEntityList(): List<TopMovieEntity> {
 }
 
 fun List<DetailItem>.toDetailItemToTopSeriesEntityList(): List<TopSeriesEntity> {
-    return this.map {
+    return map {
         TopSeriesEntity(
             id = it.id,
             title = it.title,

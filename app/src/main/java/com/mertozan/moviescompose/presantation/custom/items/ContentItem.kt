@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.items
+package com.mertozan.moviescompose.presantation.custom.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,8 +26,8 @@ import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
 import com.mertozan.moviescompose.navigation.DetailScreen
-import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
@@ -99,7 +99,6 @@ fun ContentItem(
                         color = DarkWhite80,
                         FontWeight.SemiBold,
                         modifier = Modifier
-                            .padding(end = 24.dp, top = 16.dp, bottom = 16.dp)
                     )
                     Row(
                         horizontalArrangement = Arrangement.End,

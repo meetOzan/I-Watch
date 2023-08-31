@@ -2,6 +2,8 @@ package com.mertozan.moviescompose.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.mertozan.moviescompose.dao.MovieDao
+import com.mertozan.moviescompose.dao.SeriesDao
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
@@ -21,6 +23,7 @@ import com.mertozan.moviescompose.data.model.entity.UserEntity
 )
 abstract class LocalDatabase : RoomDatabase() {
 
-    abstract fun favoritesDao(): LocalDao
+    abstract fun movieDao(): MovieDao
+    abstract fun seriesDao() : SeriesDao
 
 }

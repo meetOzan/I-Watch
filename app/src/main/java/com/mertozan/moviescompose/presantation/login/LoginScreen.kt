@@ -17,7 +17,8 @@ import com.mertozan.moviescompose.common.Constants.PAGER_STATE
 @Composable
 fun LoginScreen(
     onNavigate: () -> Unit,
-    viewModel: LoginViewModel
+    viewModel: LoginViewModel,
+    context : Context
 ) {
     val pagerState = rememberPagerState(pageCount = { PAGER_STATE })
 
@@ -45,15 +46,8 @@ fun LoginScreen(
                 .align(Alignment.Center)
         ) { page ->
             when (page) {
-                0 -> SignInScreen(
-                    onNavigate = onNavigate,
-                    viewModel = viewModel
-                )
-
-                1 -> SignUpScreen(
-                    onNavigate = onNavigate,
-                    viewModel = viewModel,
-                )
+                0 -> SignInScreen(onNavigate, viewModel,context)
+                1 -> SignUpScreen(onNavigate, viewModel,context)
             }
         }
     }

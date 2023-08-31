@@ -1,5 +1,7 @@
 package com.mertozan.moviescompose.presantation.login
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +30,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.presantation.components.components.CustomTextField
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.components.CustomTextField
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
@@ -37,14 +39,16 @@ import com.mertozan.moviescompose.ui.theme.LightBlack
 @Composable
 fun SignInScreen(
     onNavigate: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    context: Context
 ) {
 
-    val userId = viewModel.userItem.collectAsState().value
+    val user = viewModel.userItem.collectAsState().value
     val userCurrent = viewModel.checkCurrentUser.collectAsState().value
+    val toastMessage = viewModel.exceptionMessage.collectAsState().value
 
-    val email = userId.signInEmail
-    val password = userId.signInPassword
+    val email = user.signInEmail
+    val password = user.signInPassword
 
     LaunchedEffect(userCurrent){
         if(userCurrent){
@@ -102,12 +106,17 @@ fun SignInScreen(
                     if (userCurrent) {
                         onNavigate()
                         viewModel.transferUserToLocal()
+                        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
                     }
                 },
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = DarkYellow
                 ),
-                modifier = Modifier.width(150.dp).padding(top = 24.dp)
+                modifier = Modifier
+                    .width(150.dp)
+                    .padding(top = 24.dp)
             ) {
                 CustomText(
                     text = stringResource(id = R.string.sign_in),

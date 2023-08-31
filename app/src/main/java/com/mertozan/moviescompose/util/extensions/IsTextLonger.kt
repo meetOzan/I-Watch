@@ -1,9 +1,9 @@
 package com.mertozan.moviescompose.util.extensions
 
-fun String.isLongerThan(what: Int): String {
-    return if (this.length > what) {
+fun String.isLongerThan(much: Int): String {
+    return if (this.length > much) {
         var newText = ""
-        for (i in 0..what) {
+        for (i in 0..much) {
             newText += this[i]
         }
         "$newText..."

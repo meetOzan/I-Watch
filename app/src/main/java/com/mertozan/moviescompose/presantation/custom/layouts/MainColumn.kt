@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.layouts
+package com.mertozan.moviescompose.presantation.custom.layouts
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,9 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.common.Constants.CONTENT_LIST
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.presantation.components.items.MainColumnItem
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.items.MainColumnItem
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
@@ -72,10 +73,10 @@ fun MainColumn(
             .height(250.dp)
     ) {
         itemsIndexed(list) { index, content ->
-            if (index < 15) {
+            if (index < CONTENT_LIST) {
                 MainColumnItem(
                     title = content.title,
-                    number = (list.indexOf(content)) + 1,
+                    number = (list.indexOf(content)).plus(1),
                     onNavigate = {
                         onToDetailClick(content.id, type, listType)
                     }

@@ -20,25 +20,25 @@ class GenerateViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            _allContents.value.addAll(movieRepository.getAllPopularLocalMovies())
+            _allContents.value.addAll(movieRepository.getAllPopularMovies())
         }
     }
 
     private fun getPopularSeries() {
         viewModelScope.launch {
-            _allContents.value.addAll(movieRepository.getAllPopularLocalSeries())
+            _allContents.value.addAll(movieRepository.getAllPopularSeries())
         }
     }
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            _allContents.value.addAll(movieRepository.getAllTopRatedLocalMovies())
+            _allContents.value.addAll(movieRepository.getAllTopRatedMovies())
         }
     }
 
     private fun getTopRatedSeries() {
         viewModelScope.launch {
-            _allContents.value.addAll(movieRepository.getAllTopRatedLocalSeries())
+            _allContents.value.addAll(movieRepository.getAllTopRatedSeries())
         }
     }
 
@@ -50,6 +50,6 @@ class GenerateViewModel @Inject constructor(
     }
 
     fun shuffleList() {
-        _allContents.value = _allContents.value.shuffled() as MutableList<DetailItem>
+        _allContents.value = _allContents.value.shuffled().toMutableList()
     }
 }
