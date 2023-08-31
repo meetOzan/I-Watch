@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.items
+package com.mertozan.moviescompose.presantation.custom.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 

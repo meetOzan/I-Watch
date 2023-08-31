@@ -116,6 +116,7 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     // Chucker
     implementation(libs.com.github.chuckerteam.chucker)

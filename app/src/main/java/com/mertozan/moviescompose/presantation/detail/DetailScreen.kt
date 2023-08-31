@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.custom.components.CustomText
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 

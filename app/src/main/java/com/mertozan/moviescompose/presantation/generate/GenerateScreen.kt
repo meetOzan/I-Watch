@@ -1,9 +1,7 @@
 package com.mertozan.moviescompose.presantation.generate
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -29,16 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.components.CustomText
-import com.mertozan.moviescompose.ui.theme.DarkWhite80
+import com.mertozan.moviescompose.presantation.custom.screen.NoGeneratedContents
+import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
@@ -49,7 +43,6 @@ fun GenerateContent(
     var isPreferred by remember {
         mutableStateOf(false)
     }
-
     val trendList = viewModel.allContents.collectAsState().value
 
     Column(
@@ -74,27 +67,7 @@ fun GenerateContent(
                     alignment = Alignment.Center
                 )
             } else {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.6f)
-                ) {
-                    Image(
-                        imageVector = Icons.Filled.PlayArrow,
-                        contentDescription = stringResource(R.string.play_arrow),
-                        colorFilter = ColorFilter.tint(DarkWhite80),
-                        modifier = Modifier
-                            .size(120.dp)
-                            .alpha(0.7f)
-                    )
-                    CustomText(
-                        text = stringResource(R.string.click_button_to_prefer),
-                        fontSize = 18,
-                        modifier = Modifier.padding(start = 8.dp, top = 12.dp)
-                    )
-                }
+                NoGeneratedContents()
             }
         }
         AnimatedVisibility(visible = isPreferred) {

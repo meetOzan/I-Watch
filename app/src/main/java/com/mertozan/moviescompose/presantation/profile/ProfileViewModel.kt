@@ -28,7 +28,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getUser() {
         viewModelScope.launch {
-            repository.getUser(_user)
+            _user.value = repository.getUser()
         }
     }
 

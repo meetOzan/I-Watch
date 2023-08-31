@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mertozan.moviescompose.common.Constants.COLLECTION_NAME
 import com.mertozan.moviescompose.domain.model.UserItem
+import com.mertozan.moviescompose.util.extensions.emailRegex
+import com.mertozan.moviescompose.util.extensions.passwordRegex
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +26,9 @@ class LoginViewModel @Inject constructor(
 
     private var _checkCurrentUser = MutableStateFlow(false)
     val checkCurrentUser = _checkCurrentUser.asStateFlow()
+
+    private var _exceptionMessage = MutableStateFlow("")
+    val exceptionMessage = _exceptionMessage.asStateFlow()
 
     val userItem = MutableStateFlow(UserItem())
 
@@ -48,30 +54,21 @@ class LoginViewModel @Inject constructor(
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                if (email.isNotEmpty() || name.isNotEmpty() || surname.isNotEmpty() || password.isNotEmpty()) {
+                if (email.emailRegex() || name.isNotEmpty() || surname.isNotEmpty() || password.passwordRegex()) {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
                             saveUser(name, surname, email, password)
                         }
                         .addOnFailureListener {
-                            Log.e(
-                                "Firebase Firestore ERROR:",
-                                "${
-                                    UserItem(
-                                        name,
-                                        surname,
-                                        email,
-                                        password
-                                    )
-                                } can't logged."
-                            )
+                            _exceptionMessage.value = "User can't created"
                         }
                 } else {
-                    Log.e("Please fill blanks", "")
+                    _exceptionMessage.value = "Please fill blanks"
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("Catch Exception: ", e.message.orEmpty())
+                    _exceptionMessage.value = e.message.orEmpty()
                 }
             }
         }
@@ -83,35 +80,15 @@ class LoginViewModel @Inject constructor(
         email: String,
         password: String
     ) {
-        firebaseFirestore.collection("users")
+        firebaseFirestore.collection(COLLECTION_NAME)
             .document(firebaseAuth.uid.toString())
             .set(UserItem(name, surname, email, password))
             .addOnCompleteListener {
                 checkLogged()
-                Log.e(
-                    "Firebase Auth SUCCESS:",
-                    "${
-                        UserItem(
-                            name,
-                            surname,
-                            email,
-                            password
-                        )
-                    } can't logged."
-                )
+                _exceptionMessage.value = "User Saved"
             }
             .addOnFailureListener {
-                Log.e(
-                    "Firebase Auth ERROR:",
-                    "${
-                        UserItem(
-                            name,
-                            surname,
-                            email,
-                            password
-                        )
-                    } can't logged."
-                )
+                _exceptionMessage.value = "Wrong E-Mail or Password"
             }
     }
 
@@ -123,29 +100,17 @@ class LoginViewModel @Inject constructor(
                 if (email.isNotEmpty() && password.isNotEmpty()) {
                     firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener {
-                            Log.e(
-                                "Firebase Auth msg:",
-                                "$email $password successfully signed."
-                            )
                             checkLogged()
+                            _exceptionMessage.value = "Login successful"
                         }
                         .addOnFailureListener {
-                            Log.e(
-                                "Firebase Auth ERROR:",
-                                "$email $password can't signed."
-                            )
+                            _exceptionMessage.value = "Wrong E-Mail or Password"
                         }.await()
                 } else {
-                    Log.e(
-                        "Email and Password Error",
-                        "$email and $password are empty."
-                    )
+                    _exceptionMessage.value = "Please fill blanks"
                 }
             } catch (e: Exception) {
-                Log.e(
-                    "Sign In Exception",
-                    e.message.orEmpty()
-                )
+                _exceptionMessage.value = e.message.orEmpty()
             }
         }
     }
@@ -169,7 +134,6 @@ class LoginViewModel @Inject constructor(
     fun changeItemSignInPassword(password: String) {
         userItem.value = userItem.value.copy(signInPassword = password)
     }
-
 
     fun changeItemSignUpPassword(password: String) {
         userItem.value = userItem.value.copy(signUpPassword = password)

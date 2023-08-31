@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.mertozan.moviescompose.navigation.MovieNavHost
-import com.mertozan.moviescompose.presantation.components.layouts.BottomNavigationView
+import com.mertozan.moviescompose.presantation.custom.layouts.BottomNavigationView
 import com.mertozan.moviescompose.ui.theme.MoviesComposeTheme
 import com.mertozan.moviescompose.util.enums.BottomNavItems
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
             MoviesComposeTheme {
 
                 val navController = rememberNavController()
+                val context = LocalContext.current
 
                 val items = listOf(
                     BottomNavItems.MAIN_SCREEN,
@@ -36,7 +38,8 @@ class MainActivity : ComponentActivity() {
                     },
                     content = { it
                         MovieNavHost(
-                            navController = navController
+                            navController = navController,
+                            context = context
                         )
                     }
                 )

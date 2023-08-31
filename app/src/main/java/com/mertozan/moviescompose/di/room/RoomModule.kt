@@ -2,7 +2,9 @@ package com.mertozan.moviescompose.di.room
 
 import android.content.Context
 import androidx.room.Room
-import com.mertozan.moviescompose.data.LocalDao
+import com.mertozan.moviescompose.common.Constants.DATABASE_NAME
+import com.mertozan.moviescompose.dao.MovieDao
+import com.mertozan.moviescompose.dao.SeriesDao
 import com.mertozan.moviescompose.data.LocalDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,13 +23,19 @@ object RoomModule {
         return Room.databaseBuilder(
             context,
             LocalDatabase::class.java,
-            "note_database.db"
+            DATABASE_NAME
         ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
     }
 
     @Provides
     @Singleton
-    fun provideNoteDao(favoritesDatabase: LocalDatabase): LocalDao {
-        return favoritesDatabase.favoritesDao()
+    fun provideMovieDao(localDatabase: LocalDatabase): MovieDao {
+        return localDatabase.movieDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSeriesDao(localDatabase: LocalDatabase): SeriesDao {
+        return localDatabase.seriesDao()
     }
 }

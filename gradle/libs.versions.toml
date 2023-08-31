@@ -5,6 +5,7 @@ android-min-sdk = "24"
 firebaseAuthKtx = "22.1.1"
 jvmTarget = "17"
 androidFoundation = "1.4.1"
+coroutinesPlayServices = "1.7.1"
 googleService = "4.3.15"
 version-name = "1.0"
 versionCode = "1"
@@ -46,7 +47,7 @@ androidxTestExt = "1.1.5"
 androidxEspresso = "3.5.1"
 lottieVersion = "4.2.0"
 bottomNav = "1.5.0"
-firebaseFirestore = "24.7.0"
+firebaseFirestore = "24.7.1"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -77,6 +78,7 @@ androidx-navigation-fragment = { group = "androidx.navigation", name = "navigati
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "androidxNavigation" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutinesPlayServices"}
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

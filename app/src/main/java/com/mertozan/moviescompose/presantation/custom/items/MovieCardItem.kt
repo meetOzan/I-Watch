@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components.items
+package com.mertozan.moviescompose.presantation.custom.items
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -35,11 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
-import com.mertozan.moviescompose.util.enums.MovieOrSeries
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
@@ -74,7 +73,7 @@ fun MovieItem(
     ) {
         Box {
             CustomAsyncImage(
-                model = content.posterPath.toString(),
+                model = content.posterPath,
                 contentDescription = stringResource(R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -105,11 +104,7 @@ fun MovieItem(
                     .size(28.dp)
                     .padding(bottom = 4.dp)
                     .clickable {
-                        if(type == MovieOrSeries.MOVIE.name) (
-                            viewModel.updateMovieFavorite(content.id,content.isFavorite)
-                        )else{
-                            viewModel.updateSeriesFavorite(content.id,content.isFavorite)
-                        }
+                        viewModel.updateFavoriteState(content.id, content.isFavorite, type)
                         isFavorite = !isFavorite
                     },
                 alignment = Alignment.TopStart
