@@ -3,12 +3,10 @@ package com.mertozan.moviescompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.mertozan.moviescompose.navigation.MovieNavHost
-import com.mertozan.moviescompose.presantation.components.BottomNavigationView
+import com.mertozan.moviescompose.presantation.components.layouts.BottomNavigationView
 import com.mertozan.moviescompose.ui.theme.MoviesComposeTheme
 import com.mertozan.moviescompose.util.enums.BottomNavItems
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,10 +34,9 @@ class MainActivity : ComponentActivity() {
                             navController = navController
                         )
                     },
-                    content = { padding ->
+                    content = { it
                         MovieNavHost(
-                            navController = navController,
-                            modifier = Modifier.padding(padding)
+                            navController = navController
                         )
                     }
                 )

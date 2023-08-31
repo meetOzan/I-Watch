@@ -1,6 +1,7 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.components.items
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.presantation.components.components.CustomText
 import com.mertozan.moviescompose.ui.theme.Dark80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 
@@ -26,11 +28,13 @@ import com.mertozan.moviescompose.ui.theme.DarkYellow
 fun ProfileOptionsCard(
     optionName: String,
     icon: ImageVector,
+    onClick : () -> Unit = {}
 ) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 24.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
@@ -67,5 +71,5 @@ fun ProfileOptionsCard(
 @Preview(showBackground = true)
 @Composable
 fun PreviewOptionCard() {
-    ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = "Favorites")
+    ProfileOptionsCard(icon = Icons.Filled.Favorite, optionName = stringResource(id = R.string.favorites))
 }

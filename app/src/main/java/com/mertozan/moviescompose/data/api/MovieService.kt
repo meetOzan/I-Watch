@@ -1,11 +1,11 @@
 package com.mertozan.moviescompose.data.api
 
 import com.mertozan.moviescompose.BuildConfig
-import com.mertozan.moviescompose.data.model.GenresResponse
+import com.mertozan.moviescompose.data.model.response.GenresResponse
 import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.MovieResponse
+import com.mertozan.moviescompose.data.model.response.MovieResponse
 import com.mertozan.moviescompose.data.model.Series
-import com.mertozan.moviescompose.data.model.SeriesResponse
+import com.mertozan.moviescompose.data.model.response.SeriesResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -32,5 +32,11 @@ interface MovieService {
     suspend fun getSingleSeries(
         @Path("series_id") seriesId: Int,
     ): Series
+
+    @GET("movie/top_rated?api_key=${BuildConfig.API_KEY}")
+    suspend fun getTopRatedMovies(): MovieResponse
+
+    @GET("tv/top_rated?api_key=${BuildConfig.API_KEY}")
+    suspend fun getTopRatedSeries(): SeriesResponse
 
 }

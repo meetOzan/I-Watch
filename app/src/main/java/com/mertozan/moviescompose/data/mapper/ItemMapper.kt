@@ -1,16 +1,22 @@
 package com.mertozan.moviescompose.data.mapper
 
-import com.mertozan.moviescompose.data.model.Movie
-import com.mertozan.moviescompose.data.model.Series
+import com.mertozan.moviescompose.data.model.entity.MovieEntity
+import com.mertozan.moviescompose.data.model.entity.SeriesEntity
+import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
+import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.util.extensions.orFalse
+import com.mertozan.moviescompose.util.extensions.orZero
+import com.mertozan.moviescompose.util.extensions.orZeroFloat
 
-fun Movie.toMovieItem(): DetailItem {
+fun MovieEntity.movieEntityToDetailItem(): DetailItem {
     return DetailItem(
         id = id,
         title = title,
         popularity = popularity.toString(),
-        genresDto = genres,
-        posterPath = posterPath,
+        posterPath = posterPath.orEmpty(),
+        voteAverage = voteAverage.toString(),
+        voteCount = voteCount.toString(),
         releaseDate = releaseDate,
         adult = adult,
         runTime = runtime.toString(),
@@ -19,16 +25,49 @@ fun Movie.toMovieItem(): DetailItem {
     )
 }
 
-fun Series.toSeriesItem(): DetailItem {
+fun SeriesEntity.seriesEntityToDetailItem(): DetailItem {
     return DetailItem(
         id = id,
-        title = name,
+        title = title,
         popularity = popularity.toString(),
-        genresDto = genres,
-        posterPath = posterPath,
-        releaseDate = firstAirDate,
+        posterPath = posterPath.orEmpty(),
+        releaseDate = firstAirDate.orEmpty(),
+        voteAverage = voteAverage.orZeroFloat().toString(),
+        voteCount = voteCount.orZero().toString(),
+        adult = adult.orFalse(),
+        runTime = episodeNumber.orZero().toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun TopMovieEntity.topMovieEntityToDetailItem(): DetailItem {
+    return DetailItem(
+        id = id,
+        title = title,
+        popularity = popularity.toString(),
+        posterPath = posterPath.orEmpty(),
+        releaseDate = releaseDate,
+        voteAverage = voteAverage.orZeroFloat().toString(),
+        voteCount = voteCount.orZero().toString(),
+        adult = adult.orFalse(),
+        runTime = runtime.orZero().toString(),
+        originalLanguage = originalLanguage,
+        overview = if (overview == "") "No Detail" else overview
+    )
+}
+
+fun TopSeriesEntity.topSeriesEntityToDetailItem(): DetailItem {
+    return DetailItem(
+        id = id,
+        title = title,
+        popularity = popularity.toString(),
+        posterPath = posterPath.orEmpty(),
+        releaseDate = releaseDate,
+        voteAverage = voteAverage.toString(),
+        voteCount = voteCount.toString(),
         adult = adult,
-        runTime = episodeNumber.toString(),
+        runTime = runtime.toString(),
         originalLanguage = originalLanguage,
         overview = if (overview == "") "No Detail" else overview
     )

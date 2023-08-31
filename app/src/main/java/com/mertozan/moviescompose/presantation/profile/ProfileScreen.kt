@@ -15,9 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,13 +27,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomText
-import com.mertozan.moviescompose.presantation.components.ProfileOptionsCard
+import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.components.items.ProfileOptionsCard
 import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onNavigate: () -> Unit,
+    viewModel: ProfileViewModel
+) {
 
     Column(
         modifier = Modifier
@@ -40,7 +44,6 @@ fun ProfileScreen() {
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,7 +66,7 @@ fun ProfileScreen() {
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 CustomText(
-                    text = "Mert Ozan Kahraman",
+                    text = viewModel.userFullName.collectAsState().value,
                     fontSize = 24,
                     color = DarkWhite80,
                     fontWeight = FontWeight.SemiBold,
@@ -98,11 +101,26 @@ fun ProfileScreen() {
                     .padding(start = 24.dp, bottom = 24.dp)
             )
 
-            ProfileOptionsCard(optionName = "Favorites", icon = Icons.Filled.Favorite)
-            ProfileOptionsCard(optionName = "Settings", icon = Icons.Filled.Settings)
-            ProfileOptionsCard(optionName = "Preferred Contents", icon = Icons.Rounded.Refresh)
-            ProfileOptionsCard(optionName = "Lists", icon = Icons.Rounded.List)
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.favorites),
+                icon = Icons.Filled.Favorite
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.settings),
+                icon = Icons.Filled.Settings
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.lists),
+                icon = Icons.Rounded.List
+            )
+            ProfileOptionsCard(
+                optionName = stringResource(R.string.sign_out),
+                icon = Icons.Rounded.ExitToApp,
+                onClick = {
+                    viewModel.signOut()
+                    onNavigate()
+                }
+            )
         }
-
     }
 }

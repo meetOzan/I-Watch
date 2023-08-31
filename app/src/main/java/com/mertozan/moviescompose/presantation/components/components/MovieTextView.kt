@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.components.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,11 +11,11 @@ import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
 fun CustomText(
-    modifier: Modifier = Modifier,
     text: String,
     fontSize: Int = 16,
     color: Color = DarkWhite80,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,

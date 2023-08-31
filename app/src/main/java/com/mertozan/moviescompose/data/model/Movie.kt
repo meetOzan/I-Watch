@@ -2,6 +2,7 @@ package com.mertozan.moviescompose.data.model
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Movie(
     @SerializedName("id")
     val id: Int,
@@ -13,6 +14,10 @@ data class Movie(
     val popularity: Float,
     @SerializedName("adult")
     val adult: Boolean,
+    @SerializedName("vote_average")
+    val voteAverage: Float,
+    @SerializedName("vote_count")
+    val voteNumber: Int,
     @SerializedName("genres")
     val genres: List<Genres>,
     @SerializedName("poster_path")
@@ -22,7 +27,7 @@ data class Movie(
     @SerializedName("overview")
     val overview : String,
     @SerializedName("runtime")
-    val runtime : Int?,
+    val runtime : Int,
     @SerializedName("original_language")
     val originalLanguage : String
 )

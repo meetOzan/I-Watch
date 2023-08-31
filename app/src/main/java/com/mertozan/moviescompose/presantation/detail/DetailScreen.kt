@@ -21,14 +21,12 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -42,8 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
 
 @Composable
@@ -53,18 +52,10 @@ fun DetailScreen(
     viewModel: DetailViewModel
 ) {
 
-    var isFavorite by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Yellow else Color.White,
+        if (detail.isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.getList()
-    }
 
     Column(
         modifier = Modifier
@@ -76,7 +67,7 @@ fun DetailScreen(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             CustomAsyncImage(
-                model = detail.posterPath.toString(),
+                model = detail.posterPath,
                 contentDescription = stringResource(id = R.string.movie_poster),
                 modifier = Modifier
                     .padding(bottom = 2.dp)
@@ -114,7 +105,6 @@ fun DetailScreen(
                         .clickable(onClick = onBackClicked),
                 )
             }
-
         }
         CustomText(
             text = detail.title,
@@ -125,21 +115,50 @@ fun DetailScreen(
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(280.dp)
+            horizontalArrangement = Arrangement.spacedBy(180.dp)
         ) {
-            CustomText(
-                text = detail.popularity,
-                fontSize = 16,
-                color = Color.White
-            )
-
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    Image(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = stringResource(R.string.liked),
+                        colorFilter = ColorFilter.tint(
+                            DarkYellow
+                        )
+                    )
+                    CustomText(
+                        text = detail.voteAverage,
+                        fontSize = 16,
+                        color = Color.White
+                    )
+                    Image(
+                        imageVector = Icons.Filled.ThumbUp,
+                        contentDescription = stringResource(R.string.liked),
+                        colorFilter = ColorFilter.tint(
+                            DarkYellow
+                        )
+                    )
+                    CustomText(
+                        text = detail.voteCount,
+                        fontSize = 16,
+                        color = Color.White
+                    )
+                }
+            }
             Image(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable { isFavorite = !isFavorite },
+                    .clickable {
+                        viewModel.updateFavorite(detail.isFavorite)
+                    },
             )
         }
         Row(
@@ -161,7 +180,7 @@ fun DetailScreen(
                     fontFamily = amazonEmberFamily,
                 )
                 CustomText(
-                    text = detail.runTime.toString(),
+                    text = detail.runTime,
                     fontSize = 18,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

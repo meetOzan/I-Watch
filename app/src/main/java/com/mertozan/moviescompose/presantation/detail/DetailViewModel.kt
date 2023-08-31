@@ -4,12 +4,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.common.Constants.ARGS_ID
+import com.mertozan.moviescompose.common.Constants.ARGS_LIST_TYPE
 import com.mertozan.moviescompose.common.Constants.ARGS_TYPE
-import com.mertozan.moviescompose.data.mapper.toMovieItem
-import com.mertozan.moviescompose.data.mapper.toSeriesItem
+import com.mertozan.moviescompose.data.mapper.movieEntityToDetailItem
+import com.mertozan.moviescompose.data.mapper.seriesEntityToDetailItem
+import com.mertozan.moviescompose.data.mapper.topMovieEntityToDetailItem
+import com.mertozan.moviescompose.data.mapper.topSeriesEntityToDetailItem
 import com.mertozan.moviescompose.data.model.Genres
 import com.mertozan.moviescompose.data.repository.MovieRepository
 import com.mertozan.moviescompose.domain.model.DetailItem
+import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.enums.MovieOrSeries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +35,7 @@ class DetailViewModel @Inject constructor(
 
     private val id = savedStateHandle.get<Int>(key = ARGS_ID)
     private val type = savedStateHandle.get<String>(key = ARGS_TYPE)
+    private val listType = savedStateHandle.get<String>(key = ARGS_LIST_TYPE)
 
     init {
         viewModelScope.launch {
@@ -38,10 +43,30 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getList() {
-        when (type) {
-            MovieOrSeries.SERIES.name -> getSingleSeries(id ?: 0)
-            MovieOrSeries.MOVIE.name -> getSingleMovie(id ?: 0)
+    fun getDetail() {
+        when (listType) {
+            ListType.POPULAR.name -> when (type) {
+                MovieOrSeries.SERIES.name -> getSingleSeries(id ?: 0)
+                MovieOrSeries.MOVIE.name -> getSingleMovie(id ?: 0)
+            }
+
+            ListType.TOP_RATED.name -> when (type) {
+                MovieOrSeries.SERIES.name -> getSingleTopSeries(id ?: 0)
+                MovieOrSeries.MOVIE.name -> getSingleTopMovies(id ?: 0)
+            }
+        }
+    }
+
+    fun updateFavorite(isFavorite: Boolean) {
+        when (listType) {
+            ListType.POPULAR.name -> when (type) {
+                MovieOrSeries.SERIES.name -> updateSeriesFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.MOVIE.name -> updateMovieFavorite(id ?: 0, isFavorite)
+            }
+            ListType.TOP_RATED.name -> when (type) {
+                MovieOrSeries.SERIES.name -> updateTopSeriesFavorite(id ?: 0, isFavorite)
+                MovieOrSeries.MOVIE.name -> updateTopMovieFavorite(id ?: 0, isFavorite)
+            }
         }
     }
 
@@ -52,15 +77,53 @@ class DetailViewModel @Inject constructor(
 
     private fun getSingleMovie(movieId: Int) {
         viewModelScope.launch {
-            val movie = movieRepository.getSingleMovie(movieId = movieId)
-            _movieDetailUiState.value = movie.toMovieItem()
+            _movieDetailUiState.value =
+                movieRepository.getSingleLocalMovie(movieId = movieId).movieEntityToDetailItem()
         }
     }
 
     private fun getSingleSeries(seriesId: Int) {
         viewModelScope.launch {
-            val series = movieRepository.getSingleSeries(seriesId = seriesId)
-            _movieDetailUiState.value = series.toSeriesItem()
+            _movieDetailUiState.value =
+                movieRepository.getSingleLocalSeries(seriesId = seriesId).seriesEntityToDetailItem()
+        }
+    }
+
+    private fun getSingleTopMovies(movieId: Int) {
+        viewModelScope.launch {
+            _movieDetailUiState.value =
+                movieRepository.getSingleTopLocalMovies(movieId).topMovieEntityToDetailItem()
+        }
+    }
+
+    private fun getSingleTopSeries(seriesId: Int) {
+        viewModelScope.launch {
+            _movieDetailUiState.value =
+                movieRepository.getSingleTopLocalSeries(seriesId).topSeriesEntityToDetailItem()
+        }
+    }
+
+    private fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateMovieFavorite(movieId = id, isFavorite = isFavorite)
+        }
+    }
+
+    private fun updateSeriesFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateSeriesFavorite(seriesId = id, isFavorite = isFavorite)
+        }
+    }
+
+    private fun updateTopSeriesFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateTopSeriesFavorite(seriesId = id, isFavorite = isFavorite)
+        }
+    }
+
+    private fun updateTopMovieFavorite(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            movieRepository.updateTopMovieFavorite(movieId = id, isFavorite = isFavorite)
         }
     }
 }

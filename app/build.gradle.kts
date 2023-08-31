@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.androidx.navigation.safe.args)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -103,6 +104,8 @@ dependencies {
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
     implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.stdlib)
 
     // Coil
     implementation(libs.coil.kt.compose)
@@ -119,5 +122,11 @@ dependencies {
 
     // Lottie
     implementation(libs.com.airbnb.android.lottie)
+
+    // Firebase - Auth
+    implementation(libs.com.firebase.auth.ktx)
+
+    // Firebase - Firestore
+    implementation(libs.firebase.firestore.ktx)
 
 }

@@ -1,130 +1,140 @@
 package com.mertozan.moviescompose.presantation.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomTextField
+import com.mertozan.moviescompose.ui.theme.DarkWhite80
 import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
 fun SignInScreen(
-    onNavigate: () -> Unit
+    onNavigate: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    var email by remember {
-        mutableStateOf("")
-    }
+    val userId = viewModel.userItem.collectAsState().value
+    val userCurrent = viewModel.checkCurrentUser.collectAsState().value
 
-    var password by remember {
-        mutableStateOf("")
+    val email = userId.signInEmail
+    val password = userId.signInPassword
+
+    LaunchedEffect(userCurrent){
+        if(userCurrent){
+            onNavigate()
+        }
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(LightBlack),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(75.dp))
-        CustomText(
-            text = stringResource(R.string.welcome_to_movieapp),
-            fontWeight = FontWeight.Bold,
-            fontSize = 30,
-            color = DarkYellow
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-        CustomText(
-            text = stringResource(R.string.sign_in),
-            fontWeight = FontWeight.Bold,
-            fontSize = 28,
-            color = DarkYellow,
-            modifier = Modifier.padding(end = 16.dp)
-        )
-        Spacer(modifier = Modifier.height(100.dp))
-        TextField(
-            value = email,
-            onValueChange = {
-                email = it
-            },
-            placeholder = { Text(stringResource(R.string.enter_your_e_mail)) },
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .border(
-                    width = 0.4.dp,
-                    shape = MaterialTheme.shapes.medium,
-                    color = DarkYellow
-                ),
-            shape = MaterialTheme.shapes.medium,
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = DarkYellow,
-                focusedContainerColor = Color.DarkGray,
-                unfocusedContainerColor = Color.Black,
-                focusedIndicatorColor = LightBlack,
-                unfocusedIndicatorColor = LightBlack
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.height(75.dp))
+            CustomText(
+                text = stringResource(R.string.welcome_to_movieapp),
+                fontWeight = FontWeight.Bold,
+                fontSize = 30,
+                color = DarkYellow
             )
-        )
-        TextField(
-            value = password,
-            onValueChange = {
-                password = it
-            },
-            maxLines = 1,
-            placeholder = { Text(stringResource(R.string.enter_your_password)) },
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .border(
-                    width = 0.4.dp,
-                    shape = MaterialTheme.shapes.medium,
-                    color = DarkYellow
-                ),
-            shape = MaterialTheme.shapes.medium,
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = DarkYellow,
-                focusedContainerColor = Color.DarkGray,
-                unfocusedContainerColor = Color.Black,
-                focusedIndicatorColor = LightBlack,
-                unfocusedIndicatorColor = LightBlack
+            Spacer(modifier = Modifier.height(25.dp))
+            CustomText(
+                text = stringResource(R.string.sign_in),
+                fontWeight = FontWeight.Bold,
+                fontSize = 28,
+                color = DarkYellow,
+                modifier = Modifier.padding(end = 16.dp)
             )
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        ElevatedButton(
-            onClick = onNavigate,
-            colors = ButtonDefaults.elevatedButtonColors(
-                containerColor = DarkYellow
-            ),
-            modifier = Modifier.width(150.dp)
+            Spacer(modifier = Modifier.height(100.dp))
+            CustomTextField(
+                email,
+                placeHolder = stringResource(id = R.string.enter_your_e_mail),
+                onChangeValue = {
+                    viewModel.changeItemSignInEmail(it)
+                },
+                keyboardType = KeyboardType.Email
+            )
+            CustomTextField(
+                password,
+                placeHolder = stringResource(id = R.string.enter_your_password),
+                onChangeValue = {
+                    viewModel.changeItemSignInPassword(it)
+                },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardType = KeyboardType.Password
+            )
+            ElevatedButton(
+                onClick = {
+                    viewModel.signInFirebase(email, password)
+                    if (userCurrent) {
+                        onNavigate()
+                    }
+                },
+                colors = ButtonDefaults.elevatedButtonColors(
+                    containerColor = DarkYellow
+                ),
+                modifier = Modifier.width(150.dp).padding(top = 24.dp)
+            ) {
+                CustomText(
+                    text = stringResource(id = R.string.sign_in),
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    color = Color.Black,
+                )
+            }
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CustomText(
-                text = stringResource(id = R.string.sign_up),
-                modifier = Modifier.padding(horizontal = 8.dp),
-                color = Color.Black,
+                text = stringResource(R.string.you_don_t_have_an_account),
+                fontSize = 18,
             )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Image(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = stringResource(R.string.swipe_left),
+                    Modifier,
+                    alignment = Alignment.Center,
+                    colorFilter = ColorFilter.tint(DarkWhite80)
+                )
+                CustomText(text = stringResource(R.string.swipe_left_now), fontSize = 16)
+            }
         }
     }
 }

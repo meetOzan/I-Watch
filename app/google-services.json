@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "137108980903",
+    "project_id": "moviescompose-7a85f",
+    "storage_bucket": "moviescompose-7a85f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137108980903:android:047002309fe201a8a7c782",
+        "android_client_info": {
+          "package_name": "com.mertozan.moviescompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137108980903-l04bgt7bok5iqf06acb9g1oc1ifhj19j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_OlE0TK38nCEZAz8Xk-u1T6fkjrMvz8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137108980903-l04bgt7bok5iqf06acb9g1oc1ifhj19j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

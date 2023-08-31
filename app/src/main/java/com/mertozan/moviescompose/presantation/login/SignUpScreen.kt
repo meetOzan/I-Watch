@@ -10,44 +10,36 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomText
+import com.mertozan.moviescompose.presantation.components.components.CustomTextField
+import com.mertozan.moviescompose.ui.theme.DarkYellow
 import com.mertozan.moviescompose.ui.theme.LightBlack
 
 @Composable
 fun SignUpScreen(
-    onNavigate: () -> Unit
+    onNavigate: () -> Unit,
+    viewModel: LoginViewModel
 ) {
 
-    var email by remember {
-        mutableStateOf("")
-    }
+    val userId = viewModel.userItem.collectAsState().value
+    val userCurrent = viewModel.checkCurrentUser.collectAsState().value
 
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    var name by remember {
-        mutableStateOf("")
-    }
-
-    var surname by remember {
-        mutableStateOf("")
+    LaunchedEffect(userCurrent) {
+        if (userCurrent) {
+            onNavigate()
+        }
     }
 
     Column(
@@ -61,7 +53,7 @@ fun SignUpScreen(
             text = stringResource(R.string.sign_up),
             fontWeight = FontWeight.Bold,
             fontSize = 28,
-            color = Color.Yellow,
+            color = DarkYellow,
             modifier = Modifier.padding(end = 16.dp, top = 64.dp)
         )
         Column(
@@ -69,86 +61,48 @@ fun SignUpScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(bottom = 36.dp)
         ) {
-            TextField(
-                value = name,
-                onValueChange = {
-                    name = it
-                },
-                placeholder = { Text(stringResource(R.string.enter_your_name)) },
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.Yellow,
-                    focusedContainerColor = Color.DarkGray,
-                    unfocusedContainerColor = Color.Black,
-                    focusedIndicatorColor = LightBlack,
-                    unfocusedIndicatorColor = LightBlack
-                )
+            CustomTextField(
+                userId.name,
+                stringResource(R.string.enter_your_name),
+                onChangeValue = {
+                    viewModel.changeItemName(it)
+                }
             )
-            TextField(
-                value = surname,
-                onValueChange = {
-                    surname = it
-                },
-                maxLines = 1,
-                placeholder = { Text(stringResource(R.string.enter_your_surname)) },
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.Yellow,
-                    focusedContainerColor = Color.DarkGray,
-                    unfocusedContainerColor = Color.Black,
-                    focusedIndicatorColor = LightBlack,
-                    unfocusedIndicatorColor = LightBlack
-                )
+            CustomTextField(
+                userId.surname,
+                stringResource(R.string.enter_your_surname),
+                onChangeValue = {
+                    viewModel.changeItemSurname(it)
+                }
             )
-            TextField(
-                value = email,
-                onValueChange = {
-                    email = it
+            CustomTextField(
+                userId.signUpEmail, stringResource(R.string.enter_your_e_mail),
+                onChangeValue = {
+                    viewModel.changeItemSignUpEmail(it)
                 },
-                maxLines = 1,
-                placeholder = { Text(stringResource(R.string.enter_your_e_mail)) },
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.Yellow,
-                    focusedContainerColor = Color.DarkGray,
-                    unfocusedContainerColor = Color.Black,
-                    focusedIndicatorColor = LightBlack,
-                    unfocusedIndicatorColor = LightBlack
-                )
+                keyboardType = KeyboardType.Email
             )
-            TextField(
-                value = password,
-                onValueChange = {
-                    password = it
+            CustomTextField(
+                userId.signUpPassword, stringResource(R.string.enter_your_password),
+                onChangeValue = {
+                    viewModel.changeItemSignUpPassword(it)
                 },
-                maxLines = 1,
-                placeholder = { Text(stringResource(R.string.enter_your_password)) },
-                modifier = Modifier
-                    .padding(bottom = 8.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.Yellow,
-                    focusedContainerColor = Color.DarkGray,
-                    unfocusedContainerColor = Color.Black,
-                    focusedIndicatorColor = LightBlack,
-                    unfocusedIndicatorColor = LightBlack
-                )
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardType = KeyboardType.Password
             )
             Spacer(modifier = Modifier.height(24.dp))
             ElevatedButton(
-                onClick = onNavigate,
+                onClick = {
+                    viewModel.createUserInFirebase(
+                        name = userId.name,
+                        surname = userId.surname,
+                        email = userId.signUpEmail,
+                        password = userId.signUpPassword
+                    )
+                    if (userCurrent) onNavigate()
+                },
                 colors = ButtonDefaults.elevatedButtonColors(
-                    containerColor = Color.Yellow
+                    containerColor = DarkYellow
                 ),
                 modifier = Modifier.width(150.dp)
             ) {
