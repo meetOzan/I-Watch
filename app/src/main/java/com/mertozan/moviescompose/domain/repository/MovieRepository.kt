@@ -8,26 +8,25 @@ import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.data.model.entity.UserEntity
-import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.model.UserModel
 
 interface MovieRepository {
 
-    fun getAllPopularMovies(): List<ContentModel>
+    fun getAllPopularMovies(): List<MovieEntity>
 
-    fun getAllPopularSeries(): List<ContentModel>
+    fun getAllPopularSeries(): List<SeriesEntity>
 
-    fun getAllTopRatedMovies(): List<ContentModel>
+    fun getAllTopRatedMovies(): List<TopMovieEntity>
 
-    fun getAllTopRatedSeries(): List<ContentModel>
+    fun getAllTopRatedSeries(): List<TopSeriesEntity>
 
-    fun addPopularMoviesToLocal(movieItem: List<ContentModel>)
+    fun addPopularMoviesToLocal(movieItem: List<MovieEntity>)
 
-    fun addPopularSeriesToLocal(seriesItem: List<ContentModel>)
+    fun addPopularSeriesToLocal(seriesItem: List<SeriesEntity>)
 
-    fun addTopRatedMoviesToLocal(movieItem: List<ContentModel>)
+    fun addTopRatedMoviesToLocal(movieItem: List<TopMovieEntity>)
 
-    fun addTopRatedSeries(seriesItem: List<ContentModel>)
+    fun addTopRatedSeries(seriesItem: List<TopSeriesEntity>)
 
     fun addUserToLocal(user: UserEntity)
 
@@ -39,8 +38,6 @@ interface MovieRepository {
 
     fun getSingleTopSeries(seriesId: Int): TopSeriesEntity
 
-    fun getSingleLocalUser(): UserModel
-
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean)
 
     fun updateSeriesFavorite(seriesId: Int, isFavorite: Boolean)
@@ -51,7 +48,9 @@ interface MovieRepository {
 
     suspend fun getUserFromLocale(): UserModel
 
-    suspend fun getUserFromNetwork() : UserModel
+    suspend fun getUserFromNetwork(): UserModel
+
+    fun getSingleLocalUser(): UserModel
 
     suspend fun signOut()
 

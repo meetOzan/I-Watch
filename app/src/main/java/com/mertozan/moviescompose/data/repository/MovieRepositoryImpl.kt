@@ -1,8 +1,12 @@
 package com.mertozan.moviescompose.data.repository
 
 import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
+import com.mertozan.moviescompose.data.mapper.movieModelToMovieEntityList
+import com.mertozan.moviescompose.data.mapper.movieModelToTopMovieEntityList
 import com.mertozan.moviescompose.data.mapper.moviesToMovieModelList
-import com.mertozan.moviescompose.data.mapper.seriestoSeriesModelList
+import com.mertozan.moviescompose.data.mapper.seriesToSeriesModelList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToSeriesEntityList
+import com.mertozan.moviescompose.data.mapper.toDetailItemToTopSeriesEntityList
 import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.data.model.dto.GenresResponse
 import com.mertozan.moviescompose.data.model.dto.MovieResponse
@@ -14,7 +18,6 @@ import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.data.model.entity.UserEntity
 import com.mertozan.moviescompose.data.remote.firebase.FirebaseDataSource
 import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
-import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.domain.repository.MovieRepository
 import kotlinx.coroutines.CoroutineScope
@@ -36,35 +39,35 @@ class MovieRepositoryImpl @Inject constructor(
         transferToLocal()
     }
 
-    override fun getAllPopularMovies(): List<ContentModel> {
+    override fun getAllPopularMovies(): List<MovieEntity> {
         return localDataSource.getAllPopularMovies()
     }
 
-    override fun getAllPopularSeries(): List<ContentModel> {
+    override fun getAllPopularSeries(): List<SeriesEntity> {
         return localDataSource.getAllPopularSeries()
     }
 
-    override fun getAllTopRatedMovies(): List<ContentModel> {
+    override fun getAllTopRatedMovies(): List<TopMovieEntity> {
         return localDataSource.getAllTopRatedMovies()
     }
 
-    override fun getAllTopRatedSeries(): List<ContentModel> {
+    override fun getAllTopRatedSeries(): List<TopSeriesEntity> {
         return localDataSource.getAllTopRatedSeries()
     }
 
-    override fun addPopularMoviesToLocal(movieItem: List<ContentModel>) {
+    override fun addPopularMoviesToLocal(movieItem: List<MovieEntity>) {
         localDataSource.addPopularMoviesToLocal(movieItem = movieItem)
     }
 
-    override fun addPopularSeriesToLocal(seriesItem: List<ContentModel>) {
+    override fun addPopularSeriesToLocal(seriesItem: List<SeriesEntity>) {
         localDataSource.addPopularSeriesToLocal(seriesItem = seriesItem)
     }
 
-    override fun addTopRatedMoviesToLocal(movieItem: List<ContentModel>) {
+    override fun addTopRatedMoviesToLocal(movieItem: List<TopMovieEntity>) {
         localDataSource.addTopRatedMoviesToLocal(movieItem)
     }
 
-    override fun addTopRatedSeries(seriesItem: List<ContentModel>) {
+    override fun addTopRatedSeries(seriesItem: List<TopSeriesEntity>) {
         localDataSource.addTopRatedSeries(seriesItem = seriesItem)
     }
 
@@ -153,28 +156,38 @@ class MovieRepositoryImpl @Inject constructor(
     private fun transferToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
 
+            /**
+             * DTO -> Model -> Entity
+             */
+
             if (getAllPopularMovies().isEmpty()) {
                 addPopularMoviesToLocal(
                     getAllPopularNetworkMovies()
-                        .movieResults.moviesToMovieModelList()
+                        .movieResults
+                        .moviesToMovieModelList()
+                        .movieModelToMovieEntityList()
                 )
             }
             if (getAllPopularSeries().isEmpty()) {
                 addPopularSeriesToLocal(
                     getAllPopularNetworkSeries()
-                        .seriesResults.seriestoSeriesModelList()
+                        .seriesResults
+                        .seriesToSeriesModelList()
+                        .toDetailItemToSeriesEntityList()
                 )
             }
             if (getAllTopRatedMovies().isEmpty()) {
                 addTopRatedMoviesToLocal(
                     getAllTopRatedNetworkMovies()
                         .movieResults.moviesToMovieModelList()
+                        .movieModelToTopMovieEntityList()
                 )
             }
             if (getAllTopRatedSeries().isEmpty()) {
                 addTopRatedSeries(
                     getAllNetworkTopRatedSeries()
-                        .seriesResults.seriestoSeriesModelList()
+                        .seriesResults.seriesToSeriesModelList()
+                        .toDetailItemToTopSeriesEntityList()
                 )
             }
         }

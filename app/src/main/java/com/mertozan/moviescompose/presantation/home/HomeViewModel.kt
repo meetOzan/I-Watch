@@ -3,7 +3,6 @@ package com.mertozan.moviescompose.presantation.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.usecase.GetAllPopularMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllPopularSeries
@@ -49,7 +48,7 @@ class HomeViewModel @Inject constructor(
     private val _contentListType = MutableStateFlow("")
     val contentListType = _contentListType.asStateFlow()
 
-    private val _contentTitle = MutableStateFlow(0)
+    private val _contentTitle = MutableStateFlow("")
     val contentTitle = _contentTitle.asStateFlow()
 
     private val type = savedStateHandle.get<String>(key = ARGS_TYPE)
@@ -66,13 +65,13 @@ class HomeViewModel @Inject constructor(
             ContentTypes.MOVIE.name -> {
                 _topRatedContents.value = topRatedMovies.value
                 _contentListType.value = ContentTypes.MOVIE.name
-                _contentTitle.value = R.string.top_rated_movies
+                _contentTitle.value = "Top Rated Movies"
             }
 
             ContentTypes.SERIES.name -> {
                 _topRatedContents.value = topRatedSeries.value
                 _contentListType.value = ContentTypes.SERIES.name
-                _contentTitle.value = R.string.top_rated_series
+                _contentTitle.value = "Top Rated Series"
             }
         }
     }

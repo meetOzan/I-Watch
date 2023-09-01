@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetUserFromLocal @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke() : UserModel{
+    suspend operator fun invoke(): UserModel {
         return movieRepository.getUserFromLocale()
     }
 }

@@ -3,21 +3,12 @@ package com.mertozan.moviescompose.data.local.datasource
 import com.mertozan.moviescompose.data.local.dao.MovieDao
 import com.mertozan.moviescompose.data.local.dao.SeriesDao
 import com.mertozan.moviescompose.data.local.dao.UserDao
-import com.mertozan.moviescompose.data.mapper.movieModelToMovieEntityList
-import com.mertozan.moviescompose.data.mapper.movieModelToTopMovieEntityList
-import com.mertozan.moviescompose.data.mapper.moviesToMoviesModelList
-import com.mertozan.moviescompose.data.mapper.toDetailItemToSeriesEntityList
-import com.mertozan.moviescompose.data.mapper.toDetailItemToTopSeriesEntityList
-import com.mertozan.moviescompose.data.mapper.toSeriesDetailItemList
-import com.mertozan.moviescompose.data.mapper.toTopSeriesDetailItemList
 import com.mertozan.moviescompose.data.mapper.toUserEntityToUserItem
-import com.mertozan.moviescompose.data.mapper.topMoviesToMovieModelList
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.data.model.entity.UserEntity
-import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.model.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,36 +20,36 @@ class LocalDataSource @Inject constructor(
     private val seriesDao: SeriesDao,
     private val userDao: UserDao
 ) {
-    fun getAllPopularMovies(): List<ContentModel> {
-        return movieDao.getPopularMovies().moviesToMoviesModelList()
+    fun getAllPopularMovies(): List<MovieEntity> {
+        return movieDao.getPopularMovies()
     }
 
-    fun getAllPopularSeries(): List<ContentModel> {
-        return seriesDao.getPopularSeries().toSeriesDetailItemList()
+    fun getAllPopularSeries(): List<SeriesEntity> {
+        return seriesDao.getPopularSeries()
     }
 
-    fun getAllTopRatedMovies(): List<ContentModel> {
-        return movieDao.getTopMovies().topMoviesToMovieModelList()
+    fun getAllTopRatedMovies(): List<TopMovieEntity> {
+        return movieDao.getTopMovies()
     }
 
-    fun getAllTopRatedSeries(): List<ContentModel> {
-        return seriesDao.getTopSeries().toTopSeriesDetailItemList()
+    fun getAllTopRatedSeries(): List<TopSeriesEntity> {
+        return seriesDao.getTopSeries()
     }
 
-    fun addPopularMoviesToLocal(movieItem: List<ContentModel>) {
-        movieDao.addMovieToLocal(movieItem.movieModelToMovieEntityList())
+    fun addPopularMoviesToLocal(movieItem: List<MovieEntity>) {
+        movieDao.addMovieToLocal(movieItem)
     }
 
-    fun addPopularSeriesToLocal(seriesItem: List<ContentModel>) {
-        seriesDao.addSeriesToLocal(seriesItem.toDetailItemToSeriesEntityList())
+    fun addPopularSeriesToLocal(seriesItem: List<SeriesEntity>) {
+        seriesDao.addSeriesToLocal(seriesItem)
     }
 
-    fun addTopRatedMoviesToLocal(movieItem: List<ContentModel>) {
-        movieDao.addTopMoviesToLocal(movieItem.movieModelToTopMovieEntityList())
+    fun addTopRatedMoviesToLocal(movieItem: List<TopMovieEntity>) {
+        movieDao.addTopMoviesToLocal(movieItem)
     }
 
-    fun addTopRatedSeries(seriesItem: List<ContentModel>) {
-        seriesDao.addTopSeriesToLocal(seriesItem.toDetailItemToTopSeriesEntityList())
+    fun addTopRatedSeries(seriesItem: List<TopSeriesEntity>) {
+        seriesDao.addTopSeriesToLocal(seriesItem)
     }
 
     fun addUserToLocal(user: UserEntity) {

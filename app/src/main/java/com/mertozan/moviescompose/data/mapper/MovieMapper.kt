@@ -2,6 +2,7 @@ package com.mertozan.moviescompose.data.mapper
 
 import com.mertozan.moviescompose.data.model.dto.Movie
 import com.mertozan.moviescompose.data.model.entity.MovieEntity
+import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.util.extensions.orEmptyList
@@ -49,7 +50,7 @@ fun List<MovieEntity>.moviesToMoviesModelList(): List<ContentModel> {
             title = it.title,
             popularity = it.popularity.toString(),
             releaseDate = it.releaseDate,
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             voteAverage = it.voteAverage.toString(),
             voteCount = it.voteCount.orZero().toString(),
             isFavorite = it.isFavorite,
@@ -86,7 +87,7 @@ fun List<ContentModel>.movieModelToMovieEntityList(): List<MovieEntity> {
             title = it.title,
             popularity = it.popularity.toFloat(),
             releaseDate = it.releaseDate,
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             adult = it.adult,
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),
@@ -104,7 +105,7 @@ fun List<ContentModel>.movieModelToTopMovieEntityList(): List<TopMovieEntity> {
             title = it.title,
             popularity = it.popularity.toFloat(),
             releaseDate = it.releaseDate,
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             adult = it.adult,
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),

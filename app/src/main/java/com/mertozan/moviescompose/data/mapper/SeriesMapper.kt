@@ -41,7 +41,7 @@ fun TopSeriesEntity.topSeriesEntityToDetailItem(): ContentModel {
     )
 }
 
-fun List<Series>.seriestoSeriesModelList(): List<ContentModel> {
+fun List<Series>.seriesToSeriesModelList(): List<ContentModel> {
     return map {
         ContentModel(
             id = it.id,
@@ -49,7 +49,7 @@ fun List<Series>.seriestoSeriesModelList(): List<ContentModel> {
             popularity = it.popularity.toString(),
             releaseDate = it.firstAirDate,
             genresDto = it.genres.orEmptyList(),
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             voteAverage = it.voteAverage.toString(),
             voteCount = it.voteNumber.toString(),
             adult = it.adult.orFalse(),
@@ -105,7 +105,7 @@ fun List<ContentModel>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
             title = it.title,
             popularity = it.popularity.toFloat(),
             firstAirDate = it.releaseDate,
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             adult = it.adult,
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),
@@ -123,7 +123,7 @@ fun List<ContentModel>.toDetailItemToTopSeriesEntityList(): List<TopSeriesEntity
             title = it.title,
             popularity = it.popularity.toFloat(),
             firstAirDate = it.releaseDate,
-            posterPath = it.posterPath.orEmpty(),
+            posterPath = it.posterPath,
             adult = it.adult,
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),

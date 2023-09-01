@@ -114,6 +114,7 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
+
         ContentList(
             contentList = contentList.value,
             type = contentListType,

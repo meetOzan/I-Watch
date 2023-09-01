@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,7 +24,7 @@ fun ContentList(
     contentList: List<ContentModel>,
     navController: NavController,
     type: String,
-    title: Int
+    title: String
 ) {
     Column(
         modifier = Modifier
@@ -35,7 +34,7 @@ fun ContentList(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CustomText(
-            text = stringResource(id = title),
+            text = title,
             fontWeight = FontWeight.SemiBold,
             fontSize = 24,
             modifier = Modifier.padding(vertical = 16.dp)

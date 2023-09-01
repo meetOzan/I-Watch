@@ -20,7 +20,7 @@ data class SeriesEntity(
 
     @ColumnInfo(name = "series_posterPath") val posterPath: String? = "",
 
-    @ColumnInfo(name = "series_is_favorite") val isFavorite: Boolean?,
+    @ColumnInfo(name = "series_is_favorite") val isFavorite: Boolean,
 
     @ColumnInfo(name = "series_date") val firstAirDate: String? = "",
 
