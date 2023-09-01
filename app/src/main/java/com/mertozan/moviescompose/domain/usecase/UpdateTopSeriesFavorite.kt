@@ -1,12 +1,12 @@
 package com.mertozan.moviescompose.domain.usecase
 
-import com.mertozan.moviescompose.domain.repository.MovieRepository
+import com.mertozan.moviescompose.domain.repository.ContentRepository
 import javax.inject.Inject
 
 class UpdateTopSeriesFavorite @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val contentRepository: ContentRepository
 ) {
     operator fun invoke(seriesId: Int,isFavorite: Boolean){
-        movieRepository.updateTopSeriesFavorite(seriesId = seriesId, isFavorite = isFavorite)
+        contentRepository.updateTopSeriesFavorite(seriesId = seriesId, isFavorite = isFavorite)
     }
 }

@@ -1,12 +1,13 @@
 package com.mertozan.moviescompose.domain.usecase
 
-import com.mertozan.moviescompose.domain.repository.MovieRepository
+import com.mertozan.moviescompose.domain.repository.ContentRepository
+import com.mertozan.moviescompose.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetSingleLocalUser @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val userRepository: UserRepository
 ){
     operator fun invoke(){
-        movieRepository.getSingleLocalUser()
+        userRepository.getSingleLocalUser()
     }
 }

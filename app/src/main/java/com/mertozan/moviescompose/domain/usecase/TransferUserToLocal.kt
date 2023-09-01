@@ -1,13 +1,13 @@
 package com.mertozan.moviescompose.domain.usecase
 
-import com.mertozan.moviescompose.domain.repository.MovieRepository
+import com.mertozan.moviescompose.domain.repository.UserRepository
 import javax.inject.Inject
 
 class TransferUserToLocal @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val userRepository: UserRepository,
     private val getUserFromNetwork: GetUserFromNetwork
-    ) {
+) {
     suspend operator fun invoke() {
-        movieRepository.transferUserToLocal(getUserFromNetwork.invoke())
+        userRepository.transferUserToLocal(getUserFromNetwork.invoke())
     }
 }

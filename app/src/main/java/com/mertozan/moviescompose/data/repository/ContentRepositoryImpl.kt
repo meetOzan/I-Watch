@@ -7,7 +7,6 @@ import com.mertozan.moviescompose.data.mapper.moviesToMovieModelList
 import com.mertozan.moviescompose.data.mapper.seriesToSeriesModelList
 import com.mertozan.moviescompose.data.mapper.toDetailItemToSeriesEntityList
 import com.mertozan.moviescompose.data.mapper.toDetailItemToTopSeriesEntityList
-import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.data.model.dto.GenresResponse
 import com.mertozan.moviescompose.data.model.dto.MovieResponse
 import com.mertozan.moviescompose.data.model.dto.SeriesResponse
@@ -15,25 +14,17 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
-import com.mertozan.moviescompose.data.model.entity.UserEntity
-import com.mertozan.moviescompose.data.remote.firebase.FirebaseDataSource
 import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
-import com.mertozan.moviescompose.domain.model.UserModel
-import com.mertozan.moviescompose.domain.repository.MovieRepository
+import com.mertozan.moviescompose.domain.repository.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-object CollectionName {
-    const val COLLECTION_NAME = "users"
-}
-
-class MovieRepositoryImpl @Inject constructor(
+class ContentRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val firebaseDataSource: FirebaseDataSource,
     private val retrofitDataSource: RetrofitDataSource
-) : MovieRepository {
+) : ContentRepository {
 
     init {
         transferToLocal()
@@ -71,10 +62,6 @@ class MovieRepositoryImpl @Inject constructor(
         localDataSource.addTopRatedSeries(seriesItem = seriesItem)
     }
 
-    override fun addUserToLocal(user: UserEntity) {
-        localDataSource.addUserToLocal(user = user)
-    }
-
     override fun getSingleMovie(movieId: Int): MovieEntity {
         return localDataSource.getSingleMovie(movieId = movieId)
     }
@@ -91,10 +78,6 @@ class MovieRepositoryImpl @Inject constructor(
         return localDataSource.getSingleTopSeries(seriesId = seriesId)
     }
 
-    override fun getSingleLocalUser(): UserModel {
-        return localDataSource.getSingleLocalUser()
-    }
-
     override fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         localDataSource.updateMovieFavorite(movieId = movieId, isFavorite = isFavorite)
     }
@@ -109,18 +92,6 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
         localDataSource.updateTopSeriesFavorite(seriesId = seriesId, isFavorite = isFavorite)
-    }
-
-    override suspend fun getUserFromLocale(): UserModel {
-        return firebaseDataSource.getUser()
-    }
-
-    override suspend fun getUserFromNetwork(): UserModel {
-        return firebaseDataSource.getUserFromNetwork()
-    }
-
-    override suspend fun signOut() {
-        firebaseDataSource.signOut()
     }
 
     // Network
@@ -146,10 +117,6 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getSeriesGenres(): GenresResponse {
         return retrofitDataSource.getSeriesGenres()
-    }
-
-    override suspend fun transferUserToLocal(userModel: UserModel) {
-        localDataSource.addUserToLocal(userModel.toUserItemToUserEntity())
     }
 
     // Transfer
@@ -192,4 +159,8 @@ class MovieRepositoryImpl @Inject constructor(
             }
         }
     }
+}
+
+object CollectionName {
+    const val COLLECTION_NAME = "users"
 }

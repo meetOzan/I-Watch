@@ -3,6 +3,7 @@ package com.mertozan.moviescompose.presantation.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.usecase.GetAllPopularMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllPopularSeries
@@ -10,6 +11,7 @@ import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedSeries
 import com.mertozan.moviescompose.domain.usecase.UpdateMovieFavorite
 import com.mertozan.moviescompose.domain.usecase.UpdateSeriesFavorite
+import com.mertozan.moviescompose.infrastructure.StringResourceProvider
 import com.mertozan.moviescompose.presantation.navigation.ARGS_TYPE
 import com.mertozan.moviescompose.util.enums.ContentTypes
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +29,8 @@ class HomeViewModel @Inject constructor(
     private val getAllTopRatedMovies: GetAllTopRatedMovies,
     private val getAllTopRatedSeries: GetAllTopRatedSeries,
     private val updatePopularMovieFavorite: UpdateMovieFavorite,
-    private val updatePopularSeriesFavorite: UpdateSeriesFavorite
+    private val updatePopularSeriesFavorite: UpdateSeriesFavorite,
+    private val stringRes: StringResourceProvider
 ) : ViewModel() {
 
     private val _popularMovies = MutableStateFlow(emptyList<ContentModel>())
@@ -65,13 +68,13 @@ class HomeViewModel @Inject constructor(
             ContentTypes.MOVIE.name -> {
                 _topRatedContents.value = topRatedMovies.value
                 _contentListType.value = ContentTypes.MOVIE.name
-                _contentTitle.value = "Top Rated Movies"
+                _contentTitle.value = stringRes.getString(R.string.top_rated_movies)
             }
 
             ContentTypes.SERIES.name -> {
                 _topRatedContents.value = topRatedSeries.value
                 _contentListType.value = ContentTypes.SERIES.name
-                _contentTitle.value = "Top Rated Series"
+                _contentTitle.value = stringRes.getString(R.string.top_rated_series)
             }
         }
     }

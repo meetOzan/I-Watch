@@ -91,14 +91,14 @@ fun ContentItem(
                         color = DarkWhite80,
                         FontWeight.SemiBold,
                         modifier = Modifier
-                            .padding(top = 16.dp)
+                            .padding(top = 8.dp, bottom = 16.dp)
                     )
                     CustomText(
-                        text = content.overview.isLongerThan(60),
+                        text = content.overview.isLongerThan(100),
                         fontSize = 14,
                         color = DarkWhite80,
                         FontWeight.SemiBold,
-                        modifier = Modifier
+                        modifier = Modifier.padding(end = 8.dp)
                     )
                     Row(
                         horizontalArrangement = Arrangement.End,

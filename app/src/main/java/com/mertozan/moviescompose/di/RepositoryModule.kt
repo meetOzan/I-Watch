@@ -3,8 +3,10 @@ package com.mertozan.moviescompose.di
 import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
 import com.mertozan.moviescompose.data.remote.firebase.FirebaseDataSource
 import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
-import com.mertozan.moviescompose.data.repository.MovieRepositoryImpl
-import com.mertozan.moviescompose.domain.repository.MovieRepository
+import com.mertozan.moviescompose.data.repository.ContentRepositoryImpl
+import com.mertozan.moviescompose.data.repository.UserRepositoryImpl
+import com.mertozan.moviescompose.domain.repository.ContentRepository
+import com.mertozan.moviescompose.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +19,21 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideProductsRepository(
-        firebaseDataSource: FirebaseDataSource,
+    fun provideContentsRepository(
         retrofitDataSource: RetrofitDataSource,
         localDataSource: LocalDataSource
-    ): MovieRepository = MovieRepositoryImpl(localDataSource, firebaseDataSource, retrofitDataSource)
+    ): ContentRepository = ContentRepositoryImpl(
+        localDataSource,
+        retrofitDataSource
+    )
 
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        firebaseDataSource: FirebaseDataSource,
+        localDataSource: LocalDataSource
+    ): UserRepository = UserRepositoryImpl(
+        localDataSource,
+        firebaseDataSource
+    )
 }
