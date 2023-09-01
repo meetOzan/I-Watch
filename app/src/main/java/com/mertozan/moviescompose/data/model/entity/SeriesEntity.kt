@@ -1,12 +1,9 @@
 package com.mertozan.moviescompose.data.model.entity
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @Entity("series_entity")
 data class SeriesEntity(
 
@@ -23,7 +20,7 @@ data class SeriesEntity(
 
     @ColumnInfo(name = "series_posterPath") val posterPath: String? = "",
 
-    @ColumnInfo(name = "series_is_favorite") val isFavorite : Boolean?,
+    @ColumnInfo(name = "series_is_favorite") val isFavorite: Boolean,
 
     @ColumnInfo(name = "series_date") val firstAirDate: String? = "",
 
@@ -37,4 +34,4 @@ data class SeriesEntity(
 
     @ColumnInfo(name = "series_language") val originalLanguage: String = ""
 
-) : Parcelable
+)

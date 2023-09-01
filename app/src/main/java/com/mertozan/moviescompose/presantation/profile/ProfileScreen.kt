@@ -26,10 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.custom.components.CustomText
-import com.mertozan.moviescompose.presantation.custom.items.ProfileOptionsCard
-import com.mertozan.moviescompose.ui.theme.DarkWhite80
-import com.mertozan.moviescompose.ui.theme.DarkYellow
+import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.profile.components.ProfileOptionsCard
+import com.mertozan.moviescompose.presantation.theme.DarkWhite80
+import com.mertozan.moviescompose.presantation.theme.DarkYellow
 
 @Composable
 fun ProfileScreen(
