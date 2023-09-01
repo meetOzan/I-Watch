@@ -13,20 +13,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.navigation.ContentListScreen
-import com.mertozan.moviescompose.navigation.DetailScreen
-import com.mertozan.moviescompose.presantation.custom.layouts.MainColumn
-import com.mertozan.moviescompose.presantation.custom.layouts.MainRow
+import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.presantation.home.components.MainRow
+import com.mertozan.moviescompose.presantation.home.components.MainColumn
+import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
+import com.mertozan.moviescompose.presantation.navigation.DetailScreen
+import com.mertozan.moviescompose.util.enums.ContentTypes
 import com.mertozan.moviescompose.util.enums.ListType
-import com.mertozan.moviescompose.util.enums.MovieOrSeries
 
 @Composable
 fun HomeScreen(
-    popularMovieList: List<DetailItem>,
-    popularSeriesList: List<DetailItem>,
-    topRatedMovieList: List<DetailItem>,
-    topRatedSeriesList: List<DetailItem>,
+    popularMovieList: List<ContentModel>,
+    popularSeriesList: List<ContentModel>,
+    topRatedMovieList: List<ContentModel>,
+    topRatedSeriesList: List<ContentModel>,
     navController: NavController,
     viewModel: HomeViewModel
 ) {
@@ -40,13 +40,13 @@ fun HomeScreen(
         MainRow(
             title = stringResource(R.string.top_20_movies_on_this_week),
             list = popularMovieList,
-            type = MovieOrSeries.MOVIE.name,
+            type = ContentTypes.MOVIE.name,
             listType = ListType.POPULAR.name,
             onClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        MovieOrSeries.MOVIE.name,
+                        ContentTypes.MOVIE.name,
                         ListType.POPULAR.name
                     )
                 )
@@ -58,13 +58,13 @@ fun HomeScreen(
         MainRow(
             title = stringResource(R.string.top_20_tv_series_on_this_week),
             list = popularSeriesList,
-            type = MovieOrSeries.SERIES.name,
+            type = ContentTypes.SERIES.name,
             listType = ListType.POPULAR.name,
             onClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        MovieOrSeries.SERIES.name,
+                        ContentTypes.SERIES.name,
                         ListType.POPULAR.name
                     )
                 )
@@ -74,13 +74,13 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         MainColumn(
             list = topRatedMovieList,
-            type = MovieOrSeries.MOVIE.name,
+            type = ContentTypes.MOVIE.name,
             listType = ListType.TOP_RATED.name,
             onToDetailClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        MovieOrSeries.MOVIE.name,
+                        ContentTypes.MOVIE.name,
                         ListType.TOP_RATED.name
                     ),
                 )
@@ -88,7 +88,7 @@ fun HomeScreen(
             onToContentListClick = {
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        MovieOrSeries.MOVIE.name
+                        ContentTypes.MOVIE.name
                     )
                 )
             },
@@ -97,13 +97,13 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(12.dp))
         MainColumn(
             list = topRatedSeriesList,
-            type = MovieOrSeries.SERIES.name,
+            type = ContentTypes.SERIES.name,
             listType = ListType.TOP_RATED.name,
             onToDetailClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        MovieOrSeries.SERIES.name,
+                        ContentTypes.SERIES.name,
                         ListType.TOP_RATED.name
                     )
                 )
@@ -111,7 +111,7 @@ fun HomeScreen(
             onToContentListClick = {
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        MovieOrSeries.SERIES.name
+                        ContentTypes.SERIES.name
                     )
                 )
             },

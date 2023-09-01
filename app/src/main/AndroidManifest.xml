@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MoviesCompose"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presantation.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MoviesCompose">
             <intent-filter>

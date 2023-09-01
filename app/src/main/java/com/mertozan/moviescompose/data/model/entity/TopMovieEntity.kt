@@ -1,13 +1,10 @@
 package com.mertozan.moviescompose.data.model.entity
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
 @Entity("top_movies")
-@Parcelize
 data class TopMovieEntity(
 
     @PrimaryKey
@@ -37,4 +34,4 @@ data class TopMovieEntity(
 
     @ColumnInfo(name = "top_movie_language") val originalLanguage: String = ""
 
-) : Parcelable
+)

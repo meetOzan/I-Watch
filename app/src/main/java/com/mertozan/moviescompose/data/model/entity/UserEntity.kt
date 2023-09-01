@@ -1,18 +1,15 @@
 package com.mertozan.moviescompose.data.model.entity
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
 @Entity("user_entity")
-@Parcelize
 data class UserEntity(
 
     @PrimaryKey
     @ColumnInfo("user_id")
-    val id : Int,
+    val id: Int,
 
     @ColumnInfo("user_name")
     val name: String,
@@ -25,5 +22,5 @@ data class UserEntity(
 
     @ColumnInfo("user_watched")
     val watched: Int
-    
-) : Parcelable
+
+)

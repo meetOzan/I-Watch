@@ -31,9 +31,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.custom.screen.NoGeneratedContents
-import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
-import com.mertozan.moviescompose.ui.theme.LightBlack
+import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.generate.components.NoGeneratedContents
+import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun GenerateContent(

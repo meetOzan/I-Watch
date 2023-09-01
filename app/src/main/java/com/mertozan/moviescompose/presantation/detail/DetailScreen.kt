@@ -39,16 +39,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.domain.model.DetailItem
-import com.mertozan.moviescompose.presantation.custom.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.custom.components.CustomText
-import com.mertozan.moviescompose.ui.theme.DarkYellow
-import com.mertozan.moviescompose.ui.theme.amazonEmberFamily
+import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.theme.DarkYellow
+import com.mertozan.moviescompose.presantation.theme.amazonEmberFamily
 
 @Composable
 fun DetailScreen(
     onBackClicked: () -> Unit,
-    detail: DetailItem,
+    detail: ContentModel,
     viewModel: DetailViewModel
 ) {
 
