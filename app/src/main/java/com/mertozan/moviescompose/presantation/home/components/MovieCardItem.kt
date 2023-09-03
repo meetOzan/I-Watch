@@ -36,18 +36,18 @@ import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.home.HomeViewModel
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.theme.Dark80
 import com.mertozan.moviescompose.presantation.theme.amazonEmberFamily
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
-fun MovieCardItem(
+fun MainRowCardItem(
     onCardClick: () -> Unit,
     content: ContentModel,
     number: Int,
     type: String,
-    viewModel: HomeViewModel
+    onFavoriteAction: (HomeAction) -> Unit
 ) {
 
     var isFavorite by rememberSaveable {
@@ -104,7 +104,13 @@ fun MovieCardItem(
                     .size(28.dp)
                     .padding(bottom = 4.dp)
                     .clickable {
-                        viewModel.updateFavoriteState(content.id, content.isFavorite, type)
+                        onFavoriteAction(
+                            HomeAction.UpdateFavoriteState(
+                                content.id,
+                                content.isFavorite,
+                                type
+                            )
+                        )
                         isFavorite = !isFavorite
                     },
                 alignment = Alignment.TopStart

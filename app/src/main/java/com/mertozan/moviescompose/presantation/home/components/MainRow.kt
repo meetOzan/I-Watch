@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomText
-import com.mertozan.moviescompose.presantation.home.HomeViewModel
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
@@ -27,7 +27,7 @@ fun MainRow(
     type: String,
     listType: String,
     onClick: (Int, String, String) -> Unit,
-    viewModel: HomeViewModel
+    onFavoriteAction: (HomeAction) -> Unit
 ) {
     Row(
         modifier = Modifier.padding(vertical = 8.dp),
@@ -53,14 +53,14 @@ fun MainRow(
             .padding(bottom = 8.dp)
     ) {
         items(list) { content ->
-            MovieCardItem(
+            MainRowCardItem(
                 onCardClick = {
                     onClick(content.id, type, listType)
                 },
                 content = content,
                 number = (list.indexOf(content)).plus(1),
-                viewModel = viewModel,
-                type = type
+                type = type,
+                onFavoriteAction = onFavoriteAction
             )
         }
     }

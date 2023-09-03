@@ -101,6 +101,7 @@ com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", vers
 android-compose-ui = {module = "androidx.compose.ui:ui", version.ref = "bottomNav"}
 android-compose-material = {module = "androidx.compose.material:material", version.ref = "bottomNav"}
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore"}
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version = "2.9.9" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

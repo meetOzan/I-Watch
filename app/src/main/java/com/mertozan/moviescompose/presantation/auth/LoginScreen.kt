@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import com.mertozan.moviescompose.presantation.auth.PagerState.PAGER_STATE
 import com.mertozan.moviescompose.presantation.auth.signIn.SignInScreen
 import com.mertozan.moviescompose.presantation.auth.signUp.SignUpScreen
+import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
 import com.mertozan.moviescompose.util.enums.PagerScreen
 
 @OptIn(ExperimentalFoundationApi::class)

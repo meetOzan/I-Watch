@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.auth.LoginViewModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
 import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.components.CustomTextField
 import com.mertozan.moviescompose.presantation.theme.DarkYellow

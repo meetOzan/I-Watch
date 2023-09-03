@@ -42,6 +42,7 @@ import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.amazonEmberFamily
 
@@ -49,7 +50,7 @@ import com.mertozan.moviescompose.presantation.theme.amazonEmberFamily
 fun DetailScreen(
     onBackClicked: () -> Unit,
     detail: ContentModel,
-    viewModel: DetailViewModel
+    onUpdateAction: (DetailAction) -> Unit
 ) {
 
     val animateFavColor: Color by animateColorAsState(
@@ -157,7 +158,7 @@ fun DetailScreen(
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        viewModel.updateFavorite(detail.isFavorite)
+                        onUpdateAction(DetailAction.UpdateSingleFavorite(detail.isFavorite))
                     },
             )
         }

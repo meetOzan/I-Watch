@@ -19,7 +19,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,19 +30,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.generate.components.NoGeneratedContents
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun GenerateContent(
-    viewModel: GenerateViewModel
+    onShuffleAction: (GenerateAction) -> Unit,
+    trendList: List<ContentModel>
 ) {
 
     var isPreferred by remember {
         mutableStateOf(false)
     }
-    val trendList = viewModel.allContents.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -84,7 +85,7 @@ fun GenerateContent(
                 if (!isPreferred) {
                     isPreferred = true
                 } else {
-                    viewModel.shuffleList()
+                    onShuffleAction(GenerateAction.ShuffleList)
                 }
             }, modifier = Modifier
                 .size(75.dp)

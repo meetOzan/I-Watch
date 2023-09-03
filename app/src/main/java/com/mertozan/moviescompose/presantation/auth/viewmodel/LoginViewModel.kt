@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.auth
+package com.mertozan.moviescompose.presantation.auth.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -33,6 +33,9 @@ class LoginViewModel @Inject constructor(
     private var _exceptionMessage = MutableStateFlow("")
     val exceptionMessage = _exceptionMessage.asStateFlow()
 
+    private var _uiState = MutableStateFlow(AuthUiState())
+    val uiState = _uiState.asStateFlow()
+
     val userItem = MutableStateFlow(UserModel())
 
     init {
@@ -51,7 +54,7 @@ class LoginViewModel @Inject constructor(
 
     fun transferUserToLocal() {
         viewModelScope.launch(Dispatchers.IO) {
-            transferUserToLocal
+            transferUserToLocal()
         }
     }
 

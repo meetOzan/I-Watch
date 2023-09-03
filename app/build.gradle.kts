@@ -69,6 +69,7 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.crashlytics.buildtools)
     val composeBom = platform(libs.androidx.compose.bom)
 
     implementation(libs.androidx.core.ktx) /*1.9.0*/

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.remote.retrofit
+package com.mertozan.moviescompose.data.source.remote
 
 import com.mertozan.moviescompose.data.model.dto.GenresResponse
 import com.mertozan.moviescompose.data.model.dto.MovieResponse

@@ -3,24 +3,25 @@ package com.mertozan.moviescompose.presantation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mertozan.moviescompose.presantation.detail.components.ContentList
-import com.mertozan.moviescompose.presantation.detail.DetailScreen
-import com.mertozan.moviescompose.presantation.detail.DetailViewModel
-import com.mertozan.moviescompose.presantation.generate.GenerateContent
-import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
-import com.mertozan.moviescompose.presantation.home.HomeScreen
-import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.presantation.auth.LoginScreen
-import com.mertozan.moviescompose.presantation.auth.LoginViewModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
+import com.mertozan.moviescompose.presantation.detail.DetailScreen
+import com.mertozan.moviescompose.presantation.home.components.ContentList
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailViewModel
+import com.mertozan.moviescompose.presantation.generate.GenerateContent
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateViewModel
+import com.mertozan.moviescompose.presantation.home.HomeScreen
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
-import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
+import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
 
 @Composable
@@ -66,17 +67,18 @@ fun MovieNavHost(
 fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<HomeViewModel>()
-        val popularMovieList = viewModel.popularMovies.collectAsState()
-        val popularSeriesList = viewModel.popularSeries.collectAsState()
-        val topRatedMovieList = viewModel.topRatedMovies.collectAsState()
-        val topRatedSeriesList = viewModel.topRatedSeries.collectAsState()
+        val homeUiState = viewModel.homeUiState.collectAsState().value
+        val popularMovieList = homeUiState.popularMovies
+        val popularSeriesList = homeUiState.popularSeries
+        val topRatedMovieList = homeUiState.topRatedMovies
+        val topRatedSeriesList = homeUiState.topRatedSeries
         HomeScreen(
-            popularMovieList = popularMovieList.value,
-            popularSeriesList = popularSeriesList.value,
-            topRatedMovieList = topRatedMovieList.value,
-            topRatedSeriesList = topRatedSeriesList.value,
+            popularMovieList = popularMovieList,
+            popularSeriesList = popularSeriesList,
+            topRatedMovieList = topRatedMovieList,
+            topRatedSeriesList = topRatedSeriesList,
             navController = navController,
-            viewModel = viewModel
+            onFavoriteAction = viewModel::onAction
         )
     }
 }
@@ -87,16 +89,16 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         arguments = DetailScreen.args
     ) {
         val viewModel: DetailViewModel = hiltViewModel()
-        val detail = viewModel.movieDetailUiState.collectAsState()
+        val detail = viewModel.uiState.collectAsState().value.movieDetailUiState
 
         LaunchedEffect(Unit) {
-            viewModel.getDetail()
+            viewModel.onAction(DetailAction.GetSingleDetail)
         }
 
         DetailScreen(
             onBackClicked = onNavigate,
-            detail = detail.value,
-            viewModel = viewModel
+            detail = detail,
+            onUpdateAction = viewModel::onAction
         )
     }
 }
@@ -107,16 +109,17 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         arguments = ContentListScreen.args
     ) {
         val viewModel: HomeViewModel = hiltViewModel()
-        val contentList = viewModel.topRatedContents.collectAsState()
-        val contentListType = viewModel.contentListType.collectAsState().value
-        val contentTitle = viewModel.contentTitle.collectAsState().value
+        val homeUiState = viewModel.homeUiState.collectAsState().value
+        val contentList = homeUiState.contentList
+        val contentListType = homeUiState.contentListType
+        val contentTitle = homeUiState.contentTitle
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
 
         ContentList(
-            contentList = contentList.value,
+            contentList = contentList,
             type = contentListType,
             title = contentTitle,
             navController = navController
@@ -150,13 +153,18 @@ fun NavGraphBuilder.generateScreen() {
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
+        val generateList = viewModel.generateUiState.collectAsState().value.allContents
 
         LaunchedEffect(Unit) {
             viewModel.getAllContents()
-            viewModel.shuffleList()
+            viewModel.onAction(GenerateAction.ShuffleList)
+            viewModel.getAllContents()
         }
 
-        GenerateContent(viewModel)
+        GenerateContent(
+            trendList = generateList,
+            onShuffleAction = viewModel::onAction
+        )
     }
 }
 
@@ -165,7 +173,7 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
-        val userItem by profileViewModel.user.collectAsState()
+        val userItem = profileViewModel.profileUiState.collectAsState().value.user
 
         ProfileScreen(
             fullName = userItem.fullName,

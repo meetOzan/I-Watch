@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.remote.firebase
+package com.mertozan.moviescompose.data.source.remote
 
 import android.content.res.Resources
 import com.google.firebase.auth.FirebaseAuth

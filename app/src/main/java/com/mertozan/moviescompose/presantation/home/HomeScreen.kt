@@ -14,8 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presantation.home.components.MainRow
 import com.mertozan.moviescompose.presantation.home.components.MainColumn
+import com.mertozan.moviescompose.presantation.home.components.MainRow
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presantation.navigation.DetailScreen
 import com.mertozan.moviescompose.util.enums.ContentTypes
@@ -28,7 +29,7 @@ fun HomeScreen(
     topRatedMovieList: List<ContentModel>,
     topRatedSeriesList: List<ContentModel>,
     navController: NavController,
-    viewModel: HomeViewModel
+    onFavoriteAction: (HomeAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +52,7 @@ fun HomeScreen(
                     )
                 )
             },
-            viewModel = viewModel
+            onFavoriteAction = onFavoriteAction
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -69,7 +70,7 @@ fun HomeScreen(
                     )
                 )
             },
-            viewModel = viewModel
+            onFavoriteAction = onFavoriteAction
         )
         Spacer(modifier = Modifier.height(24.dp))
         MainColumn(

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.data.local.datasource
+package com.mertozan.moviescompose.data.source.local
 
 import com.mertozan.moviescompose.data.local.dao.MovieDao
 import com.mertozan.moviescompose.data.local.dao.SeriesDao
@@ -83,7 +83,7 @@ class LocalDataSource @Inject constructor(
     }
 
     fun updateSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
-        seriesDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = isFavorite)
+        seriesDao.updateSeriesFavoriteState(seriesId = seriesId, isFavorite = !isFavorite)
     }
 
     fun updateTopMovieFavorite(movieId: Int, isFavorite: Boolean) {

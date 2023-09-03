@@ -1,6 +1,6 @@
 package com.mertozan.moviescompose.data.repository
 
-import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
+import com.mertozan.moviescompose.data.source.local.LocalDataSource
 import com.mertozan.moviescompose.data.mapper.movieModelToMovieEntityList
 import com.mertozan.moviescompose.data.mapper.movieModelToTopMovieEntityList
 import com.mertozan.moviescompose.data.mapper.moviesToMovieModelList
@@ -14,7 +14,7 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
-import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
+import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
 import com.mertozan.moviescompose.domain.repository.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
