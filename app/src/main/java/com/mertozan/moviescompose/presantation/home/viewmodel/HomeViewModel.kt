@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateFavoriteState(id: Int, isFavorite: Boolean, type: String) {
+    private fun updateFavoriteState(id: Int, isFavorite: Boolean, type: String) {
         when (type) {
             ContentTypes.MOVIE.name -> updateMovieFavorite(id,isFavorite)
             ContentTypes.SERIES.name -> updateSeriesFavorite(id, isFavorite)

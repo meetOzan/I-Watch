@@ -29,22 +29,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.generate.components.NoGeneratedContents
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateUiState
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun GenerateContent(
     onShuffleAction: (GenerateAction) -> Unit,
-    trendList: List<ContentModel>
+    trendList: List<ContentModel>,
+    generateUiState: GenerateUiState
 ) {
 
     var isPreferred by remember {
         mutableStateOf(false)
     }
+
+    val splashAnimateComposition by rememberLottieComposition(
+        spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_generate_loading))
+    )
 
     Column(
         modifier = Modifier
@@ -56,17 +66,28 @@ fun GenerateContent(
             modifier = Modifier.padding(top = 50.dp)
         ) {
             if (isPreferred) {
-                CustomAsyncImage(
-                    model = trendList[0].posterPath,
-                    contentDescription = stringResource(
-                        R.string.generated_image
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.6f)
-                        .background(LightBlack),
-                    alignment = Alignment.Center
-                )
+                if (generateUiState.isLoading){
+                    LottieAnimation(
+                        composition = splashAnimateComposition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .fillMaxHeight(0.6f),
+                        alignment = Alignment.Center
+                    )
+                }else{
+                    CustomAsyncImage(
+                        model = trendList[0].posterPath,
+                        contentDescription = stringResource(
+                            R.string.generated_image
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .fillMaxHeight(0.6f)
+                            .background(LightBlack),
+                        alignment = Alignment.Center
+                    )
+                }
             } else {
                 NoGeneratedContents()
             }

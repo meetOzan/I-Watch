@@ -47,4 +47,9 @@
     <string name="liked">liked</string>
     <string name="custom_content_item_poster">custom_content_item_poster</string>
     <string name="abc">Abc</string>
+    <string name="lottie_list_loading">https://lottie.host/c967aac8-d964-438e-ad07-52cdcab073ab/fV3ebOClL5.lottie</string>
+    <string name="lottie_row_loading">https://lottie.host/13391b81-e455-4e39-8588-5234275358f9/Azgp6sP7tW.lottie</string>
+    <string name="lottie_generate_loading">https://lottie.host/c79ec3a1-dcf2-4d3f-a3ba-7e1426305bf6/YxLphnyRyv.lottie</string>
+    <string name="watched_calculated">Watched: Calculated…</string>
+    <string name="watched">"Watched: %1$s "</string>
 </resources>

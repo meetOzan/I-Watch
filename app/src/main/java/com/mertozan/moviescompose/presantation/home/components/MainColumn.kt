@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -11,16 +12,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.home.components.ContentList.CONTENT_LIST
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 
@@ -31,8 +38,14 @@ fun MainColumn(
     listType: String,
     onToDetailClick: (Int, String, String) -> Unit,
     onToContentListClick: (String) -> Unit,
-    title: String
+    title: String,
+    homeUiState: HomeUiState
 ) {
+
+    val splashAnimateComposition by rememberLottieComposition(
+        spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_list_loading))
+    )
+
     Row(
         modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -62,24 +75,42 @@ fun MainColumn(
             fontWeight = FontWeight.Normal,
             color = Color.White,
             modifier = Modifier.clickable {
-                onToContentListClick(type)
+                if (list.isNotEmpty()) {
+                    onToContentListClick(type)
+                }
             }
         )
     }
-    LazyColumn(
-        modifier = Modifier
-            .background(LightBlack)
-            .height(250.dp)
-    ) {
-        itemsIndexed(list) { index, content ->
-            if (index < CONTENT_LIST) {
-                MainColumnItem(
-                    title = content.title,
-                    number = (list.indexOf(content)).plus(1),
-                    onNavigate = {
-                        onToDetailClick(content.id, type, listType)
-                    }
-                )
+    if (homeUiState.isLoading) {
+        LottieAnimation(
+            composition = splashAnimateComposition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier.fillMaxWidth(0.8f),
+            alignment = Alignment.Center
+        )
+    } else if (list.isEmpty()) {
+        LottieAnimation(
+            composition = splashAnimateComposition,
+            iterations = LottieConstants.IterateForever,
+            modifier = Modifier.fillMaxWidth(),
+            alignment = Alignment.Center
+        )
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .background(LightBlack)
+                .height(250.dp)
+        ) {
+            itemsIndexed(list) { index, content ->
+                if (index < CONTENT_LIST) {
+                    MainColumnItem(
+                        title = content.title,
+                        number = (list.indexOf(content)).plus(1),
+                        onNavigate = {
+                            onToDetailClick(content.id, type, listType)
+                        }
+                    )
+                }
             }
         }
     }

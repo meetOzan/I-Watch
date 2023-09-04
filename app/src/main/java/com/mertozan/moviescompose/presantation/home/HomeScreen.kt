@@ -17,6 +17,7 @@ import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.home.components.MainColumn
 import com.mertozan.moviescompose.presantation.home.components.MainRow
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presantation.navigation.DetailScreen
 import com.mertozan.moviescompose.util.enums.ContentTypes
@@ -29,14 +30,14 @@ fun HomeScreen(
     topRatedMovieList: List<ContentModel>,
     topRatedSeriesList: List<ContentModel>,
     navController: NavController,
-    onFavoriteAction: (HomeAction) -> Unit
+    onFavoriteAction: (HomeAction) -> Unit,
+    homeUiState: HomeUiState,
 ) {
     Column(
         modifier = Modifier
             .background(Color.Black)
             .verticalScroll(rememberScrollState())
     ) {
-
         Spacer(modifier = Modifier.height(16.dp))
         MainRow(
             title = stringResource(R.string.top_20_movies_on_this_week),
@@ -52,9 +53,9 @@ fun HomeScreen(
                     )
                 )
             },
-            onFavoriteAction = onFavoriteAction
+            onFavoriteAction = onFavoriteAction,
+            homeUiState = homeUiState
         )
-
         Spacer(modifier = Modifier.height(16.dp))
         MainRow(
             title = stringResource(R.string.top_20_tv_series_on_this_week),
@@ -70,7 +71,8 @@ fun HomeScreen(
                     )
                 )
             },
-            onFavoriteAction = onFavoriteAction
+            onFavoriteAction = onFavoriteAction,
+            homeUiState = homeUiState
         )
         Spacer(modifier = Modifier.height(24.dp))
         MainColumn(
@@ -93,7 +95,8 @@ fun HomeScreen(
                     )
                 )
             },
-            title = stringResource(R.string.top_rated_movies)
+            title = stringResource(R.string.top_rated_movies),
+            homeUiState = homeUiState
         )
         Spacer(modifier = Modifier.height(12.dp))
         MainColumn(
@@ -117,6 +120,7 @@ fun HomeScreen(
                 )
             },
             title = stringResource(R.string.top_rated_series),
+            homeUiState = homeUiState
         )
         Spacer(modifier = Modifier.height(72.dp))
     }

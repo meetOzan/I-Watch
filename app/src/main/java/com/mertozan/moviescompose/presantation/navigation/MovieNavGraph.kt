@@ -12,13 +12,13 @@ import androidx.navigation.compose.composable
 import com.mertozan.moviescompose.presantation.auth.LoginScreen
 import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
-import com.mertozan.moviescompose.presantation.home.components.ContentList
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailViewModel
 import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateViewModel
 import com.mertozan.moviescompose.presantation.home.HomeScreen
+import com.mertozan.moviescompose.presantation.home.components.ContentList
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileViewModel
@@ -78,7 +78,8 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
             topRatedMovieList = topRatedMovieList,
             topRatedSeriesList = topRatedSeriesList,
             navController = navController,
-            onFavoriteAction = viewModel::onAction
+            onFavoriteAction = viewModel::onAction,
+            homeUiState = homeUiState
         )
     }
 }
@@ -153,17 +154,20 @@ fun NavGraphBuilder.generateScreen() {
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
-        val generateList = viewModel.generateUiState.collectAsState().value.allContents
+        val generateUiState = viewModel.generateUiState.collectAsState().value
+        var generateList = generateUiState.allContents
 
         LaunchedEffect(Unit) {
             viewModel.getAllContents()
             viewModel.onAction(GenerateAction.ShuffleList)
-            viewModel.getAllContents()
+            generateList = viewModel.generateUiState.value.allContents
         }
+
 
         GenerateContent(
             trendList = generateList,
-            onShuffleAction = viewModel::onAction
+            onShuffleAction = viewModel::onAction,
+            generateUiState = generateUiState
         )
     }
 }
@@ -173,13 +177,15 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
-        val userItem = profileViewModel.profileUiState.collectAsState().value.user
+        val profileUiState = profileViewModel.profileUiState.collectAsState().value
+        val userItem = profileUiState.user
 
         ProfileScreen(
             fullName = userItem.fullName,
             watched = userItem.watched,
             onNavigate = onNavigate,
-            onSignOutClick = profileViewModel::signOut
+            onSignOutClick = profileViewModel::signOut,
+            profileUiState = profileUiState
         )
     }
 }

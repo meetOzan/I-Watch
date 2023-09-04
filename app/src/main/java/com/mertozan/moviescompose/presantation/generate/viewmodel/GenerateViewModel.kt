@@ -42,6 +42,7 @@ class GenerateViewModel @Inject constructor(
 
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
+                    shuffleList()
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
@@ -59,6 +60,7 @@ class GenerateViewModel @Inject constructor(
 
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
+                    shuffleList()
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
@@ -76,6 +78,7 @@ class GenerateViewModel @Inject constructor(
 
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
+                    shuffleList()
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
@@ -93,6 +96,7 @@ class GenerateViewModel @Inject constructor(
 
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
+                    shuffleList()
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
@@ -100,10 +104,13 @@ class GenerateViewModel @Inject constructor(
     }
 
     fun getAllContents() {
-        getTopRatedMovies()
-        getTopRatedSeries()
-        getPopularSeries()
-        getPopularMovies()
+        viewModelScope.launch(Dispatchers.IO) {
+            getTopRatedMovies()
+            getTopRatedSeries()
+            getPopularSeries()
+            getPopularMovies()
+            shuffleList()
+        }
     }
 
     private fun shuffleList() {

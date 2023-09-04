@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.profile.components.ProfileOptionsCard
+import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileUiState
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 
@@ -36,7 +37,8 @@ fun ProfileScreen(
     onNavigate: () -> Unit,
     onSignOutClick: () -> Unit,
     fullName: String,
-    watched: Int
+    watched: Int,
+    profileUiState: ProfileUiState
 ) {
 
     Column(
@@ -63,32 +65,58 @@ fun ProfileScreen(
                 colorFilter = ColorFilter.tint(DarkYellow)
             )
             Spacer(modifier = Modifier.width(24.dp))
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                CustomText(
-                    text = fullName,
-                    fontSize = 24,
-                    color = DarkWhite80,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-                Row(
-                    horizontalArrangement = Arrangement.Center,
+            if (profileUiState.isLoading) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     CustomText(
-                        text = "Watched: $watched ",
-                        fontSize = 20,
+                        text = "Still waiting...",
+                        fontSize = 24,
                         color = DarkWhite80,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier
                             .fillMaxWidth()
                     )
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CustomText(
+                            text = stringResource(R.string.watched_calculated),
+                            fontSize = 20,
+                            color = DarkWhite80,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
                 }
-            }
+            } else
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    CustomText(
+                        text = fullName,
+                        fontSize = 24,
+                        color = DarkWhite80,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CustomText(
+                            text = stringResource(R.string.watched, watched),
+                            fontSize = 20,
+                            color = DarkWhite80,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
+                }
         }
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
