@@ -30,6 +30,7 @@ import com.mertozan.moviescompose.presantation.home.components.ContentList.CONTE
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
+import com.mertozan.moviescompose.util.enums.ContentListType
 
 @Composable
 fun MainColumn(
@@ -37,7 +38,7 @@ fun MainColumn(
     type: String,
     listType: String,
     onToDetailClick: (Int, String, String) -> Unit,
-    onToContentListClick: (String) -> Unit,
+    onToContentListClick: (String,String) -> Unit,
     title: String,
     homeUiState: HomeUiState
 ) {
@@ -76,7 +77,10 @@ fun MainColumn(
             color = Color.White,
             modifier = Modifier.clickable {
                 if (list.isNotEmpty()) {
-                    onToContentListClick(type)
+                    onToContentListClick(
+                        type,
+                        ContentListType.TOP_CONTENTS.name
+                    )
                 }
             }
         )

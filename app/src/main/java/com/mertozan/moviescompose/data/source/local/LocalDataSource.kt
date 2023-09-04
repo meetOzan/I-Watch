@@ -62,8 +62,24 @@ class LocalDataSource @Inject constructor(
         return movieDao.getSingleMovie(movieId = movieId)
     }
 
+    fun getFavoritePopularMovie() : List<MovieEntity>{
+        return movieDao.getFavoritePopularMovie()
+    }
+
+    fun getFavoriteTopMovie() : List<TopMovieEntity>{
+        return movieDao.getFavoriteTopMovies()
+    }
+
+    fun getFavoritePopularSeries() : List<SeriesEntity>{
+        return seriesDao.getFavoritePopularSeries()
+    }
+
+    fun getFavoriteTopSeries() : List<TopSeriesEntity>{
+        return seriesDao.getFavoriteTopLocalSeries()
+    }
+
     fun getSingleSeries(seriesId: Int): SeriesEntity {
-        return seriesDao.getSingleLocalSeries(seriesId = seriesId)
+        return seriesDao.getSinglePopularSeries(seriesId = seriesId)
     }
 
     fun getSingleTopMovies(movieId: Int): TopMovieEntity {

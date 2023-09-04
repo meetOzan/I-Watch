@@ -15,7 +15,7 @@ import com.mertozan.moviescompose.domain.usecase.UpdateSeriesFavorite
 import com.mertozan.moviescompose.domain.usecase.UpdateTopMovieFavorite
 import com.mertozan.moviescompose.domain.usecase.UpdateTopSeriesFavorite
 import com.mertozan.moviescompose.presantation.navigation.ARGS_ID
-import com.mertozan.moviescompose.presantation.navigation.ARGS_LIST_TYPE
+import com.mertozan.moviescompose.presantation.navigation.ARGS_CONTENT_TYPE
 import com.mertozan.moviescompose.presantation.navigation.ARGS_TYPE
 import com.mertozan.moviescompose.util.enums.ContentTypes
 import com.mertozan.moviescompose.util.enums.ListType
@@ -47,7 +47,7 @@ class DetailViewModel @Inject constructor(
 
     private val id = savedStateHandle.get<Int>(key = ARGS_ID)
     private val type = savedStateHandle.get<String>(key = ARGS_TYPE)
-    private val listType = savedStateHandle.get<String>(key = ARGS_LIST_TYPE)
+    private val listType = savedStateHandle.get<String>(key = ARGS_CONTENT_TYPE)
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

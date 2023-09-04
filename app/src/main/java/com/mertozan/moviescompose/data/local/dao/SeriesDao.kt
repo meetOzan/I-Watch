@@ -23,10 +23,16 @@ interface SeriesDao {
     fun getTopSeries(): List<TopSeriesEntity>
 
     @Query("SELECT * FROM series_entity WHERE series_id = :seriesId")
-    fun getSingleLocalSeries(seriesId: Int): SeriesEntity
+    fun getSinglePopularSeries(seriesId: Int): SeriesEntity
 
     @Query("SELECT * FROM top_series WHERE top_series_id = :seriesId")
     fun getTopSingleLocalSeries(seriesId: Int): TopSeriesEntity
+
+    @Query("SELECT * FROM series_entity WHERE series_is_favorite = 1")
+    fun getFavoritePopularSeries(): List<SeriesEntity>
+
+    @Query("SELECT * FROM top_series WHERE top_series_is_favorite = 1")
+    fun getFavoriteTopLocalSeries(): List<TopSeriesEntity>
 
     @Query("UPDATE series_entity SET series_is_favorite = :isFavorite WHERE series_id = :seriesId")
     fun updateSeriesFavoriteState(seriesId: Int, isFavorite: Boolean)

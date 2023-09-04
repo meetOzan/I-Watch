@@ -88,10 +88,10 @@ fun HomeScreen(
                     ),
                 )
             },
-            onToContentListClick = {
+            onToContentListClick = { _, _ ->
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        ContentTypes.MOVIE.name
+                        type = ContentTypes.MOVIE.name
                     )
                 )
             },
@@ -112,10 +112,10 @@ fun HomeScreen(
                     )
                 )
             },
-            onToContentListClick = {
+            onToContentListClick = { _, _ ->
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        ContentTypes.SERIES.name
+                        type = ContentTypes.SERIES.name
                     )
                 )
             },

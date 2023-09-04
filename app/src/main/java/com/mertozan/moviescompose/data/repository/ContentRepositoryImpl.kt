@@ -78,6 +78,22 @@ class ContentRepositoryImpl @Inject constructor(
         return localDataSource.getSingleTopSeries(seriesId = seriesId)
     }
 
+    override fun getFavoriteTopMovies(): List<TopMovieEntity> {
+        return localDataSource.getFavoriteTopMovie()
+    }
+
+    override fun getFavoritePopularMovies(): List<MovieEntity> {
+        return localDataSource.getFavoritePopularMovie()
+    }
+
+    override fun getFavoriteTopSeries(): List<TopSeriesEntity> {
+        return localDataSource.getFavoriteTopSeries()
+    }
+
+    override fun getFavoritePopularSeries(): List<SeriesEntity> {
+        return localDataSource.getFavoritePopularSeries()
+    }
+
     override fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         localDataSource.updateMovieFavorite(movieId = movieId, isFavorite = isFavorite)
     }

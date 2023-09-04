@@ -52,4 +52,5 @@
     <string name="lottie_generate_loading">https://lottie.host/c79ec3a1-dcf2-4d3f-a3ba-7e1426305bf6/YxLphnyRyv.lottie</string>
     <string name="watched_calculated">Watched: Calculated…</string>
     <string name="watched">"Watched: %1$s "</string>
+    <string name="favorite_contents">Favorite Contents ❤</string>
 </resources>

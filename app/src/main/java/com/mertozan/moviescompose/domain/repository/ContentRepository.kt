@@ -34,6 +34,14 @@ interface ContentRepository {
 
     fun getSingleTopSeries(seriesId: Int): TopSeriesEntity
 
+    fun getFavoriteTopMovies() : List<TopMovieEntity>
+
+    fun getFavoritePopularMovies() : List<MovieEntity>
+
+    fun getFavoriteTopSeries() : List<TopSeriesEntity>
+
+    fun getFavoritePopularSeries() : List<SeriesEntity>
+
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean)
 
     fun updateSeriesFavorite(seriesId: Int, isFavorite: Boolean)

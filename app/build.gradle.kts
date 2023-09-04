@@ -131,4 +131,7 @@ dependencies {
     // Firebase - Firestore
     implementation(libs.firebase.firestore.ktx)
 
+    // System UI Controller
+    implementation(libs.google.accompanist.systemuicontroller)
+
 }

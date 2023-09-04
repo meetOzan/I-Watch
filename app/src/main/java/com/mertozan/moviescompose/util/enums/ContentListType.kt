@@ -1,8 +1,6 @@
 package com.mertozan.moviescompose.util.enums
 
-enum class ContentTypes {
-    MOVIE,
-    SERIES,
+enum class ContentListType {
     TOP_CONTENTS,
     FAVORITE_CONTENTS
 }

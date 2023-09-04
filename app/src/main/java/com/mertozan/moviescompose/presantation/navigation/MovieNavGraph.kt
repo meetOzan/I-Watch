@@ -18,8 +18,9 @@ import com.mertozan.moviescompose.presantation.generate.GenerateContent
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateViewModel
 import com.mertozan.moviescompose.presantation.home.HomeScreen
-import com.mertozan.moviescompose.presantation.home.components.ContentList
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeViewModel
+import com.mertozan.moviescompose.presantation.list.ContentList
+import com.mertozan.moviescompose.presantation.list.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
@@ -48,11 +49,14 @@ fun MovieNavHost(
         })
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen {
-            navController.navigate(LoginScreen.route) {
-                navController.popBackStack(route = MainScreen.route, inclusive = true)
-            }
-        }
+        profileScreen(
+            onNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    navController.popBackStack(route = MainScreen.route, inclusive = true)
+                }
+            },
+            navController = navController
+        )
         detailScreen {
             navController.navigate(MainScreen.route) {
                 popUpTo(DetailScreen.route) {
@@ -109,11 +113,11 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         route = ContentListScreen.routeWithArgs,
         arguments = ContentListScreen.args
     ) {
-        val viewModel: HomeViewModel = hiltViewModel()
-        val homeUiState = viewModel.homeUiState.collectAsState().value
-        val contentList = homeUiState.contentList
-        val contentListType = homeUiState.contentListType
-        val contentTitle = homeUiState.contentTitle
+        val viewModel: ListViewModel = hiltViewModel()
+        val listUiState = viewModel.listUiState.collectAsState().value
+        val contentList = listUiState.contentList
+        val contentListType = listUiState.contentListType
+        val contentTitle = listUiState.contentTitle
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
@@ -163,7 +167,6 @@ fun NavGraphBuilder.generateScreen() {
             generateList = viewModel.generateUiState.value.allContents
         }
 
-
         GenerateContent(
             trendList = generateList,
             onShuffleAction = viewModel::onAction,
@@ -172,7 +175,7 @@ fun NavGraphBuilder.generateScreen() {
     }
 }
 
-fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
+fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit, navController: NavController) {
     composable(
         route = ProfileScreen.route
     ) {
@@ -185,7 +188,8 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
             watched = userItem.watched,
             onNavigate = onNavigate,
             onSignOutClick = profileViewModel::signOut,
-            profileUiState = profileUiState
+            profileUiState = profileUiState,
+            navController = navController
         )
     }
 }

@@ -48,6 +48,7 @@ androidxEspresso = "3.5.1"
 lottieVersion = "4.2.0"
 bottomNav = "1.5.0"
 firebaseFirestore = "24.7.1"
+accompanistSystem = "0.32.0"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -102,6 +103,7 @@ android-compose-ui = {module = "androidx.compose.ui:ui", version.ref = "bottomNa
 android-compose-material = {module = "androidx.compose.material:material", version.ref = "bottomNav"}
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore"}
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version = "2.9.9" }
+google-accompanist-systemuicontroller = {group = "com.google.accompanist",name = "accompanist-systemuicontroller", version.ref ="accompanistSystem"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

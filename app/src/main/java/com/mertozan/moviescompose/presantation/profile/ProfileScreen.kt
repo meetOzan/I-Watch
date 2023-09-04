@@ -25,17 +25,21 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presantation.profile.components.ProfileOptionsCard
 import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileUiState
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
+import com.mertozan.moviescompose.util.enums.ContentListType
 
 @Composable
 fun ProfileScreen(
     onNavigate: () -> Unit,
     onSignOutClick: () -> Unit,
+    navController: NavController,
     fullName: String,
     watched: Int,
     profileUiState: ProfileUiState
@@ -129,18 +133,25 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .padding(start = 24.dp, bottom = 24.dp)
             )
-
             ProfileOptionsCard(
                 optionName = stringResource(R.string.favorites),
-                icon = Icons.Filled.Favorite
+                icon = Icons.Filled.Favorite,
+                contentListType = ContentListType.FAVORITE_CONTENTS.name,
+                onToListClick = {
+                    navController.navigate(
+                        ContentListScreen.navigateWithArgs(
+                            type = ContentListType.FAVORITE_CONTENTS.name
+                        )
+                    )
+                }
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.settings),
-                icon = Icons.Filled.Settings
+                icon = Icons.Filled.Settings,
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.lists),
-                icon = Icons.Rounded.List
+                icon = Icons.Rounded.List,
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.sign_out),
@@ -148,7 +159,7 @@ fun ProfileScreen(
                 onClick = {
                     onSignOutClick()
                     onNavigate()
-                }
+                },
             )
         }
     }

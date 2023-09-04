@@ -1,5 +1,6 @@
-package com.mertozan.moviescompose.presantation.home.components
+package com.mertozan.moviescompose.presantation.list
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,6 +33,7 @@ import com.mertozan.moviescompose.presantation.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.theme.Dark80
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
+import com.mertozan.moviescompose.util.enums.ContentTypes
 import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
@@ -40,17 +43,26 @@ fun ContentItem(
     type: String,
     navController: NavController
 ) {
+
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                navController.navigate(
-                    DetailScreen.navigateWithArgs(
-                        content.id,
-                        type,
-                        ListType.TOP_RATED.name
+                if (type == ContentTypes.FAVORITE_CONTENTS.name){
+                    Toast.makeText(
+                        context,"Details inaccessible from there",Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    navController.navigate(
+                        DetailScreen.navigateWithArgs(
+                            content.id,
+                            type,
+                            ListType.TOP_RATED.name
+                        )
                     )
-                )
+                }
             }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(

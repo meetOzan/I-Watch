@@ -25,6 +25,12 @@ interface MovieDao {
     @Query("SELECT * FROM movies_entity WHERE movie_id = :movieId")
     fun getSingleMovie(movieId: Int): MovieEntity
 
+    @Query("SELECT * FROM movies_entity WHERE movie_is_favorite = 1 ")
+    fun getFavoritePopularMovie(): List<MovieEntity>
+
+    @Query("SELECT * FROM top_movies WHERE top_movie_is_favorite = 1")
+    fun getFavoriteTopMovies(): List<TopMovieEntity>
+
     @Query("SELECT * FROM top_movies WHERE top_movie_id = :movieId")
     fun getTopSingleMovie(movieId: Int): TopMovieEntity
 

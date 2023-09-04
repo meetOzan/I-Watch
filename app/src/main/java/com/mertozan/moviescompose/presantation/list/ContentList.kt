@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.home.components
+package com.mertozan.moviescompose.presantation.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
