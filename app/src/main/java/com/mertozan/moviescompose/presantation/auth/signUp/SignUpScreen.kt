@@ -13,7 +13,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
+import com.mertozan.moviescompose.domain.model.UserModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthAction
 import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.components.CustomTextField
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
@@ -32,20 +32,19 @@ import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun SignUpScreen(
+    userModel: UserModel,
+    userCurrent: Boolean,
+    toastMessage: String,
     onNavigate: () -> Unit,
-    viewModel: LoginViewModel
+    signUpOnAction: (AuthAction) -> Unit
 ) {
-
-    val userId = viewModel.userItem.collectAsState().value
-    val userCurrent = viewModel.checkCurrentUser.collectAsState().value
-    val toastMessage = viewModel.exceptionMessage.collectAsState().value
 
     val context = LocalContext.current
 
     LaunchedEffect(userCurrent) {
         if (userCurrent) {
             onNavigate()
-            viewModel.transferUserToLocal()
+            signUpOnAction(AuthAction.TransferUserLocal)
         }
     }
 
@@ -69,30 +68,30 @@ fun SignUpScreen(
             modifier = Modifier.padding(bottom = 36.dp)
         ) {
             CustomTextField(
-                userId.name,
+                userModel.name,
                 stringResource(R.string.enter_your_name),
                 onChangeValue = {
-                    viewModel.changeItemName(it)
+                    signUpOnAction(AuthAction.ChangeItemName(it))
                 }
             )
             CustomTextField(
-                userId.surname,
+                userModel.surname,
                 stringResource(R.string.enter_your_surname),
                 onChangeValue = {
-                    viewModel.changeItemSurname(it)
+                    signUpOnAction(AuthAction.ChangeItemSurname(it))
                 }
             )
             CustomTextField(
-                userId.signUpEmail, stringResource(R.string.enter_your_e_mail),
+                userModel.signUpEmail, stringResource(R.string.enter_your_e_mail),
                 onChangeValue = {
-                    viewModel.changeItemSignUpEmail(it)
+                    signUpOnAction(AuthAction.ChangeItemSignUpEmail(it))
                 },
                 keyboardType = KeyboardType.Email
             )
             CustomTextField(
-                userId.signUpPassword, stringResource(R.string.enter_your_password),
+                userModel.signUpPassword, stringResource(R.string.enter_your_password),
                 onChangeValue = {
-                    viewModel.changeItemSignUpPassword(it)
+                    signUpOnAction(AuthAction.ChangeItemSignUpPassword(it))
                 },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardType = KeyboardType.Password
@@ -100,16 +99,18 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(24.dp))
             ElevatedButton(
                 onClick = {
-                    viewModel.createUserInFirebase(
-                        name = userId.name,
-                        surname = userId.surname,
-                        email = userId.signUpEmail,
-                        password = userId.signUpPassword,
-                        watched = userId.watched
+                    signUpOnAction(
+                        AuthAction.CreateUserInFirebase(
+                            name = userModel.name,
+                            surname = userModel.surname,
+                            email = userModel.signUpEmail,
+                            password = userModel.signUpPassword,
+                            watched = userModel.watched
+                        )
                     )
                     if (userCurrent) {
                         onNavigate()
-                        viewModel.transferUserToLocal()
+                        signUpOnAction(AuthAction.TransferUserLocal)
                         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()

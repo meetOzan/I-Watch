@@ -107,6 +107,6 @@ class LocalDataSource @Inject constructor(
     }
 
     fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
-        seriesDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = isFavorite)
+        seriesDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = !isFavorite)
     }
 }

@@ -13,7 +13,10 @@ class GetSinglePopularMovie @Inject constructor(
 ){
     operator fun invoke(movieId: Int) : NetworkResponse<ContentModel>{
         return try {
-            NetworkResponse.Success(contentRepository.getSingleMovie(movieId = movieId).movieEntityToContentModel())
+            NetworkResponse.Success(
+                contentRepository.getSingleMovie(movieId = movieId)
+                    .movieEntityToContentModel()
+            )
         }catch (e: HttpException) {
             NetworkResponse.Error(e)
         } catch (e: IOException) {

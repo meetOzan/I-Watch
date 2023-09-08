@@ -1,6 +1,5 @@
 package com.mertozan.moviescompose.presantation.auth.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore,
     private val transferUserToLocal: TransferUserToLocal
@@ -42,6 +41,29 @@ class LoginViewModel @Inject constructor(
         checkLogged()
     }
 
+    fun onAction(action: AuthAction) {
+        when (action) {
+            is AuthAction.TransferUserLocal -> transferUserLocal()
+            is AuthAction.ChangeItemName -> changeItemName(action.name)
+            is AuthAction.ChangeItemSignInEmail -> changeItemSignInEmail(action.email)
+            is AuthAction.ChangeItemSignInPassword -> changeItemSignInPassword(action.password)
+            is AuthAction.ChangeItemSignUpPassword -> changeItemSignUpPassword(action.password)
+            is AuthAction.ChangeItemSignUpEmail -> changeItemSignUpEmail(action.email)
+            is AuthAction.ChangeItemSurname -> changeItemSurname(action.surname)
+            is AuthAction.CreateUserInFirebase -> createUserInFirebase(
+                name = action.name,
+                surname =  action.surname,
+                email = action.email,
+                password = action.password,
+                watched = action.watched
+            )
+            is AuthAction.SignInFirebase -> signInFirebase(
+                email = action.email,
+                password = action.password,
+            )
+        }
+    }
+
     private fun checkLogged() {
         if (firebaseAuth.currentUser != null) {
             firebaseAuth.currentUser?.reload()
@@ -52,13 +74,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun transferUserToLocal() {
+    private fun transferUserLocal() {
         viewModelScope.launch(Dispatchers.IO) {
             transferUserToLocal()
         }
     }
 
-    fun createUserInFirebase(
+    private fun createUserInFirebase(
         name: String,
         surname: String,
         email: String,
@@ -80,7 +102,6 @@ class LoginViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Log.e("Catch Exception: ", e.message.orEmpty())
                     _exceptionMessage.value = e.message.orEmpty()
                 }
             }
@@ -108,7 +129,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun signInFirebase(
+    private fun signInFirebase(
         email: String, password: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -131,27 +152,27 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun changeItemName(name: String) {
+    private fun changeItemName(name: String) {
         userItem.value = userItem.value.copy(name = name)
     }
 
-    fun changeItemSurname(surname: String) {
+    private fun changeItemSurname(surname: String) {
         userItem.value = userItem.value.copy(surname = surname)
     }
 
-    fun changeItemSignInEmail(email: String) {
+    private fun changeItemSignInEmail(email: String) {
         userItem.value = userItem.value.copy(signInEmail = email)
     }
 
-    fun changeItemSignUpEmail(email: String) {
+    private fun changeItemSignUpEmail(email: String) {
         userItem.value = userItem.value.copy(signUpEmail = email)
     }
 
-    fun changeItemSignInPassword(password: String) {
+    private fun changeItemSignInPassword(password: String) {
         userItem.value = userItem.value.copy(signInPassword = password)
     }
 
-    fun changeItemSignUpPassword(password: String) {
+    private fun changeItemSignUpPassword(password: String) {
         userItem.value = userItem.value.copy(signUpPassword = password)
     }
 }

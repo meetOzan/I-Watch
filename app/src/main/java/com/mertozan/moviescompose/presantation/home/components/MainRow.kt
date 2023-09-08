@@ -28,6 +28,7 @@ import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.LightBlack
+import com.mertozan.moviescompose.util.enums.ContentTypes
 
 @Composable
 fun MainRow(
@@ -43,6 +44,9 @@ fun MainRow(
     val splashAnimateComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_row_loading))
     )
+    val isLoading : Boolean =
+        if (type == ContentTypes.MOVIE.name) homeUiState.popularMovieIsLoading
+            else homeUiState.popularSeriesIsLoading
 
     Row(
         modifier = Modifier.padding(vertical = 8.dp),
@@ -62,22 +66,13 @@ fun MainRow(
             color = Color.White,
         )
     }
-    if (homeUiState.isLoading) {
+    if (isLoading) {
         LottieAnimation(
             composition = splashAnimateComposition,
             iterations = LottieConstants.IterateForever,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 24.dp),
-            alignment = Alignment.Center
-        )
-    } else if (list.isEmpty()) {
-        LottieAnimation(
-            composition = splashAnimateComposition,
-            iterations = LottieConstants.IterateForever,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp),
             alignment = Alignment.Center
         )
     } else {

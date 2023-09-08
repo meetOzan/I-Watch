@@ -53,16 +53,17 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
+            _homeUiState.value = _homeUiState.value.copy(popularMovieIsLoading = true)
+            getAllPopularMovies()
             when (val response = getAllPopularMovies()) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(popularMovieIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _homeUiState.value = _homeUiState.value.copy(popularMovies = response.data)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(popularMovieIsLoading = false)
                 }
             }
         }
@@ -70,16 +71,17 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularSeries() {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
+            _homeUiState.value = _homeUiState.value.copy(popularSeriesIsLoading = true)
+            getAllPopularSeries()
             when (val response = getAllPopularSeries()) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(popularSeriesIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _homeUiState.value = _homeUiState.value.copy(popularSeries = response.data)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(popularSeriesIsLoading = false)
                 }
             }
         }
@@ -87,16 +89,17 @@ class HomeViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
+            _homeUiState.value = _homeUiState.value.copy(topMoviesIsLoading = true)
+            getAllTopRatedMovies()
             when (val response = getAllTopRatedMovies()) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(topMoviesIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _homeUiState.value = _homeUiState.value.copy(topRatedMovies = response.data)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(topMoviesIsLoading = false)
                 }
             }
         }
@@ -104,16 +107,17 @@ class HomeViewModel @Inject constructor(
 
     private fun getTopRatedSeries() {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
+            _homeUiState.value = _homeUiState.value.copy(topSeriesIsLoading = true)
+            getAllTopRatedSeries()
             when (val response = getAllTopRatedSeries()) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(topSeriesIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _homeUiState.value = _homeUiState.value.copy(topRatedSeries = response.data)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
+                    _homeUiState.value = _homeUiState.value.copy(topSeriesIsLoading = false)
                 }
             }
         }
@@ -121,16 +125,13 @@ class HomeViewModel @Inject constructor(
 
     private fun updateMovieFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
             when (val response =
                 updatePopularMovieFavorite(movieId = id, isFavorite = isFavorite)) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
                 }
             }
         }
@@ -138,16 +139,13 @@ class HomeViewModel @Inject constructor(
 
     private fun updateSeriesFavorite(id: Int, isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            _homeUiState.value = _homeUiState.value.copy(isLoading = true)
             when (val response =
                 updatePopularSeriesFavorite(seriesId = id, isFavorite = isFavorite)) {
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
-                    _homeUiState.value = _homeUiState.value.copy(isLoading = false)
                 }
             }
         }

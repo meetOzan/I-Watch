@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mertozan.moviescompose.presantation.auth.LoginScreen
-import com.mertozan.moviescompose.presantation.auth.viewmodel.LoginViewModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthViewModel
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailViewModel
@@ -144,11 +144,17 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
     ) {
-        val loginViewModel = hiltViewModel<LoginViewModel>()
+        val loginViewModel = hiltViewModel<AuthViewModel>()
+        val userModel = loginViewModel.userItem.collectAsState().value
+        val userCurrent = loginViewModel.checkCurrentUser.collectAsState().value
+        val errorMessage = loginViewModel.exceptionMessage.collectAsState().value
 
         LoginScreen(
+            userModel = userModel,
+            userCurrent = userCurrent,
+            errorMessage = errorMessage,
             onNavigate = onNavigate,
-            viewModel = loginViewModel
+            onAuthAction = loginViewModel::onAction,
         )
     }
 }

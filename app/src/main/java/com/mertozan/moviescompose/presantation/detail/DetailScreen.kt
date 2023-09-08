@@ -27,6 +27,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -53,8 +55,13 @@ fun DetailScreen(
     onUpdateAction: (DetailAction) -> Unit
 ) {
 
+
+    val isFavorite by rememberSaveable {
+        mutableStateOf(detail.isFavorite)
+    }
+
     val animateFavColor: Color by animateColorAsState(
-        if (detail.isFavorite) Color.Yellow else Color.White,
+        if (isFavorite) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
 

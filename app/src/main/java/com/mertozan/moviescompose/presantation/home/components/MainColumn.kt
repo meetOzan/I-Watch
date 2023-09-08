@@ -31,21 +31,26 @@ import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 import com.mertozan.moviescompose.util.enums.ContentListType
+import com.mertozan.moviescompose.util.enums.ContentTypes
 
 @Composable
 fun MainColumn(
     list: List<ContentModel>,
     type: String,
     listType: String,
+    title: String,
+    homeUiState: HomeUiState,
     onToDetailClick: (Int, String, String) -> Unit,
     onToContentListClick: (String,String) -> Unit,
-    title: String,
-    homeUiState: HomeUiState
 ) {
 
     val splashAnimateComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_list_loading))
     )
+
+    val isLoading : Boolean =
+        if (type == ContentTypes.MOVIE.name) homeUiState.topMoviesIsLoading
+        else homeUiState.topSeriesIsLoading
 
     Row(
         modifier = Modifier.padding(8.dp),
@@ -85,21 +90,14 @@ fun MainColumn(
             }
         )
     }
-    if (homeUiState.isLoading) {
-        LottieAnimation(
-            composition = splashAnimateComposition,
-            iterations = LottieConstants.IterateForever,
-            modifier = Modifier.fillMaxWidth(0.8f),
-            alignment = Alignment.Center
-        )
-    } else if (list.isEmpty()) {
+    if (isLoading) {
         LottieAnimation(
             composition = splashAnimateComposition,
             iterations = LottieConstants.IterateForever,
             modifier = Modifier.fillMaxWidth(),
             alignment = Alignment.Center
         )
-    } else {
+    }  else {
         LazyColumn(
             modifier = Modifier
                 .background(LightBlack)

@@ -30,8 +30,8 @@ fun HomeScreen(
     topRatedMovieList: List<ContentModel>,
     topRatedSeriesList: List<ContentModel>,
     navController: NavController,
-    onFavoriteAction: (HomeAction) -> Unit,
     homeUiState: HomeUiState,
+    onFavoriteAction: (HomeAction) -> Unit,
 ) {
     Column(
         modifier = Modifier
