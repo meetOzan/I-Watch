@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.list
+package com.mertozan.moviescompose.presantation.watch_list.components
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -24,24 +24,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.components.CustomText
-import com.mertozan.moviescompose.presantation.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.theme.Dark80
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
-import com.mertozan.moviescompose.util.enums.ContentTypes
-import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
-fun ContentItem(
+fun WatchCardItem(
     content: ContentModel,
-    type: String,
-    navController: NavController
 ) {
 
     val context = LocalContext.current
@@ -50,19 +44,13 @@ fun ContentItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (type == ContentTypes.FAVORITE_CONTENTS.name){
-                    Toast.makeText(
-                        context,"Details inaccessible from there",Toast.LENGTH_SHORT
-                    ).show()
-                }else{
-                    navController.navigate(
-                        DetailScreen.navigateWithArgs(
-                            content.id,
-                            type,
-                            ListType.TOP_RATED.name
-                        )
+                Toast
+                    .makeText(
+                        context,
+                        context.getText(R.string.details_inaccessible_from_there),
+                        Toast.LENGTH_SHORT
                     )
-                }
+                    .show()
             }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
@@ -136,6 +124,4 @@ fun ContentItem(
             }
         }
     }
-
-    // TODO navigation kullanımına bak projeye navController paslamadan nasıl yapabilirim.
 }

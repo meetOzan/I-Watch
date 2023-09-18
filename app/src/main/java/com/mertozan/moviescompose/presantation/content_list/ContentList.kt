@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.list
+package com.mertozan.moviescompose.presantation.content_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,13 +27,16 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.content_list.components.ContentItem
+import com.mertozan.moviescompose.presantation.content_list.components.EmptyListPlaceholder
 
 @Composable
 fun ContentList(
-    contentList: List<ContentModel>,
-    navController: NavController,
     type: String,
-    title: String
+    title: String,
+    isLoading: Boolean,
+    contentList: List<ContentModel>,
+    navController: NavController
 ) {
 
     val splashAnimateComposition by rememberLottieComposition(
@@ -51,7 +56,7 @@ fun ContentList(
             fontSize = 24,
             modifier = Modifier.padding(vertical = 16.dp)
         )
-        if (contentList.isEmpty()) {
+        if (isLoading) {
             LottieAnimation(
                 composition = splashAnimateComposition,
                 iterations = LottieConstants.IterateForever,
@@ -60,10 +65,15 @@ fun ContentList(
                     .weight(1f),
                 alignment = Alignment.Center
             )
+        } else if (contentList.isEmpty()) {
+            EmptyListPlaceholder(
+                modifier = Modifier.weight(1f),
+                text = stringResource(R.string.no_favorite_content_added_to_the_list_yet),
+                icon = Icons.Filled.Clear
+            )
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f)
             ) {
                 items(contentList) { content ->
                     ContentItem(

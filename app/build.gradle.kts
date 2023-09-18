@@ -69,11 +69,10 @@ android {
 
 dependencies {
 
-    implementation(libs.firebase.crashlytics.buildtools)
     val composeBom = platform(libs.androidx.compose.bom)
 
-    implementation(libs.androidx.core.ktx) /*1.9.0*/
-    implementation(libs.androidx.lifecycle.runtime.ktx) /*2.6.1*/
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.activity.compose)
     implementation(composeBom)
@@ -82,14 +81,15 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext) /* 1.1.5 */
-    androidTestImplementation(libs.androidx.test.espresso.core) /* 3.5.1 */
+    androidTestImplementation(libs.androidx.test.ext)
+    androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.junit)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.android.compose.ui)
     implementation(libs.android.compose.material)
+    implementation(libs.firebase.crashlytics.buildtools)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -133,5 +133,4 @@ dependencies {
 
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
-
 }

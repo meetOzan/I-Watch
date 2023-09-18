@@ -58,10 +58,7 @@ class LocalDataSource @Inject constructor(
         }
     }
 
-    fun getSingleMovie(movieId: Int): MovieEntity {
-        return movieDao.getSingleMovie(movieId = movieId)
-    }
-
+    // Get Favorite List
     fun getFavoritePopularMovie() : List<MovieEntity>{
         return movieDao.getFavoritePopularMovie()
     }
@@ -76,6 +73,43 @@ class LocalDataSource @Inject constructor(
 
     fun getFavoriteTopSeries() : List<TopSeriesEntity>{
         return seriesDao.getFavoriteTopLocalSeries()
+    }
+
+    // Get Watch List
+    fun getWatchedPopularMovies() : List<MovieEntity>{
+        return movieDao.getWatchedPopularMovies()
+    }
+
+    fun getInWatchListPopularMovies() : List<MovieEntity>{
+        return movieDao.getInWatchListPopularMovies()
+    }
+
+    fun getWatchedPopularSeries() : List<SeriesEntity>{
+        return seriesDao.getWatchedPopularSeries()
+    }
+
+    fun getInWatchListPopularSeries() : List<SeriesEntity>{
+        return seriesDao.getInWatchListPopularSeries()
+    }
+
+    fun getWatchedTopMovies() : List<TopMovieEntity>{
+        return movieDao.getWatchedTopMovies()
+    }
+
+    fun getInWatchListTopMovies() : List<TopMovieEntity>{
+        return movieDao.getInWatchListTopMovies()
+    }
+
+    fun getWatchedTopSeries() : List<TopSeriesEntity>{
+        return seriesDao.getWatchedTopSeries()
+    }
+
+    fun getInWatchListTopSeries() : List<TopSeriesEntity>{
+        return seriesDao.getInWatchListTopSeries()
+    }
+
+    fun getSingleMovie(movieId: Int): MovieEntity {
+        return movieDao.getSingleMovie(movieId = movieId)
     }
 
     fun getSingleSeries(seriesId: Int): SeriesEntity {
@@ -94,6 +128,7 @@ class LocalDataSource @Inject constructor(
         return userDao.getSingleUser().toUserEntityToUserItem()
     }
 
+    // Update Favorite State
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         movieDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)
     }
@@ -108,5 +143,38 @@ class LocalDataSource @Inject constructor(
 
     fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
         seriesDao.updateTopSeriesFavoriteState(topSeriesId = seriesId, isFavorite = !isFavorite)
+    }
+
+    // Update Watch State
+    fun updateMovieIsWatched(movieId: Int, isWatched: Boolean) {
+        movieDao.updateMovieIsWatchedState(movieId = movieId, isWatched = !isWatched)
+    }
+
+    fun updateMovieIsInWatchedList(movieId: Int, isInWatched: Boolean) {
+        movieDao.updateMovieInWatchListState(movieId = movieId, isInWatch = !isInWatched)
+    }
+
+    fun updateSeriesIsWatched(seriesId: Int, isWatched: Boolean) {
+        seriesDao.updateSeriesIsWatchedState(seriesId = seriesId, isWatched  = !isWatched)
+    }
+
+    fun updateSeriesIsInWatchedList(seriesId: Int, isInWatched: Boolean) {
+        seriesDao.updateSeriesInWatchListState(seriesId = seriesId, isInWatch  = !isInWatched)
+    }
+
+    fun updateTopMovieIsWatched(movieId: Int, isWatched: Boolean) {
+        movieDao.updateTopMovieIsWatchedState(movieId = movieId, isWatched = !isWatched)
+    }
+
+    fun updateTopMovieIsInWatchedList(movieId: Int, isInWatched: Boolean) {
+        movieDao.updateTopMovieInWatchListState(movieId = movieId, isInWatch = !isInWatched)
+    }
+
+    fun updateTopSeriesIsWatched(seriesId: Int, isWatched: Boolean) {
+        seriesDao.updateTopSeriesIsWatchedState(seriesId = seriesId, isWatched = !isWatched)
+    }
+
+    fun updateTopSeriesIsInWatched(seriesId: Int, isInWatched: Boolean) {
+        seriesDao.updateTopSeriesInWatchListState(seriesId = seriesId, isInWatch = !isInWatched)
     }
 }

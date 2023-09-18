@@ -20,7 +20,7 @@ import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presantation.navigation.DetailScreen
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 import com.mertozan.moviescompose.util.enums.ListType
 
 @Composable
@@ -42,13 +42,13 @@ fun HomeScreen(
         MainRow(
             title = stringResource(R.string.top_20_movies_on_this_week),
             list = popularMovieList,
-            type = ContentTypes.MOVIE.name,
+            type = ContentType.MOVIE.name,
             listType = ListType.POPULAR.name,
             onClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        ContentTypes.MOVIE.name,
+                        ContentType.MOVIE.name,
                         ListType.POPULAR.name
                     )
                 )
@@ -60,13 +60,13 @@ fun HomeScreen(
         MainRow(
             title = stringResource(R.string.top_20_tv_series_on_this_week),
             list = popularSeriesList,
-            type = ContentTypes.SERIES.name,
+            type = ContentType.SERIES.name,
             listType = ListType.POPULAR.name,
             onClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        ContentTypes.SERIES.name,
+                        ContentType.SERIES.name,
                         ListType.POPULAR.name
                     )
                 )
@@ -77,13 +77,13 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         MainColumn(
             list = topRatedMovieList,
-            type = ContentTypes.MOVIE.name,
+            type = ContentType.MOVIE.name,
             listType = ListType.TOP_RATED.name,
             onToDetailClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        ContentTypes.MOVIE.name,
+                        ContentType.MOVIE.name,
                         ListType.TOP_RATED.name
                     ),
                 )
@@ -91,7 +91,7 @@ fun HomeScreen(
             onToContentListClick = { _, _ ->
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        type = ContentTypes.MOVIE.name
+                        type = ContentType.MOVIE.name
                     )
                 )
             },
@@ -101,13 +101,13 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(12.dp))
         MainColumn(
             list = topRatedSeriesList,
-            type = ContentTypes.SERIES.name,
+            type = ContentType.SERIES.name,
             listType = ListType.TOP_RATED.name,
             onToDetailClick = { id, _, _ ->
                 navController.navigate(
                     DetailScreen.navigateWithArgs(
                         id,
-                        ContentTypes.SERIES.name,
+                        ContentType.SERIES.name,
                         ListType.TOP_RATED.name
                     )
                 )
@@ -115,7 +115,7 @@ fun HomeScreen(
             onToContentListClick = { _, _ ->
                 navController.navigate(
                     ContentListScreen.navigateWithArgs(
-                        type = ContentTypes.SERIES.name
+                        type = ContentType.SERIES.name
                     )
                 )
             },

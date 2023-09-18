@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.list.viewmodel
+package com.mertozan.moviescompose.presantation.content_list.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedSeries
 import com.mertozan.moviescompose.infrastructure.StringResourceProvider
 import com.mertozan.moviescompose.presantation.navigation.ARGS_TYPE
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,27 +40,27 @@ class ListViewModel @Inject constructor(
 
     fun getContentList() {
         when (type) {
-            ContentTypes.MOVIE.name -> {
+            ContentType.MOVIE.name -> {
                 _listUiState.value = _listUiState.value.copy(
                     contentList = _listUiState.value.topRatedMovies
                 )
-                _listUiState.value.contentListType = ContentTypes.MOVIE.name
+                _listUiState.value.contentListType = ContentType.MOVIE.name
                 _listUiState.value.contentTitle = stringRes.getString(R.string.top_rated_movies)
             }
 
-            ContentTypes.SERIES.name -> {
+            ContentType.SERIES.name -> {
                 _listUiState.value = _listUiState.value.copy(
                     contentList = _listUiState.value.topRatedSeries
                 )
-                _listUiState.value.contentListType = ContentTypes.SERIES.name
+                _listUiState.value.contentListType = ContentType.SERIES.name
                 _listUiState.value.contentTitle = stringRes.getString(R.string.top_rated_series)
             }
 
-            ContentTypes.FAVORITE_CONTENTS.name -> {
+            ContentType.FAVORITE_CONTENTS.name -> {
                 _listUiState.value = _listUiState.value.copy(
                     contentList = _listUiState.value.favoriteContents
                 )
-                _listUiState.value.contentListType = ContentTypes.FAVORITE_CONTENTS.name
+                _listUiState.value.contentListType = ContentType.FAVORITE_CONTENTS.name
                 _listUiState.value.contentTitle = stringRes.getString(R.string.favorite_contents)
             }
         }
@@ -68,16 +68,16 @@ class ListViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch(Dispatchers.IO) {
-            _listUiState.value = _listUiState.value.copy(isLoading = true)
+            _listUiState.value = _listUiState.value.copy(favoriteIsLoading = true)
             when (val response = getAllTopRatedMovies()) {
                 is NetworkResponse.Error -> {
                     _listUiState.value = _listUiState.value.copy(errorMessage = response.error)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _listUiState.value = _listUiState.value.copy(topRatedMovies = response.data)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
             }
         }
@@ -85,16 +85,16 @@ class ListViewModel @Inject constructor(
 
     private fun getTopRatedSeries() {
         viewModelScope.launch(Dispatchers.IO) {
-            _listUiState.value = _listUiState.value.copy(isLoading = true)
+            _listUiState.value = _listUiState.value.copy(favoriteIsLoading = true)
             when (val response = getAllTopRatedSeries()) {
                 is NetworkResponse.Error -> {
                     _listUiState.value = _listUiState.value.copy(errorMessage = response.error)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _listUiState.value = _listUiState.value.copy(topRatedSeries = response.data)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
             }
         }
@@ -102,16 +102,16 @@ class ListViewModel @Inject constructor(
 
     private fun getAllFavoriteContents() {
         viewModelScope.launch(Dispatchers.IO) {
-            _listUiState.value = _listUiState.value.copy(isLoading = true)
+            _listUiState.value = _listUiState.value.copy(favoriteIsLoading = true)
             when (val response = getAllFavorites()) {
                 is NetworkResponse.Error -> {
                     _listUiState.value = _listUiState.value.copy(errorMessage = response.error)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
 
                 is NetworkResponse.Success -> {
                     _listUiState.value = _listUiState.value.copy(favoriteContents = response.data)
-                    _listUiState.value = _listUiState.value.copy(isLoading = false)
+                    _listUiState.value = _listUiState.value.copy(favoriteIsLoading = false)
                 }
             }
         }

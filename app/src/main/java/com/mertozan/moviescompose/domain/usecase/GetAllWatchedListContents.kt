@@ -11,16 +11,16 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetAllFavorites @Inject constructor(
+class GetAllWatchedListContents @Inject constructor(
     private val contentRepository: ContentRepository
 ) {
     operator fun invoke(): NetworkResponse<List<ContentModel>> {
         return try {
             NetworkResponse.Success(
-                contentRepository.getFavoritePopularSeries().toSeriesMovieModelList()
-                    .plus(contentRepository.getFavoriteTopMovies().topMoviesToMovieModelList())
-                    .plus(contentRepository.getFavoriteTopSeries().toTopSeriesDetailItemList())
-                    .plus(contentRepository.getFavoritePopularMovies().moviesToMoviesModelList())
+                contentRepository.getAllWatchedPopularMovies().moviesToMoviesModelList()
+                    .plus(contentRepository.getAllWatchedTopMovies().topMoviesToMovieModelList())
+                    .plus(contentRepository.getAllWatchedPopularSeries().toSeriesMovieModelList())
+                    .plus(contentRepository.getAllWatchedTopSeries().toTopSeriesDetailItemList())
             )
         } catch (e: HttpException) {
             NetworkResponse.Error(e)

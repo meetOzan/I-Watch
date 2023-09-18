@@ -23,6 +23,6 @@ fun CustomText(
         fontFamily = amazonEmberFamily,
         color = color,
         fontWeight = fontWeight,
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ButtonDefaults
@@ -38,11 +40,11 @@ import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun SignInScreen(
-    userModel : UserModel,
-    userCurrent : Boolean,
+    userModel: UserModel,
+    userCurrent: Boolean,
     toastMessage: String,
     onNavigate: () -> Unit,
-    signInOnAction : (AuthAction) -> Unit
+    signInOnAction: (AuthAction) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -50,8 +52,8 @@ fun SignInScreen(
     val email = userModel.signInEmail
     val password = userModel.signInPassword
 
-    LaunchedEffect(userCurrent){
-        if(userCurrent){
+    LaunchedEffect(userCurrent) {
+        if (userCurrent) {
             signInOnAction(AuthAction.TransferUserLocal)
             onNavigate()
         }
@@ -60,7 +62,8 @@ fun SignInScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBlack),
+            .background(LightBlack)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -107,7 +110,7 @@ fun SignInScreen(
                         onNavigate()
                         signInOnAction(AuthAction.TransferUserLocal)
                     } else {
-                        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                     }
                 },
                 colors = ButtonDefaults.elevatedButtonColors(

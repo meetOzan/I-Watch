@@ -37,12 +37,13 @@ import com.mertozan.moviescompose.util.enums.ContentListType
 
 @Composable
 fun ProfileScreen(
-    onNavigate: () -> Unit,
-    onSignOutClick: () -> Unit,
     navController: NavController,
     fullName: String,
     watched: Int,
-    profileUiState: ProfileUiState
+    profileUiState: ProfileUiState,
+    onSignOutNavigate: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onWatchListClick: () -> Unit
 ) {
 
     Column(
@@ -152,13 +153,14 @@ fun ProfileScreen(
             ProfileOptionsCard(
                 optionName = stringResource(R.string.lists),
                 icon = Icons.Rounded.List,
+                onToListClick = {onWatchListClick()}
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
                     onSignOutClick()
-                    onNavigate()
+                    onSignOutNavigate()
                 },
             )
         }

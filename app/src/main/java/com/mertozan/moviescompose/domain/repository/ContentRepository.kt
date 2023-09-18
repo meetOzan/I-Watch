@@ -34,13 +34,29 @@ interface ContentRepository {
 
     fun getSingleTopSeries(seriesId: Int): TopSeriesEntity
 
-    fun getFavoriteTopMovies() : List<TopMovieEntity>
+    fun getFavoriteTopMovies(): List<TopMovieEntity>
 
-    fun getFavoritePopularMovies() : List<MovieEntity>
+    fun getFavoritePopularMovies(): List<MovieEntity>
 
-    fun getFavoriteTopSeries() : List<TopSeriesEntity>
+    fun getFavoriteTopSeries(): List<TopSeriesEntity>
 
-    fun getFavoritePopularSeries() : List<SeriesEntity>
+    fun getFavoritePopularSeries(): List<SeriesEntity>
+
+    fun getAllWatchedPopularMovies(): List<MovieEntity>
+
+    fun getAllWatchedTopMovies(): List<TopMovieEntity>
+
+    fun getAllWatchedPopularSeries(): List<SeriesEntity>
+
+    fun getAllWatchedTopSeries(): List<TopSeriesEntity>
+
+    fun getAllInWatchListPopularMovies(): List<MovieEntity>
+
+    fun getAllInWatchListTopMovies(): List<TopMovieEntity>
+
+    fun getAllInWatchListPopularSeries(): List<SeriesEntity>
+
+    fun getAllInWatchListTopSeries(): List<TopSeriesEntity>
 
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean)
 
@@ -49,6 +65,22 @@ interface ContentRepository {
     fun updateTopMovieFavorite(movieId: Int, isFavorite: Boolean)
 
     fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean)
+
+    fun updatePopularMoviesIsWatched(movieId: Int, isWatched: Boolean)
+
+    fun updatePopularMoviesIsInWatchList(movieId: Int, isInWatched: Boolean)
+
+    fun updatePopularSeriesIsWatched(seriesId: Int, isWatched: Boolean)
+
+    fun updatePopularSeriesIsInWatchedList(seriesId: Int, isInWatched: Boolean)
+
+    fun updateTopMoviesIsWatched(movieId: Int, isWatched: Boolean)
+
+    fun updateTopMoviesIsInWatchList(movieId: Int, isInWatched: Boolean)
+
+    fun updateTopSeriesIsWatched(seriesId: Int, isWatched: Boolean)
+
+    fun updateTopSeriesIsInWatchedList(seriesId: Int, isInWatched: Boolean)
 
     suspend fun getAllPopularNetworkMovies(): MovieResponse
 

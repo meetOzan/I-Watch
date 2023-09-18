@@ -31,7 +31,7 @@ import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 import com.mertozan.moviescompose.util.enums.ContentListType
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 
 @Composable
 fun MainColumn(
@@ -49,7 +49,7 @@ fun MainColumn(
     )
 
     val isLoading : Boolean =
-        if (type == ContentTypes.MOVIE.name) homeUiState.topMoviesIsLoading
+        if (type == ContentType.MOVIE.name) homeUiState.topMoviesIsLoading
         else homeUiState.topSeriesIsLoading
 
     Row(

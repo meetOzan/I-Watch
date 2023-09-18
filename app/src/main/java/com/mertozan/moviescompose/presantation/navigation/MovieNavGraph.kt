@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mertozan.moviescompose.presantation.auth.LoginScreen
 import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthViewModel
+import com.mertozan.moviescompose.presantation.content_list.ContentList
+import com.mertozan.moviescompose.presantation.content_list.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presantation.detail.DetailScreen
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailViewModel
@@ -19,11 +21,11 @@ import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateViewModel
 import com.mertozan.moviescompose.presantation.home.HomeScreen
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeViewModel
-import com.mertozan.moviescompose.presantation.list.ContentList
-import com.mertozan.moviescompose.presantation.list.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
 import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
+import com.mertozan.moviescompose.presantation.watch_list.WatchListScreen
+import com.mertozan.moviescompose.presantation.watch_list.viewmodel.WatchListViewModel
 
 @Composable
 fun MovieNavHost(
@@ -50,13 +52,17 @@ fun MovieNavHost(
         mainScreen(navController = navController)
         generateScreen()
         profileScreen(
-            onNavigate = {
+            navController = navController,
+            onSignOutNavigate = {
                 navController.navigate(LoginScreen.route) {
                     navController.popBackStack(route = MainScreen.route, inclusive = true)
                 }
             },
-            navController = navController
+            onWatchListClick = {
+                navController.navigate(WatchListScreen.route)
+            }
         )
+        watchListScreen()
         detailScreen {
             navController.navigate(MainScreen.route) {
                 popUpTo(DetailScreen.route) {
@@ -118,6 +124,7 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         val contentList = listUiState.contentList
         val contentListType = listUiState.contentListType
         val contentTitle = listUiState.contentTitle
+        val isLoading = listUiState.favoriteIsLoading
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
@@ -125,9 +132,27 @@ fun NavGraphBuilder.contentList(navController: NavController) {
 
         ContentList(
             contentList = contentList,
+            isLoading = isLoading,
             type = contentListType,
             title = contentTitle,
             navController = navController
+        )
+    }
+}
+
+fun NavGraphBuilder.watchListScreen() {
+    composable(
+        route = WatchListScreen.route
+    ) {
+        val watchListViewModel: WatchListViewModel = hiltViewModel()
+        val isWatchedList =
+            watchListViewModel.watchListUiState.collectAsState().value.isWatchedList
+        val isInWatchedList =
+            watchListViewModel.watchListUiState.collectAsState().value.isInWatchedList
+
+        WatchListScreen(
+            isInWatchList = isInWatchedList,
+            isWatchedList = isWatchedList
         )
     }
 }
@@ -146,8 +171,8 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     ) {
         val loginViewModel = hiltViewModel<AuthViewModel>()
         val userModel = loginViewModel.userItem.collectAsState().value
-        val userCurrent = loginViewModel.checkCurrentUser.collectAsState().value
-        val errorMessage = loginViewModel.exceptionMessage.collectAsState().value
+        val userCurrent = loginViewModel.authUiState.collectAsState().value.checkCurrentUser
+        val errorMessage = loginViewModel.authUiState.collectAsState().value.exceptionMessage
 
         LoginScreen(
             userModel = userModel,
@@ -168,20 +193,27 @@ fun NavGraphBuilder.generateScreen() {
         var generateList = generateUiState.allContents
 
         LaunchedEffect(Unit) {
-            viewModel.getAllContents()
+            viewModel.getContents()
+        }
+
+        LaunchedEffect(Unit) {
             viewModel.onAction(GenerateAction.ShuffleList)
             generateList = viewModel.generateUiState.value.allContents
         }
 
         GenerateContent(
             trendList = generateList,
-            onShuffleAction = viewModel::onAction,
+            onGenerateAction = viewModel::onAction,
             generateUiState = generateUiState
         )
     }
 }
 
-fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit, navController: NavController) {
+fun NavGraphBuilder.profileScreen(
+    navController: NavController,
+    onSignOutNavigate: () -> Unit,
+    onWatchListClick : () -> Unit
+) {
     composable(
         route = ProfileScreen.route
     ) {
@@ -192,10 +224,11 @@ fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit, navController: NavCont
         ProfileScreen(
             fullName = userItem.fullName,
             watched = userItem.watched,
-            onNavigate = onNavigate,
-            onSignOutClick = profileViewModel::signOut,
             profileUiState = profileUiState,
-            navController = navController
+            navController = navController,
+            onSignOutNavigate = onSignOutNavigate,
+            onSignOutClick = profileViewModel::signOut,
+            onWatchListClick = onWatchListClick
         )
     }
 }

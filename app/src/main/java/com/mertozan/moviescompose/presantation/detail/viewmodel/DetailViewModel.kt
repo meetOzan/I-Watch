@@ -17,7 +17,7 @@ import com.mertozan.moviescompose.domain.usecase.UpdateTopSeriesFavorite
 import com.mertozan.moviescompose.presantation.navigation.ARGS_ID
 import com.mertozan.moviescompose.presantation.navigation.ARGS_CONTENT_TYPE
 import com.mertozan.moviescompose.presantation.navigation.ARGS_TYPE
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.orZero
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,13 +65,13 @@ class DetailViewModel @Inject constructor(
     private fun getDetail() {
         when (listType) {
             ListType.POPULAR.name -> when (type) {
-                ContentTypes.SERIES.name -> getSingleSeries(id.orZero())
-                ContentTypes.MOVIE.name -> getSingleMovie(id.orZero())
+                ContentType.SERIES.name -> getSingleSeries(id.orZero())
+                ContentType.MOVIE.name -> getSingleMovie(id.orZero())
             }
 
             ListType.TOP_RATED.name -> when (type) {
-                ContentTypes.SERIES.name -> getSingleTopSeries(id.orZero())
-                ContentTypes.MOVIE.name -> getSingleTopMovies(id.orZero())
+                ContentType.SERIES.name -> getSingleTopSeries(id.orZero())
+                ContentType.MOVIE.name -> getSingleTopMovies(id.orZero())
             }
         }
     }
@@ -79,13 +79,13 @@ class DetailViewModel @Inject constructor(
     private fun updateFavorite(isFavorite: Boolean) {
         when (listType) {
             ListType.POPULAR.name -> when (type) {
-                ContentTypes.SERIES.name -> updateSeriesFavorite(id.orZero(), isFavorite)
-                ContentTypes.MOVIE.name -> updateMovieFavorite(id.orZero(), isFavorite)
+                ContentType.SERIES.name -> updateSeriesFavorite(id.orZero(), isFavorite)
+                ContentType.MOVIE.name -> updateMovieFavorite(id.orZero(), isFavorite)
             }
 
             ListType.TOP_RATED.name -> when (type) {
-                ContentTypes.SERIES.name -> updateTopSeriesFavorite(id.orZero(), isFavorite)
-                ContentTypes.MOVIE.name -> updateTopMovieFavorite(id.orZero(), isFavorite)
+                ContentType.SERIES.name -> updateTopSeriesFavorite(id.orZero(), isFavorite)
+                ContentType.MOVIE.name -> updateTopMovieFavorite(id.orZero(), isFavorite)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.presantation.generate
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -43,10 +46,12 @@ import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun GenerateContent(
-    onShuffleAction: (GenerateAction) -> Unit,
     trendList: List<ContentModel>,
-    generateUiState: GenerateUiState
+    generateUiState: GenerateUiState,
+    onGenerateAction: (GenerateAction) -> Unit,
 ) {
+
+    val context = LocalContext.current
 
     var isPreferred by remember {
         mutableStateOf(false)
@@ -66,7 +71,7 @@ fun GenerateContent(
             modifier = Modifier.padding(top = 50.dp)
         ) {
             if (isPreferred) {
-                if (generateUiState.isLoading){
+                if (generateUiState.isLoading) {
                     LottieAnimation(
                         composition = splashAnimateComposition,
                         iterations = LottieConstants.IterateForever,
@@ -75,7 +80,7 @@ fun GenerateContent(
                             .fillMaxHeight(0.6f),
                         alignment = Alignment.Center
                     )
-                }else{
+                } else {
                     CustomAsyncImage(
                         model = trendList[0].posterPath,
                         contentDescription = stringResource(
@@ -94,7 +99,20 @@ fun GenerateContent(
         }
         AnimatedVisibility(visible = isPreferred) {
             Button(
-                onClick = {}, modifier = Modifier
+                onClick = {
+                    onGenerateAction(
+                        GenerateAction.AddToWatchList(
+                            id = trendList[0].id,
+                            isInWatchList = trendList[0].isInWatchList,
+                            type = trendList[0].type,
+                            listType = trendList[0].listType
+                        )
+                    )
+                    if (!trendList[0].isInWatchList)
+                        Toast.makeText(context,
+                            context.getText(R.string.added_to_watch_list),Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context,"Removed from watch list",Toast.LENGTH_SHORT).show()
+                }, modifier = Modifier
                     .width(200.dp)
                     .padding(vertical = 36.dp)
             ) {
@@ -106,10 +124,12 @@ fun GenerateContent(
                 if (!isPreferred) {
                     isPreferred = true
                 } else {
-                    onShuffleAction(GenerateAction.ShuffleList)
+                    onGenerateAction(GenerateAction.ShuffleList)
                 }
             }, modifier = Modifier
-                .size(75.dp)
+                .size(
+                    64.dp
+                )
                 .clip(CircleShape),
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = Color.Yellow
@@ -119,7 +139,12 @@ fun GenerateContent(
                 imageVector = Icons.Filled.Refresh,
                 contentDescription = stringResource(R.string.generate_button),
                 tint = Color.Black,
-                modifier = Modifier.size(36.dp)
+                modifier = Modifier
+                    .size(32.dp)
+                    .graphicsLayer(
+                        scaleX = if (isPreferred) 1.1f else 1.0f,
+                        scaleY = if (isPreferred) 1.1f else 1.0f
+                    )
             )
         }
     }

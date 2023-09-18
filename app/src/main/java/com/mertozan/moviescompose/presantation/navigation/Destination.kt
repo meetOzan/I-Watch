@@ -37,6 +37,11 @@ object ContentListScreen : Destination {
     )
 }
 
+object WatchListScreen : Destination{
+    override val route = "watch_list_screen"
+
+}
+
 object SplashScreen : Destination {
     override val route = "splash_screen"
 }

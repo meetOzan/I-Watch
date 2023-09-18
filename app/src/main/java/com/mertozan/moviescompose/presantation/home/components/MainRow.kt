@@ -28,7 +28,7 @@ import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presantation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presantation.theme.LightBlack
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 
 @Composable
 fun MainRow(
@@ -45,7 +45,7 @@ fun MainRow(
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_row_loading))
     )
     val isLoading : Boolean =
-        if (type == ContentTypes.MOVIE.name) homeUiState.popularMovieIsLoading
+        if (type == ContentType.MOVIE.name) homeUiState.popularMovieIsLoading
             else homeUiState.popularSeriesIsLoading
 
     Row(

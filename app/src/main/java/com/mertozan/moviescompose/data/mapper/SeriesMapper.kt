@@ -4,6 +4,8 @@ import com.mertozan.moviescompose.data.model.dto.Series
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.util.enums.ContentType
+import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.orEmptyList
 import com.mertozan.moviescompose.util.extensions.orFalse
 import com.mertozan.moviescompose.util.extensions.orZero
@@ -31,7 +33,7 @@ fun TopSeriesEntity.topSeriesEntityToDetailItem(): ContentModel {
         title = title,
         popularity = popularity.toString(),
         posterPath = posterPath.orEmpty(),
-        releaseDate = firstAirDate,
+        releaseDate = firstAirDate.orEmpty(),
         voteAverage = voteAverage.toString(),
         voteCount = voteCount.toString(),
         adult = adult,
@@ -47,7 +49,7 @@ fun List<Series>.seriesToSeriesModelList(): List<ContentModel> {
             id = it.id,
             title = it.name,
             popularity = it.popularity.toString(),
-            releaseDate = it.firstAirDate,
+            releaseDate = it.firstAirDate.orEmpty(),
             genresDto = it.genres.orEmptyList(),
             posterPath = it.posterPath,
             voteAverage = it.voteAverage.toString(),
@@ -60,7 +62,7 @@ fun List<Series>.seriesToSeriesModelList(): List<ContentModel> {
     }
 }
 
-fun List<SeriesEntity>.toSeriesDetailItemList(): List<ContentModel> {
+fun List<SeriesEntity>.toSeriesMovieModelList(): List<ContentModel> {
     return map {
         ContentModel(
             id = it.id,
@@ -72,6 +74,10 @@ fun List<SeriesEntity>.toSeriesDetailItemList(): List<ContentModel> {
             voteAverage = it.voteAverage.toString(),
             voteCount = it.voteCount.toString(),
             isFavorite = it.isFavorite.orFalse(),
+            isWatched = it.isWatched.orFalse(),
+            isInWatchList = it.isInWatchList.orFalse(),
+            type = ContentType.SERIES.name,
+            listType = ListType.POPULAR.name,
             runTime = it.episodeNumber.toString(),
             originalLanguage = it.originalLanguage,
             overview = it.overview,
@@ -91,6 +97,10 @@ fun List<TopSeriesEntity>.toTopSeriesDetailItemList(): List<ContentModel> {
             isFavorite = it.isFavorite,
             voteAverage = it.voteAverage.toString(),
             voteCount = it.voteCount.toString(),
+            isWatched = it.isWatched.orFalse(),
+            isInWatchList = it.isInWatchList.orFalse(),
+            type = ContentType.SERIES.name,
+            listType = ListType.TOP_RATED.name,
             runTime = it.episodes.toString(),
             originalLanguage = it.originalLanguage,
             overview = it.overview,
@@ -110,8 +120,12 @@ fun List<ContentModel>.toDetailItemToSeriesEntityList(): List<SeriesEntity> {
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),
             isFavorite = it.isFavorite,
+            isWatched = it.isWatched,
+            type = it.type,
+            listType = it.listType,
+            isInWatchList = it.isInWatchList,
             originalLanguage = it.originalLanguage,
-            overview = it.overview,
+            overview = it.overview
         )
     }
 }
@@ -128,8 +142,12 @@ fun List<ContentModel>.toDetailItemToTopSeriesEntityList(): List<TopSeriesEntity
             voteAverage = it.voteAverage.toFloat(),
             voteCount = it.voteCount.toInt(),
             isFavorite = it.isFavorite,
+            isWatched = it.isWatched,
+            type = it.type,
+            listType = it.listType,
+            isInWatchList = it.isInWatchList,
             originalLanguage = it.originalLanguage,
-            overview = it.overview,
+            overview = it.overview
         )
     }
 }

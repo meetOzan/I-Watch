@@ -9,9 +9,10 @@ import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedSeries
 import com.mertozan.moviescompose.domain.usecase.UpdateMovieFavorite
 import com.mertozan.moviescompose.domain.usecase.UpdateSeriesFavorite
-import com.mertozan.moviescompose.util.enums.ContentTypes
+import com.mertozan.moviescompose.util.enums.ContentType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -46,8 +47,8 @@ class HomeViewModel @Inject constructor(
 
     private fun updateFavoriteState(id: Int, isFavorite: Boolean, type: String) {
         when (type) {
-            ContentTypes.MOVIE.name -> updateMovieFavorite(id, isFavorite)
-            ContentTypes.SERIES.name -> updateSeriesFavorite(id, isFavorite)
+            ContentType.MOVIE.name -> updateMovieFavorite(id, isFavorite)
+            ContentType.SERIES.name -> updateSeriesFavorite(id, isFavorite)
         }
     }
 
@@ -59,6 +60,8 @@ class HomeViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
                     _homeUiState.value = _homeUiState.value.copy(popularMovieIsLoading = false)
+                    delay(500)
+                    return@launch
                 }
 
                 is NetworkResponse.Success -> {
@@ -77,6 +80,8 @@ class HomeViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
                     _homeUiState.value = _homeUiState.value.copy(popularSeriesIsLoading = false)
+                    delay(500)
+                    return@launch
                 }
 
                 is NetworkResponse.Success -> {
@@ -95,6 +100,8 @@ class HomeViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
                     _homeUiState.value = _homeUiState.value.copy(topMoviesIsLoading = false)
+                    delay(500)
+                    return@launch
                 }
 
                 is NetworkResponse.Success -> {
@@ -113,6 +120,8 @@ class HomeViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
                     _homeUiState.value = _homeUiState.value.copy(topSeriesIsLoading = false)
+                    delay(500)
+                    return@launch
                 }
 
                 is NetworkResponse.Success -> {

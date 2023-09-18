@@ -26,14 +26,8 @@ class AuthViewModel @Inject constructor(
     private val transferUserToLocal: TransferUserToLocal
 ) : ViewModel() {
 
-    private var _checkCurrentUser = MutableStateFlow(false)
-    val checkCurrentUser = _checkCurrentUser.asStateFlow()
-
-    private var _exceptionMessage = MutableStateFlow("")
-    val exceptionMessage = _exceptionMessage.asStateFlow()
-
-    private var _uiState = MutableStateFlow(AuthUiState())
-    val uiState = _uiState.asStateFlow()
+    private var _authUiState = MutableStateFlow(AuthUiState())
+    val authUiState = _authUiState.asStateFlow()
 
     val userItem = MutableStateFlow(UserModel())
 
@@ -67,10 +61,10 @@ class AuthViewModel @Inject constructor(
     private fun checkLogged() {
         if (firebaseAuth.currentUser != null) {
             firebaseAuth.currentUser?.reload()
-            _checkCurrentUser.value = true
+            _authUiState.value = _authUiState.value.copy(checkCurrentUser = true)
         } else {
             firebaseAuth.currentUser?.reload()
-            _checkCurrentUser.value = false
+            _authUiState.value = _authUiState.value.copy(checkCurrentUser = false)
         }
     }
 
@@ -95,14 +89,14 @@ class AuthViewModel @Inject constructor(
                             saveUser(name, surname, email, password, watched)
                         }
                         .addOnFailureListener {
-                            _exceptionMessage.value = "User can't created"
+                            _authUiState.value = _authUiState.value.copy(exceptionMessage = "User can't created")
                         }
                 } else {
-                    _exceptionMessage.value = "Please fill blanks"
+                    _authUiState.value = _authUiState.value.copy(exceptionMessage = "Please fill blanks")
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _exceptionMessage.value = e.message.orEmpty()
+                    _authUiState.value = _authUiState.value.copy(exceptionMessage = e.message.orEmpty())
                 }
             }
         }
@@ -121,10 +115,9 @@ class AuthViewModel @Inject constructor(
                 .set(User(name, surname, email, password, watched))
                 .addOnCompleteListener {
                     checkLogged()
-                    _exceptionMessage.value = "User Saved"
                 }
                 .addOnFailureListener {
-                    _exceptionMessage.value = "Wrong E-Mail or Password"
+                    _authUiState.value = _authUiState.value.copy(exceptionMessage = "Wrong E-Mail or Password")
                 }
         }
     }
@@ -138,16 +131,16 @@ class AuthViewModel @Inject constructor(
                     firebaseAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener {
                             checkLogged()
-                            _exceptionMessage.value = "Login successful"
+                            _authUiState.value = _authUiState.value.copy(exceptionMessage = "Login successful")
                         }
                         .addOnFailureListener {
-                            _exceptionMessage.value = "Wrong E-Mail or Password"
+                            _authUiState.value = _authUiState.value.copy(exceptionMessage = "Wrong E-Mail or Password")
                         }.await()
                 } else {
-                    _exceptionMessage.value = "Please fill blanks"
+                    _authUiState.value = _authUiState.value.copy(exceptionMessage = "Please fill blanks")
                 }
             } catch (e: Exception) {
-                _exceptionMessage.value = e.message.orEmpty()
+                _authUiState.value = _authUiState.value.copy(exceptionMessage = e.message.orEmpty())
             }
         }
     }
