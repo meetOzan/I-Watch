@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.main_components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.main_components.CustomText
 import com.mertozan.moviescompose.presantation.navigation.DetailScreen
 import com.mertozan.moviescompose.presantation.theme.Dark80
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
@@ -52,7 +52,7 @@ fun ContentItem(
             .clickable {
                 if (type == ContentType.FAVORITE_CONTENTS.name){
                     Toast.makeText(
-                        context,"Details inaccessible from there",Toast.LENGTH_SHORT
+                        context,context.getText(R.string.details_inaccessible_from_there),Toast.LENGTH_SHORT
                     ).show()
                 }else{
                     navController.navigate(

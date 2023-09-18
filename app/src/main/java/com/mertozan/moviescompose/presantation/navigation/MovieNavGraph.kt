@@ -152,7 +152,8 @@ fun NavGraphBuilder.watchListScreen() {
 
         WatchListScreen(
             isInWatchList = isInWatchedList,
-            isWatchedList = isWatchedList
+            isWatchedList = isWatchedList,
+            onWatchListAction = watchListViewModel::onAction
         )
     }
 }
@@ -212,7 +213,7 @@ fun NavGraphBuilder.generateScreen() {
 fun NavGraphBuilder.profileScreen(
     navController: NavController,
     onSignOutNavigate: () -> Unit,
-    onWatchListClick : () -> Unit
+    onWatchListClick: () -> Unit
 ) {
     composable(
         route = ProfileScreen.route
@@ -223,7 +224,7 @@ fun NavGraphBuilder.profileScreen(
 
         ProfileScreen(
             fullName = userItem.fullName,
-            watched = userItem.watched,
+            watched = profileUiState.watchCount,
             profileUiState = profileUiState,
             navController = navController,
             onSignOutNavigate = onSignOutNavigate,

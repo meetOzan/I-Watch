@@ -58,6 +58,9 @@
     <string name="details_inaccessible_from_there">Details inaccessible from there</string>
     <string name="watched_list">Watched List</string>
     <string name="watch_list">Watch List</string>
-    <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You\'ve never seen a movie. You can add the movies you\'ve seen here!</string>
+    <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You haven\'t watched a content yet. You can add the content you\'ve seen here!</string>
     <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">You haven\'t added content to your watch list yet. Add content to your watchlist!</string>
+    <string name="did_you_watched">Did you watched %1$s ?</string>
+    <string name="i_watched">Watched</string>
+    <string name="remove">Remove</string>
 </resources>

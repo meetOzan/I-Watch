@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthAction
-import com.mertozan.moviescompose.presantation.components.CustomText
-import com.mertozan.moviescompose.presantation.components.CustomTextField
+import com.mertozan.moviescompose.presantation.main_components.CustomText
+import com.mertozan.moviescompose.presantation.main_components.CustomTextField
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack

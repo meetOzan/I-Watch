@@ -38,7 +38,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.main_components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.generate.components.NoGeneratedContents
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateUiState

@@ -128,6 +128,10 @@ class LocalDataSource @Inject constructor(
         return userDao.getSingleUser().toUserEntityToUserItem()
     }
 
+    fun updateUserWatchState(userWatched: Int) {
+        userDao.updateUserWatchState(userWatched = userWatched)
+    }
+
     // Update Favorite State
     fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         movieDao.updateMovieFavoriteState(movieId = movieId, isFavorite = !isFavorite)

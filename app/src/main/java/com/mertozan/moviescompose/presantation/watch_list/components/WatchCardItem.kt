@@ -1,6 +1,5 @@
 package com.mertozan.moviescompose.presantation.watch_list.components
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,42 +14,44 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presantation.components.CustomAsyncImage
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.main_components.CustomAlertDialog
+import com.mertozan.moviescompose.presantation.main_components.CustomAsyncImage
+import com.mertozan.moviescompose.presantation.main_components.CustomText
 import com.mertozan.moviescompose.presantation.theme.Dark80
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
+import com.mertozan.moviescompose.presantation.watch_list.viewmodel.WatchListAction
+import com.mertozan.moviescompose.util.enums.WatchListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
 fun WatchCardItem(
     content: ContentModel,
+    watchListType: String,
+    onWatchListAction: (WatchListAction) -> Unit
 ) {
 
-    val context = LocalContext.current
+    var openDialog by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                Toast
-                    .makeText(
-                        context,
-                        context.getText(R.string.details_inaccessible_from_there),
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
+                openDialog = !openDialog
             }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
@@ -122,6 +123,43 @@ fun WatchCardItem(
                     }
                 }
             }
+        }
+    }
+
+    if (openDialog) {
+        if (watchListType == WatchListType.WATCHLIST.name) {
+            CustomAlertDialog(
+                title = content.title,
+                onDismissClick = { openDialog = !openDialog },
+                onDoWatched = {
+                    onWatchListAction(
+                        WatchListAction.TransferToWatched(
+                            content.id,
+                            content.isInWatchList,
+                            content.type,
+                            content.listType
+                        )
+                    )
+                    onWatchListAction(
+                        WatchListAction.GetAllContents
+                    )
+                    openDialog = !openDialog
+                },
+                onRemoveFromList = {
+                    onWatchListAction(
+                        WatchListAction.RemoveFromWatchList(
+                            content.id,
+                            content.isInWatchList,
+                            content.type,
+                            content.listType
+                        ),
+                    )
+                    onWatchListAction(
+                        WatchListAction.GetAllContents
+                    )
+                    openDialog = !openDialog
+                }
+            )
         }
     }
 }

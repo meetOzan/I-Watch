@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -33,20 +34,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presantation.components.CustomText
 import com.mertozan.moviescompose.presantation.content_list.components.EmptyListPlaceholder
+import com.mertozan.moviescompose.presantation.main_components.CustomText
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 import com.mertozan.moviescompose.presantation.theme.LightGray70
 import com.mertozan.moviescompose.presantation.watch_list.components.TabIndicator
 import com.mertozan.moviescompose.presantation.watch_list.components.WatchCardItem
+import com.mertozan.moviescompose.presantation.watch_list.viewmodel.WatchListAction
 import com.mertozan.moviescompose.util.enums.WatchListType
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WatchListScreen(
     isInWatchList: List<ContentModel>,
-    isWatchedList: List<ContentModel>
+    isWatchedList: List<ContentModel>,
+    onWatchListAction: (WatchListAction) -> Unit
 ) {
 
     Surface {
@@ -57,11 +60,11 @@ fun WatchListScreen(
 
         val pagerState = rememberPagerState(pageCount = { WatchListType.values().size })
 
-        LaunchedEffect(selectedTab){
+        LaunchedEffect(selectedTab) {
             pagerState.animateScrollToPage(selectedTab)
         }
 
-        LaunchedEffect(pagerState.currentPage){
+        LaunchedEffect(pagerState.currentPage) {
             selectedTab = pagerState.currentPage
         }
 
@@ -100,7 +103,7 @@ fun WatchListScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .fillMaxHeight()
-                                        .padding(top = 50.dp, bottom = 24.dp),
+                                        .padding(vertical = 50.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.Center
                                 ) {
@@ -114,7 +117,7 @@ fun WatchListScreen(
                                         EmptyListPlaceholder(
                                             text = stringResource(R.string.you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist),
                                             modifier = Modifier.weight(1f),
-                                            icon = Icons.Filled.Warning
+                                            icon = Icons.Filled.Notifications
                                         )
                                     } else {
                                         LazyColumn(
@@ -122,7 +125,9 @@ fun WatchListScreen(
                                         ) {
                                             items(isInWatchList) { content ->
                                                 WatchCardItem(
-                                                    content = content
+                                                    content = content,
+                                                    onWatchListAction = onWatchListAction,
+                                                    watchListType = WatchListType.WATCHLIST.name
                                                 )
                                             }
                                         }
@@ -132,7 +137,10 @@ fun WatchListScreen(
 
                             1 -> {
                                 Column(
-                                    modifier = Modifier.fillMaxSize(),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight()
+                                        .padding(vertical = 50.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.Center
                                 ) {
@@ -154,7 +162,9 @@ fun WatchListScreen(
                                         ) {
                                             items(isWatchedList) { content ->
                                                 WatchCardItem(
-                                                    content = content
+                                                    content = content,
+                                                    onWatchListAction = onWatchListAction,
+                                                    watchListType = WatchListType.WATCHED.name
                                                 )
                                             }
                                         }

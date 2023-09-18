@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presantation.components
+package com.mertozan.moviescompose.presantation.main_components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment

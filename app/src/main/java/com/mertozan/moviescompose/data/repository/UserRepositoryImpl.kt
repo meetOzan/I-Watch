@@ -29,6 +29,10 @@ class UserRepositoryImpl @Inject constructor(
         return firebaseDataSource.getUserFromNetwork()
     }
 
+    override suspend fun updateUserWatchState(userWatched: Int) {
+        localDataSource.updateUserWatchState(userWatched)
+    }
+
     override suspend fun signOut() {
         firebaseDataSource.signOut()
     }

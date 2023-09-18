@@ -69,6 +69,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.appcompat)
     val composeBom = platform(libs.androidx.compose.bom)
 
     implementation(libs.androidx.core.ktx)
@@ -133,4 +134,8 @@ dependencies {
 
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
+
+    // Snacky - 3rd Party Lib
+    implementation(libs.com.github.snacky)
+
 }

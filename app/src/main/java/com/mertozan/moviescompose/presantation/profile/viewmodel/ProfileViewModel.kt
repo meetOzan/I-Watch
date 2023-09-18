@@ -3,6 +3,7 @@ package com.mertozan.moviescompose.presantation.profile.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.remote.response.NetworkResponse
+import com.mertozan.moviescompose.domain.usecase.GetAllWatchedListContents
 import com.mertozan.moviescompose.domain.usecase.GetUserFromLocal
 import com.mertozan.moviescompose.domain.usecase.SignOut
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserNetwork: GetUserFromLocal,
-    private val userSignOut: SignOut
+    private val userSignOut: SignOut,
+    private val getAllWatchedListContents: GetAllWatchedListContents
 ) : ViewModel() {
 
     private val _profileUiState = MutableStateFlow(ProfileUiState())
@@ -23,6 +25,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         getUser()
+        getProfileWatchedContent()
     }
 
     private fun getUser() {
@@ -52,6 +55,26 @@ class ProfileViewModel @Inject constructor(
             is NetworkResponse.Success -> {
                 _profileUiState.value.user = response.data
                 _profileUiState.value = _profileUiState.value.copy(isLoading = false)
+            }
+        }
+    }
+
+    private fun getProfileWatchedContent() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val response = getAllWatchedListContents()) {
+                is NetworkResponse.Error -> {
+                    _profileUiState.value =
+                        _profileUiState.value.copy(errorMessage = response.error)
+                    _profileUiState.value =
+                        _profileUiState.value.copy(isLoading = false)
+                }
+
+                is NetworkResponse.Success -> {
+                    _profileUiState.value =
+                        _profileUiState.value.copy(watchCount = response.data.size)
+                    _profileUiState.value =
+                        _profileUiState.value.copy(isLoading = false)
+                }
             }
         }
     }
