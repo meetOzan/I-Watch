@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviesCompose</string>
+    <string name="app_name">I-Watch</string>
     <string name="top_20_tv_series_on_this_week">Top 20 TV Series on this week</string>
     <string name="top_20_movies_on_this_week">Top 20 movies on this week</string>
     <string name="https_image_tmdb_org_t_p_original">https://image.tmdb.org/t/p/original/%1$s</string>
@@ -63,4 +63,5 @@
     <string name="did_you_watched">Did you watched %1$s ?</string>
     <string name="i_watched">Watched</string>
     <string name="remove">Remove</string>
+    <string name="still_waiting">Still waiting...</string>
 </resources>

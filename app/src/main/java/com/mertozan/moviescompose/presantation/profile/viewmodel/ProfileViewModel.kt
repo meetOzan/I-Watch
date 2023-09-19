@@ -60,6 +60,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getProfileWatchedContent() {
+        _profileUiState.value = profileUiState.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             when (val response = getAllWatchedListContents()) {
                 is NetworkResponse.Error -> {

@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,14 +38,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.main_components.CustomAsyncImage
 import com.mertozan.moviescompose.presantation.main_components.CustomText
-import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
-import com.mertozan.moviescompose.presantation.theme.amazonEmberFamily
 
 @Composable
 fun DetailScreen(
@@ -122,8 +119,9 @@ fun DetailScreen(
             fontWeight = FontWeight.Bold
         )
         Row(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(180.dp)
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -163,6 +161,7 @@ fun DetailScreen(
                 contentDescription = stringResource(R.string.add_fav),
                 colorFilter = ColorFilter.tint(animateFavColor),
                 modifier = Modifier
+                    .padding(end = 8.dp)
                     .size(24.dp)
                     .clickable {
                         onUpdateAction(DetailAction.UpdateSingleFavorite(detail.isFavorite))
@@ -171,12 +170,12 @@ fun DetailScreen(
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(top = 16.dp, end = 12.dp, start = 12.dp, bottom = 12.dp)
         ) {
-            Column(
+            /*Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -193,7 +192,7 @@ fun DetailScreen(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-            }
+            }*/
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -230,13 +229,13 @@ fun DetailScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CustomText(
-                    text = stringResource(R.string.language),
+                    text = stringResource(R.string.release_date),
                     fontSize = 16,
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     color = Color.White
                 )
                 CustomText(
-                    text = detail.originalLanguage.uppercase(),
+                    text = detail.releaseDate,
                     fontSize = 20,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -247,13 +246,13 @@ fun DetailScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CustomText(
-                    text = stringResource(R.string.release_date),
+                    text = stringResource(R.string.language),
                     fontSize = 16,
                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
                     color = Color.White
                 )
                 CustomText(
-                    text = detail.releaseDate,
+                    text = detail.originalLanguage.uppercase(),
                     fontSize = 20,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

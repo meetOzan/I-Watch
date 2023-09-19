@@ -76,7 +76,7 @@ fun ProfileScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     CustomText(
-                        text = "Still waiting...",
+                        text = stringResource(R.string.still_waiting),
                         fontSize = 24,
                         color = DarkWhite80,
                         fontWeight = FontWeight.SemiBold,
