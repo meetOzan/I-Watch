@@ -1,9 +1,9 @@
 package com.mertozan.moviescompose.data.repository
 
-import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
+import com.mertozan.moviescompose.data.source.local.LocalDataSource
 import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.data.model.entity.UserEntity
-import com.mertozan.moviescompose.data.remote.firebase.FirebaseDataSource
+import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
 import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.domain.repository.UserRepository
 import javax.inject.Inject
@@ -27,6 +27,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserFromNetwork(): UserModel {
         return firebaseDataSource.getUserFromNetwork()
+    }
+
+    override suspend fun updateUserWatchState(userWatched: Int) {
+        localDataSource.updateUserWatchState(userWatched)
     }
 
     override suspend fun signOut() {

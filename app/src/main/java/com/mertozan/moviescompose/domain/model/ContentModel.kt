@@ -14,6 +14,10 @@ data class ContentModel(
     val voteCount : String = "",
     val runTime: String = "",
     val isFavorite: Boolean = false,
+    val isWatched: Boolean = false,
+    val isInWatchList: Boolean = false,
+    val type : String = "",
+    val listType : String = "",
     val originalLanguage: String = "",
     val overview: String = "No Detail"
 )

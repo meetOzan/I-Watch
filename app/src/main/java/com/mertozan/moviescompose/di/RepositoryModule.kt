@@ -1,8 +1,8 @@
 package com.mertozan.moviescompose.di
 
-import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
-import com.mertozan.moviescompose.data.remote.firebase.FirebaseDataSource
-import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
+import com.mertozan.moviescompose.data.source.local.LocalDataSource
+import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
+import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
 import com.mertozan.moviescompose.data.repository.ContentRepositoryImpl
 import com.mertozan.moviescompose.data.repository.UserRepositoryImpl
 import com.mertozan.moviescompose.domain.repository.ContentRepository

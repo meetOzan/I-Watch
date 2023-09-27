@@ -19,7 +19,7 @@ import com.mertozan.moviescompose.data.model.entity.UserEntity
         TopSeriesEntity::class,
         UserEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class LocalDatabase : RoomDatabase() {

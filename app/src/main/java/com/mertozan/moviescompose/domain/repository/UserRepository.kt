@@ -11,6 +11,8 @@ interface UserRepository {
 
     suspend fun getUserFromNetwork(): UserModel
 
+    suspend fun updateUserWatchState(userWatched: Int)
+
     fun getSingleLocalUser(): UserModel
 
     suspend fun transferUserToLocal(userModel: UserModel)

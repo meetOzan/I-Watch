@@ -3,25 +3,29 @@ package com.mertozan.moviescompose.presantation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mertozan.moviescompose.presantation.detail.components.ContentList
-import com.mertozan.moviescompose.presantation.detail.DetailScreen
-import com.mertozan.moviescompose.presantation.detail.DetailViewModel
-import com.mertozan.moviescompose.presantation.generate.GenerateContent
-import com.mertozan.moviescompose.presantation.generate.GenerateViewModel
-import com.mertozan.moviescompose.presantation.home.HomeScreen
-import com.mertozan.moviescompose.presantation.home.HomeViewModel
 import com.mertozan.moviescompose.presantation.auth.LoginScreen
-import com.mertozan.moviescompose.presantation.auth.LoginViewModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthViewModel
+import com.mertozan.moviescompose.presantation.content_list.ContentList
+import com.mertozan.moviescompose.presantation.content_list.viewmodel.ListViewModel
+import com.mertozan.moviescompose.presantation.detail.DetailScreen
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailAction
+import com.mertozan.moviescompose.presantation.detail.viewmodel.DetailViewModel
+import com.mertozan.moviescompose.presantation.generate.GenerateContent
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateAction
+import com.mertozan.moviescompose.presantation.generate.viewmodel.GenerateViewModel
+import com.mertozan.moviescompose.presantation.home.HomeScreen
+import com.mertozan.moviescompose.presantation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presantation.profile.ProfileScreen
-import com.mertozan.moviescompose.presantation.profile.ProfileViewModel
+import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presantation.splash.SplashScreen
+import com.mertozan.moviescompose.presantation.watch_list.WatchListScreen
+import com.mertozan.moviescompose.presantation.watch_list.viewmodel.WatchListViewModel
 
 @Composable
 fun MovieNavHost(
@@ -47,11 +51,18 @@ fun MovieNavHost(
         })
         mainScreen(navController = navController)
         generateScreen()
-        profileScreen {
-            navController.navigate(LoginScreen.route) {
-                navController.popBackStack(route = MainScreen.route, inclusive = true)
+        profileScreen(
+            navController = navController,
+            onSignOutNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    navController.popBackStack(route = MainScreen.route, inclusive = true)
+                }
+            },
+            onWatchListClick = {
+                navController.navigate(WatchListScreen.route)
             }
-        }
+        )
+        watchListScreen()
         detailScreen {
             navController.navigate(MainScreen.route) {
                 popUpTo(DetailScreen.route) {
@@ -66,17 +77,19 @@ fun MovieNavHost(
 fun NavGraphBuilder.mainScreen(navController: NavController) {
     composable(route = MainScreen.route) {
         val viewModel = hiltViewModel<HomeViewModel>()
-        val popularMovieList = viewModel.popularMovies.collectAsState()
-        val popularSeriesList = viewModel.popularSeries.collectAsState()
-        val topRatedMovieList = viewModel.topRatedMovies.collectAsState()
-        val topRatedSeriesList = viewModel.topRatedSeries.collectAsState()
+        val homeUiState = viewModel.homeUiState.collectAsState().value
+        val popularMovieList = homeUiState.popularMovies
+        val popularSeriesList = homeUiState.popularSeries
+        val topRatedMovieList = homeUiState.topRatedMovies
+        val topRatedSeriesList = homeUiState.topRatedSeries
         HomeScreen(
-            popularMovieList = popularMovieList.value,
-            popularSeriesList = popularSeriesList.value,
-            topRatedMovieList = topRatedMovieList.value,
-            topRatedSeriesList = topRatedSeriesList.value,
+            popularMovieList = popularMovieList,
+            popularSeriesList = popularSeriesList,
+            topRatedMovieList = topRatedMovieList,
+            topRatedSeriesList = topRatedSeriesList,
             navController = navController,
-            viewModel = viewModel
+            onFavoriteAction = viewModel::onAction,
+            homeUiState = homeUiState
         )
     }
 }
@@ -87,16 +100,16 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         arguments = DetailScreen.args
     ) {
         val viewModel: DetailViewModel = hiltViewModel()
-        val detail = viewModel.movieDetailUiState.collectAsState()
+        val detail = viewModel.uiState.collectAsState().value.movieDetailUiState
 
         LaunchedEffect(Unit) {
-            viewModel.getDetail()
+            viewModel.onAction(DetailAction.GetSingleDetail)
         }
 
         DetailScreen(
             onBackClicked = onNavigate,
-            detail = detail.value,
-            viewModel = viewModel
+            detail = detail,
+            onUpdateAction = viewModel::onAction
         )
     }
 }
@@ -106,20 +119,41 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         route = ContentListScreen.routeWithArgs,
         arguments = ContentListScreen.args
     ) {
-        val viewModel: HomeViewModel = hiltViewModel()
-        val contentList = viewModel.topRatedContents.collectAsState()
-        val contentListType = viewModel.contentListType.collectAsState().value
-        val contentTitle = viewModel.contentTitle.collectAsState().value
+        val viewModel: ListViewModel = hiltViewModel()
+        val listUiState = viewModel.listUiState.collectAsState().value
+        val contentList = listUiState.contentList
+        val contentListType = listUiState.contentListType
+        val contentTitle = listUiState.contentTitle
+        val isLoading = listUiState.favoriteIsLoading
 
         LaunchedEffect(Unit) {
             viewModel.getContentList()
         }
 
         ContentList(
-            contentList = contentList.value,
+            contentList = contentList,
+            isLoading = isLoading,
             type = contentListType,
             title = contentTitle,
             navController = navController
+        )
+    }
+}
+
+fun NavGraphBuilder.watchListScreen() {
+    composable(
+        route = WatchListScreen.route
+    ) {
+        val watchListViewModel: WatchListViewModel = hiltViewModel()
+        val isWatchedList =
+            watchListViewModel.watchListUiState.collectAsState().value.isWatchedList
+        val isInWatchedList =
+            watchListViewModel.watchListUiState.collectAsState().value.isInWatchedList
+
+        WatchListScreen(
+            isInWatchList = isInWatchedList,
+            isWatchedList = isWatchedList,
+            onWatchListAction = watchListViewModel::onAction
         )
     }
 }
@@ -136,11 +170,17 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
     ) {
-        val loginViewModel = hiltViewModel<LoginViewModel>()
+        val loginViewModel = hiltViewModel<AuthViewModel>()
+        val userModel = loginViewModel.userItem.collectAsState().value
+        val userCurrent = loginViewModel.authUiState.collectAsState().value.checkCurrentUser
+        val errorMessage = loginViewModel.authUiState.collectAsState().value.exceptionMessage
 
         LoginScreen(
+            userModel = userModel,
+            userCurrent = userCurrent,
+            errorMessage = errorMessage,
             onNavigate = onNavigate,
-            viewModel = loginViewModel
+            onAuthAction = loginViewModel::onAction,
         )
     }
 }
@@ -150,28 +190,46 @@ fun NavGraphBuilder.generateScreen() {
         route = GenerateScreen.route
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
+        val generateUiState = viewModel.generateUiState.collectAsState().value
+        var generateList = generateUiState.allContents
 
         LaunchedEffect(Unit) {
-            viewModel.getAllContents()
-            viewModel.shuffleList()
+            viewModel.getContents()
         }
 
-        GenerateContent(viewModel)
+        LaunchedEffect(Unit) {
+            viewModel.onAction(GenerateAction.ShuffleList)
+            generateList = viewModel.generateUiState.value.allContents
+        }
+
+        GenerateContent(
+            trendList = generateList,
+            onGenerateAction = viewModel::onAction,
+            generateUiState = generateUiState
+        )
     }
 }
 
-fun NavGraphBuilder.profileScreen(onNavigate: () -> Unit) {
+fun NavGraphBuilder.profileScreen(
+    navController: NavController,
+    onSignOutNavigate: () -> Unit,
+    onWatchListClick: () -> Unit
+) {
     composable(
         route = ProfileScreen.route
     ) {
         val profileViewModel = hiltViewModel<ProfileViewModel>()
-        val userItem by profileViewModel.user.collectAsState()
+        val profileUiState = profileViewModel.profileUiState.collectAsState().value
+        val userItem = profileUiState.user
 
         ProfileScreen(
             fullName = userItem.fullName,
-            watched = userItem.watched,
-            onNavigate = onNavigate,
-            onSignOutClick = profileViewModel::signOut
+            watched = profileUiState.watchCount,
+            profileUiState = profileUiState,
+            navController = navController,
+            onSignOutNavigate = onSignOutNavigate,
+            onSignOutClick = profileViewModel::signOut,
+            onWatchListClick = onWatchListClick
         )
     }
 }

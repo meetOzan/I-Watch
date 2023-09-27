@@ -12,4 +12,7 @@ interface UserDao {
 
     @Query("SELECT * FROM user_entity")
     fun getSingleUser(): UserEntity
+
+    @Query("UPDATE user_entity SET user_watched = :userWatched WHERE user_id = 1")
+    fun updateUserWatchState(userWatched: Int)
 }

@@ -3,6 +3,8 @@ package com.mertozan.moviescompose.data.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mertozan.moviescompose.util.enums.ContentType
+import com.mertozan.moviescompose.util.enums.ListType
 
 
 @Entity("movies_entity")
@@ -26,6 +28,14 @@ data class MovieEntity(
     @ColumnInfo(name = "movie_vote_count") val voteCount: Int? = 0,
 
     @ColumnInfo(name = "movie_is_favorite") val isFavorite: Boolean,
+
+    @ColumnInfo(name = "movie_is_watched") val isWatched: Boolean,
+
+    @ColumnInfo(name = "movie_type") val type: String = ContentType.MOVIE.name,
+
+    @ColumnInfo(name = "movie_list_type") val listType: String = ListType.POPULAR.name,
+
+    @ColumnInfo(name = "movie_is_in_watch_list") val isInWatchList: Boolean,
 
     @ColumnInfo(name = "movie_date") val releaseDate: String = "",
 

@@ -17,24 +17,29 @@ object DetailScreen : Destination {
         id: Int, type: String, listType: String
     ): String = "$route/$id/$type/$listType"
 
-    val routeWithArgs = "$route/{$ARGS_ID}/{$ARGS_TYPE}/{$ARGS_LIST_TYPE}"
+    val routeWithArgs = "$route/{$ARGS_ID}/{$ARGS_TYPE}/{$ARGS_CONTENT_TYPE}"
     val args = listOf(
         navArgument(ARGS_ID) { type = NavType.IntType },
         navArgument(ARGS_TYPE) { type = NavType.StringType },
-        navArgument(ARGS_LIST_TYPE) { type = NavType.StringType }
+        navArgument(ARGS_CONTENT_TYPE) { type = NavType.StringType }
     )
 }
 
 object ContentListScreen : Destination {
     override val route = "content_list_screen"
     fun navigateWithArgs(
-        type: String
+        type: String,
     ): String = "$route/$type"
 
     val routeWithArgs = "$route/{$ARGS_TYPE}"
     val args = listOf(
         navArgument(ARGS_TYPE) { type = NavType.StringType },
     )
+}
+
+object WatchListScreen : Destination{
+    override val route = "watch_list_screen"
+
 }
 
 object SplashScreen : Destination {
@@ -57,4 +62,4 @@ const val ARGS_ID = "id"
 
 const val ARGS_TYPE = "type"
 
-const val ARGS_LIST_TYPE = "list_type"
+const val ARGS_CONTENT_TYPE = "list_type"

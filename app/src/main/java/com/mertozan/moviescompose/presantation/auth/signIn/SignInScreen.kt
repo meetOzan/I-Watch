@@ -11,13 +11,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,33 +29,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.auth.LoginViewModel
-import com.mertozan.moviescompose.presantation.components.CustomText
-import com.mertozan.moviescompose.presantation.components.CustomTextField
+import com.mertozan.moviescompose.domain.model.UserModel
+import com.mertozan.moviescompose.presantation.auth.viewmodel.AuthAction
+import com.mertozan.moviescompose.presantation.main_components.CustomText
+import com.mertozan.moviescompose.presantation.main_components.CustomTextField
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
 import com.mertozan.moviescompose.presantation.theme.LightBlack
 
 @Composable
 fun SignInScreen(
+    userModel: UserModel,
+    userCurrent: Boolean,
+    toastMessage: String,
     onNavigate: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    signInOnAction: (AuthAction) -> Unit
 ) {
-
-    val user = viewModel.userItem.collectAsState().value
-    val userCurrent = viewModel.checkCurrentUser.collectAsState().value
-    val toastMessage = viewModel.exceptionMessage.collectAsState().value
 
     val context = LocalContext.current
 
-    val email = user.signInEmail
-    val password = user.signInPassword
+    val email = userModel.signInEmail
+    val password = userModel.signInPassword
 
-    LaunchedEffect(userCurrent){
-        if(userCurrent){
-            viewModel.transferUserToLocal()
+    LaunchedEffect(userCurrent) {
+        if (userCurrent) {
+            signInOnAction(AuthAction.TransferUserLocal)
             onNavigate()
         }
     }
@@ -62,7 +62,8 @@ fun SignInScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBlack),
+            .background(LightBlack)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -89,7 +90,7 @@ fun SignInScreen(
                 email,
                 placeHolder = stringResource(id = R.string.enter_your_e_mail),
                 onChangeValue = {
-                    viewModel.changeItemSignInEmail(it)
+                    signInOnAction(AuthAction.ChangeItemSignInEmail(it))
                 },
                 keyboardType = KeyboardType.Email
             )
@@ -97,20 +98,19 @@ fun SignInScreen(
                 password,
                 placeHolder = stringResource(id = R.string.enter_your_password),
                 onChangeValue = {
-                    viewModel.changeItemSignInPassword(it)
+                    signInOnAction(AuthAction.ChangeItemSignInPassword(it))
                 },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardType = KeyboardType.Password
             )
             ElevatedButton(
                 onClick = {
-                    viewModel.signInFirebase(email,password)
+                    signInOnAction(AuthAction.SignInFirebase(email, password))
                     if (userCurrent) {
                         onNavigate()
-                        viewModel.transferUserToLocal()
-                        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+                        signInOnAction(AuthAction.TransferUserLocal)
                     } else {
-                        Toast.makeText(context,toastMessage,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
                     }
                 },
                 colors = ButtonDefaults.elevatedButtonColors(

@@ -25,18 +25,25 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presantation.components.CustomText
+import com.mertozan.moviescompose.presantation.main_components.CustomText
+import com.mertozan.moviescompose.presantation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presantation.profile.components.ProfileOptionsCard
+import com.mertozan.moviescompose.presantation.profile.viewmodel.ProfileUiState
 import com.mertozan.moviescompose.presantation.theme.DarkWhite80
 import com.mertozan.moviescompose.presantation.theme.DarkYellow
+import com.mertozan.moviescompose.util.enums.ContentListType
 
 @Composable
 fun ProfileScreen(
-    onNavigate: () -> Unit,
-    onSignOutClick: () -> Unit,
+    navController: NavController,
     fullName: String,
-    watched: Int
+    watched: Int,
+    profileUiState: ProfileUiState,
+    onSignOutNavigate: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onWatchListClick: () -> Unit
 ) {
 
     Column(
@@ -63,32 +70,58 @@ fun ProfileScreen(
                 colorFilter = ColorFilter.tint(DarkYellow)
             )
             Spacer(modifier = Modifier.width(24.dp))
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                CustomText(
-                    text = fullName,
-                    fontSize = 24,
-                    color = DarkWhite80,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-                Row(
-                    horizontalArrangement = Arrangement.Center,
+            if (profileUiState.isLoading) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     CustomText(
-                        text = "Watched: $watched ",
-                        fontSize = 20,
+                        text = stringResource(R.string.still_waiting),
+                        fontSize = 24,
                         color = DarkWhite80,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier
                             .fillMaxWidth()
                     )
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CustomText(
+                            text = stringResource(R.string.watched_calculated),
+                            fontSize = 20,
+                            color = DarkWhite80,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
                 }
-            }
+            } else
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    CustomText(
+                        text = fullName,
+                        fontSize = 24,
+                        color = DarkWhite80,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CustomText(
+                            text = stringResource(R.string.watched, watched),
+                            fontSize = 20,
+                            color = DarkWhite80,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
+                }
         }
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -101,26 +134,34 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .padding(start = 24.dp, bottom = 24.dp)
             )
-
             ProfileOptionsCard(
                 optionName = stringResource(R.string.favorites),
-                icon = Icons.Filled.Favorite
+                icon = Icons.Filled.Favorite,
+                contentListType = ContentListType.FAVORITE_CONTENTS.name,
+                onToListClick = {
+                    navController.navigate(
+                        ContentListScreen.navigateWithArgs(
+                            type = ContentListType.FAVORITE_CONTENTS.name
+                        )
+                    )
+                }
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.settings),
-                icon = Icons.Filled.Settings
+                icon = Icons.Filled.Settings,
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.lists),
-                icon = Icons.Rounded.List
+                icon = Icons.Rounded.List,
+                onToListClick = {onWatchListClick()}
             )
             ProfileOptionsCard(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
                     onSignOutClick()
-                    onNavigate()
-                }
+                    onSignOutNavigate()
+                },
             )
         }
     }

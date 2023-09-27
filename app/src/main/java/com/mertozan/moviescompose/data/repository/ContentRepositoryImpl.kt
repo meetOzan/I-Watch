@@ -1,6 +1,5 @@
 package com.mertozan.moviescompose.data.repository
 
-import com.mertozan.moviescompose.data.local.datasource.LocalDataSource
 import com.mertozan.moviescompose.data.mapper.movieModelToMovieEntityList
 import com.mertozan.moviescompose.data.mapper.movieModelToTopMovieEntityList
 import com.mertozan.moviescompose.data.mapper.moviesToMovieModelList
@@ -14,7 +13,8 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
-import com.mertozan.moviescompose.data.remote.retrofit.RetrofitDataSource
+import com.mertozan.moviescompose.data.source.local.LocalDataSource
+import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
 import com.mertozan.moviescompose.domain.repository.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,6 +78,54 @@ class ContentRepositoryImpl @Inject constructor(
         return localDataSource.getSingleTopSeries(seriesId = seriesId)
     }
 
+    override fun getFavoriteTopMovies(): List<TopMovieEntity> {
+        return localDataSource.getFavoriteTopMovie()
+    }
+
+    override fun getFavoritePopularMovies(): List<MovieEntity> {
+        return localDataSource.getFavoritePopularMovie()
+    }
+
+    override fun getFavoriteTopSeries(): List<TopSeriesEntity> {
+        return localDataSource.getFavoriteTopSeries()
+    }
+
+    override fun getFavoritePopularSeries(): List<SeriesEntity> {
+        return localDataSource.getFavoritePopularSeries()
+    }
+
+    override fun getAllWatchedPopularMovies(): List<MovieEntity> {
+        return localDataSource.getWatchedPopularMovies()
+    }
+
+    override fun getAllWatchedTopMovies(): List<TopMovieEntity> {
+        return localDataSource.getWatchedTopMovies()
+    }
+
+    override fun getAllWatchedPopularSeries(): List<SeriesEntity> {
+        return localDataSource.getWatchedPopularSeries()
+    }
+
+    override fun getAllWatchedTopSeries(): List<TopSeriesEntity> {
+        return localDataSource.getWatchedTopSeries()
+    }
+
+    override fun getAllInWatchListPopularMovies(): List<MovieEntity> {
+        return localDataSource.getInWatchListPopularMovies()
+    }
+
+    override fun getAllInWatchListTopMovies(): List<TopMovieEntity> {
+        return localDataSource.getInWatchListTopMovies()
+    }
+
+    override fun getAllInWatchListPopularSeries(): List<SeriesEntity> {
+        return localDataSource.getInWatchListPopularSeries()
+    }
+
+    override fun getAllInWatchListTopSeries(): List<TopSeriesEntity> {
+        return localDataSource.getInWatchListTopSeries()
+    }
+
     override fun updateMovieFavorite(movieId: Int, isFavorite: Boolean) {
         localDataSource.updateMovieFavorite(movieId = movieId, isFavorite = isFavorite)
     }
@@ -92,6 +140,39 @@ class ContentRepositoryImpl @Inject constructor(
 
     override fun updateTopSeriesFavorite(seriesId: Int, isFavorite: Boolean) {
         localDataSource.updateTopSeriesFavorite(seriesId = seriesId, isFavorite = isFavorite)
+    }
+
+    // Update Watch State
+    override fun updatePopularMoviesIsWatched(movieId: Int, isWatched: Boolean) {
+        localDataSource.updateMovieIsWatched(movieId = movieId, isWatched = isWatched)
+    }
+
+    override fun updatePopularMoviesIsInWatchList(movieId: Int, isInWatched: Boolean) {
+        localDataSource.updateMovieIsInWatchedList(movieId = movieId, isInWatched = isInWatched)
+    }
+
+    override fun updatePopularSeriesIsWatched(seriesId: Int, isWatched: Boolean) {
+        localDataSource.updateSeriesIsWatched(seriesId = seriesId, isWatched = isWatched)
+    }
+
+    override fun updatePopularSeriesIsInWatchedList(seriesId: Int, isInWatched: Boolean) {
+        localDataSource.updateSeriesIsInWatchedList(seriesId = seriesId, isInWatched = isInWatched)
+    }
+
+    override fun updateTopMoviesIsWatched(movieId: Int, isWatched: Boolean) {
+        localDataSource.updateTopMovieIsWatched(movieId = movieId, isWatched = isWatched)
+    }
+
+    override fun updateTopMoviesIsInWatchList(movieId: Int, isInWatched: Boolean) {
+        localDataSource.updateTopMovieIsInWatchedList(movieId = movieId, isInWatched = isInWatched)
+    }
+
+    override fun updateTopSeriesIsWatched(seriesId: Int, isWatched: Boolean) {
+        localDataSource.updateTopSeriesIsWatched(seriesId = seriesId, isWatched = isWatched)
+    }
+
+    override fun updateTopSeriesIsInWatchedList(seriesId: Int, isInWatched: Boolean) {
+        localDataSource.updateTopSeriesIsInWatched(seriesId = seriesId, isInWatched = isInWatched)
     }
 
     // Network

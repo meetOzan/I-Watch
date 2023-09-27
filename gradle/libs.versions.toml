@@ -1,8 +1,10 @@
 [versions]
+accompanistPagerIndicators = "0.13.0"
+accompanistPager = "0.13.0"
 android-target-sdk = "34"
 android-compile-sdk = "34"
 android-min-sdk = "24"
-firebaseAuthKtx = "22.1.1"
+firebaseAuthKtx = "22.1.2"
 jvmTarget = "17"
 androidFoundation = "1.4.1"
 coroutinesPlayServices = "1.7.1"
@@ -13,25 +15,25 @@ namespace = "com.mertozan.moviescompose"
 applicationId = "com.mertozan.moviescompose"
 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 androidGradlePlugin = "8.1.0"
-coreKtx = "1.10.1"
-kotlin = "1.9.0"
-roomStdlib = "1.9.0"
+coreKtx = "1.12.0"
+kotlin = "1.9.10"
+roomStdlib = "1.9.10"
 androidx-activity-compose = "1.7.2"
-androidx-compose-bom = "2023.08.00"
+androidx-compose-bom = "2023.09.00"
 androidx-lifecycle-compose = "2.6.1"
 androidx-lifecycle-runtime-compose = "2.6.1"
 androidxHiltNavigationCompose = "1.0.0"
 chucker = "4.0.0"
-compose-compiler = "1.5.1"
+compose-compiler = "1.5.3"
 androidxCore = "1.10.1"
 androidxActivity = "2.6.1"
 androidxAppCompat = "1.7.2"
-androidxLifecycle = "2.6.1"
-androidxNavigation = "2.7.1"
-navigationViewModel = "2.6.1"
+androidxLifecycle = "2.6.2"
+androidxNavigation = "2.7.2"
+navigationViewModel = "2.6.2"
 kotlinxCoroutines = "1.7.1"
 hilt = "2.47"
-lifecycleRuntimeKtx = "2.6.1"
+lifecycleRuntimeKtx = "2.6.2"
 room = "2.5.2"
 coil = "2.4.0"
 retrofit = "2.9.0"
@@ -46,10 +48,14 @@ junit = "4.13.2"
 androidxTestExt = "1.1.5"
 androidxEspresso = "3.5.1"
 lottieVersion = "4.2.0"
-bottomNav = "1.5.0"
-firebaseFirestore = "24.7.1"
+bottomNav = "1.5.1"
+firebaseFirestore = "24.8.1"
+accompanistSystem = "0.32.0"
+snacky = "1.1.5"
 
 [libraries]
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity-compose" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity-compose" }
@@ -60,7 +66,7 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "androidFoundation"}
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version = "androidFoundation" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 coil-kt-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
@@ -78,7 +84,7 @@ androidx-navigation-fragment = { group = "androidx.navigation", name = "navigati
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "androidxNavigation" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
-kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutinesPlayServices"}
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutinesPlayServices" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -97,10 +103,14 @@ skydoves-powerspinner = { group = "com.github.skydoves", name = "powerspinner", 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExt" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
-com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion"}
-android-compose-ui = {module = "androidx.compose.ui:ui", version.ref = "bottomNav"}
-android-compose-material = {module = "androidx.compose.material:material", version.ref = "bottomNav"}
-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore"}
+com-airbnb-android-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion" }
+android-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "bottomNav" }
+android-compose-material = { module = "androidx.compose.material:material", version.ref = "bottomNav" }
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version = "2.9.9" }
+google-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystem" }
+com-github-snacky = { group = "com.github.matecode",name="Snacky",version.ref = "snacky"}
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -110,4 +120,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
-google-services = {id = "com.google.gms.google-services", version.ref = "googleService"}
+google-services = { id = "com.google.gms.google-services", version.ref = "googleService" }
