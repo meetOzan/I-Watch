@@ -14,9 +14,13 @@
         android:supportsRtl="true"
         android:name=".MovieApp"
         android:theme="@style/Theme.MoviesCompose"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu"
+        android:localeConfig="@xml/locales_config">
+        <meta-data
+            android:name="autoStoreLocales"
+            android:value="true" />
         <activity
-            android:name=".presantation.main.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MoviesCompose">
             <intent-filter>
@@ -24,7 +28,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <data
+                    android:host="github.com/meetozan"
+                    android:scheme="https">
+                </data>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
         </activity>
     </application>
-
 </manifest>

@@ -20,6 +20,7 @@ android {
         versionCode = (libs.versions.versionCode.get()).toInt()
 
         versionName = libs.versions.version.name.get()
+        resConfigs("en","tr")
 
         testInstrumentationRunner = libs.versions.testInstrumentationRunner.get()
         vectorDrawables {
@@ -135,7 +136,10 @@ dependencies {
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
 
-    // Snacky - 3rd Party Lib
+    // Snacky - 3rd party lib.
     implementation(libs.com.github.snacky)
+
+    // Swipe - 3rd party lib.
+    implementation(libs.me.saket.swipe)
 
 }
