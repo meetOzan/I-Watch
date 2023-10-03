@@ -14,11 +14,15 @@
         android:supportsRtl="true"
         android:name=".MovieApp"
         android:theme="@style/Theme.MoviesCompose"
-        tools:targetApi="tiramisu"
-        android:localeConfig="@xml/locales_config">
-        <meta-data
-            android:name="autoStoreLocales"
-            android:value="true" />
+        tools:targetApi="tiramisu">
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"

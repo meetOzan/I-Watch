@@ -97,7 +97,7 @@ fun ProfileScreen(
                         )
                     }
                 }
-            } else
+            } else {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
@@ -122,6 +122,7 @@ fun ProfileScreen(
                         )
                     }
                 }
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally

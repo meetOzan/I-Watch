@@ -20,7 +20,7 @@ android {
         versionCode = (libs.versions.versionCode.get()).toInt()
 
         versionName = libs.versions.version.name.get()
-        resConfigs("en","tr")
+        resourceConfigurations.plus(listOf("en","tr"))
 
         testInstrumentationRunner = libs.versions.testInstrumentationRunner.get()
         vectorDrawables {
@@ -31,9 +31,10 @@ android {
         buildConfigField("String", "MOVIE_BASE_URL", "\"https://api.themoviedb.org/3/\"")
         buildConfigField("String", "POSTER_BASE_PATH", "\"https://image.tmdb.org/t/p/original\"")
 
-    }
+        androidResources {
+            generateLocaleConfig = true
+        }
 
-    android {
         buildFeatures {
             buildConfig = true
         }
@@ -70,7 +71,6 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.appcompat)
     val composeBom = platform(libs.androidx.compose.bom)
 
     implementation(libs.androidx.core.ktx)
@@ -92,6 +92,9 @@ dependencies {
     implementation(libs.android.compose.ui)
     implementation(libs.android.compose.material)
     implementation(libs.firebase.crashlytics.buildtools)
+
+    // AppCompat
+    implementation(libs.androidx.appcompat)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -136,7 +139,7 @@ dependencies {
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
 
-    // Snacky - 3rd party lib.
+    // Snw  acky - 3rd party lib.
     implementation(libs.com.github.snacky)
 
     // Swipe - 3rd party lib.
