@@ -1,3 +1,78 @@
 <resources>
-    <string name="app_name">MoviesCompose</string>
+    <string name="app_name">I-Watch</string>
+    <string name="top_20_tv_series_on_this_week">Top 20 TV Series on this week</string>
+    <string name="top_20_movies_on_this_week">Top 20 movies on this week</string>
+    <string name="https_image_tmdb_org_t_p_original">https://image.tmdb.org/t/p/original/%1$s</string>
+    <string name="animated_color">animated_color</string>
+    <string name="movie_poster">movie_poster</string>
+    <string name="add_fav">add_fav</string>
+    <string name="back_arrow">back_arrow</string>
+    <string name="duration">Duration</string>
+    <string name="adult">Adult</string>
+    <string name="adult_yes">adult_yes</string>
+    <string name="language">Language</string>
+    <string name="release_date">Release Date</string>
+    <string name="no_adult">no_adult</string>
+    <string name="details">Details</string>
+    <string name="splash_icon">splash_icon</string>
+    <string name="made_by_meetozan">Made by meetOzan</string>
+    <string name="welcome_to_movieapp">Welcome to MovieApp</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_e_mail">Enter your e-mail</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="generate_button">generate_button</string>
+    <string name="card_icon">card_icon</string>
+    <string name="enter_your_surname">Enter your surname</string>
+    <string name="is_adult">is_adult</string>
+    <string name="lottie_loading_link">https://lottie.host/edfaf547-7cb5-4fc9-8072-cd222bf0d380/3uBphp18vk.lottie</string>
+    <string name="generated_image">generated_image</string>
+    <string name="sign_in">Sign In</string>
+    <string name="profile_account">profile_account</string>
+    <string name="you_don_t_have_an_account">You don\'t have an account?</string>
+    <string name="swipe_left">swipe_left</string>
+    <string name="swipe_left_now">Swipe left!</string>
+    <string name="play_arrow">play_arrow</string>
+    <string name="add_to_your_watch_list">Add to your watch list</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="lists">Watch Lists</string>
+    <string name="preferred_contents">Preferred Contents</string>
+    <string name="settings">Settings</string>
+    <string name="favorites">Favorites</string>
+    <string name="click_button_to_prefer">Click button to prefer</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="see_details">See Details</string>
+    <string name="top_rated_series">Top Rated Series</string>
+    <string name="see_more">See more</string>
+    <string name="liked">liked</string>
+    <string name="custom_content_item_poster">custom_content_item_poster</string>
+    <string name="abc">Abc</string>
+    <string name="lottie_list_loading">https://lottie.host/c967aac8-d964-438e-ad07-52cdcab073ab/fV3ebOClL5.lottie</string>
+    <string name="lottie_row_loading">https://lottie.host/13391b81-e455-4e39-8588-5234275358f9/Azgp6sP7tW.lottie</string>
+    <string name="lottie_generate_loading">https://lottie.host/c79ec3a1-dcf2-4d3f-a3ba-7e1426305bf6/YxLphnyRyv.lottie</string>
+    <string name="watched_calculated">Watched: Calculated…</string>
+    <string name="watched">"Watched: %1$s "</string>
+    <string name="favorite_contents">Favorite Contents ❤</string>
+    <string name="no_favorite_content_added_to_the_list_yet">No favorite content added to the list yet</string>
+    <string name="added_to_watch_list">Added to watch list</string>
+    <string name="details_inaccessible_from_there">Details inaccessible from there</string>
+    <string name="watched_list">Watched List</string>
+    <string name="watch_list">Watch List</string>
+    <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You haven\'t watched a content yet. You can add the content you\'ve seen here!</string>
+    <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">You haven\'t added content to your watch list yet. Add content to your watchlist!</string>
+    <string name="did_you_watched">Did you watched %1$s ?</string>
+    <string name="i_watched">Watched</string>
+    <string name="remove">Remove</string>
+    <string name="still_waiting">Still waiting...</string>
+    <string name="delete_chat">Delete chat</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="change_language">Change Language</string>
+    <string name="source_code">Source Code</string>
+    <string name="watch_list_pop_up_anim">https://lottie.host/0cb0a35a-1765-41f7-98f4-f81abbfe9e4e/B5JCVuxDeV.json</string>
+    <string name="options">Options</string>
+
+    <string-array name="languages" translatable="false">
+        <item>en</item>
+        <item>tr</item>
+    </string-array>
 </resources>
