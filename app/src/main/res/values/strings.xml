@@ -64,4 +64,15 @@
     <string name="i_watched">Watched</string>
     <string name="remove">Remove</string>
     <string name="still_waiting">Still waiting...</string>
+    <string name="delete_chat">Delete chat</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="change_language">Change Language</string>
+    <string name="source_code">Source Code</string>
+    <string name="watch_list_pop_up_anim">https://lottie.host/0cb0a35a-1765-41f7-98f4-f81abbfe9e4e/B5JCVuxDeV.json</string>
+    <string name="options">Options</string>
+
+    <string-array name="languages" translatable="false">
+        <item>en</item>
+        <item>tr</item>
+    </string-array>
 </resources>
