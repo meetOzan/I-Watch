@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.infrastructure
+package com.mertozan.moviescompose.infrastructure.provider
 
 import androidx.annotation.StringRes
 

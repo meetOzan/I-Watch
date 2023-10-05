@@ -8,7 +8,7 @@ import com.mertozan.moviescompose.data.remote.response.NetworkResponse
 import com.mertozan.moviescompose.domain.usecase.GetAllFavorites
 import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedMovies
 import com.mertozan.moviescompose.domain.usecase.GetAllTopRatedSeries
-import com.mertozan.moviescompose.infrastructure.StringResourceProvider
+import com.mertozan.moviescompose.infrastructure.provider.StringResourceProvider
 import com.mertozan.moviescompose.presentation.navigation.ARGS_TYPE
 import com.mertozan.moviescompose.util.enums.ContentType
 import dagger.hilt.android.lifecycle.HiltViewModel

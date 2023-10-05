@@ -52,7 +52,6 @@ fun DetailScreen(
     onUpdateAction: (DetailAction) -> Unit
 ) {
 
-
     val isFavorite by rememberSaveable {
         mutableStateOf(detail.isFavorite)
     }
@@ -119,7 +118,9 @@ fun DetailScreen(
             fontWeight = FontWeight.Bold
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

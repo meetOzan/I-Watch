@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.settings
+package com.mertozan.moviescompose.presentation.settings
 
 import android.app.LocaleManager
 import android.content.Context
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presentation.main_components.CustomText
-import com.mertozan.moviescompose.settings.component.SettingsOptionsCard
+import com.mertozan.moviescompose.presentation.settings.component.SettingsOptionsCard
 
 @Composable
 fun SettingsScreen() {

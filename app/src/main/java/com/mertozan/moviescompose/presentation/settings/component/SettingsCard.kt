@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.settings.component
+package com.mertozan.moviescompose.presentation.settings.component
 
 
 import android.app.PendingIntent

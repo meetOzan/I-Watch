@@ -25,10 +25,10 @@ import com.mertozan.moviescompose.presentation.home.HomeScreen
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presentation.profile.ProfileScreen
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileViewModel
+import com.mertozan.moviescompose.presentation.settings.SettingsScreen
 import com.mertozan.moviescompose.presentation.splash.SplashScreen
 import com.mertozan.moviescompose.presentation.watch_list.WatchListScreen
 import com.mertozan.moviescompose.presentation.watch_list.viewmodel.WatchListViewModel
-import com.mertozan.moviescompose.settings.SettingsScreen
 
 @Composable
 fun MovieNavHost(
@@ -54,7 +54,11 @@ fun MovieNavHost(
         })
         settingScreen()
         mainScreen(navController = navController)
-        generateScreen()
+        generateScreen(
+            onNavigate = {
+                navController.navigate(MainScreen.route)
+            }
+        )
         profileScreen(
             navController = navController,
             onSignOutNavigate = {
@@ -192,9 +196,9 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     }
 }
 
-fun NavGraphBuilder.generateScreen() {
+fun NavGraphBuilder.generateScreen(onNavigate: () -> Unit) {
     composable(
-        route = GenerateScreen.route
+        route = GenerateScreen.route,
     ) {
         val viewModel = hiltViewModel<GenerateViewModel>()
         val generateUiState = viewModel.generateUiState.collectAsState().value
@@ -212,7 +216,8 @@ fun NavGraphBuilder.generateScreen() {
         GenerateContent(
             trendList = generateList,
             onGenerateAction = viewModel::onAction,
-            generateUiState = generateUiState
+            generateUiState = generateUiState,
+            onOkClicked = onNavigate
         )
     }
 }
@@ -221,7 +226,7 @@ fun NavGraphBuilder.profileScreen(
     navController: NavController,
     onSignOutNavigate: () -> Unit,
     onWatchListClick: () -> Unit,
-    onSettingsClick : () -> Unit
+    onSettingsClick: () -> Unit
 ) {
     composable(
         route = ProfileScreen.route
@@ -243,7 +248,7 @@ fun NavGraphBuilder.profileScreen(
     }
 }
 
-fun NavGraphBuilder.settingScreen(){
+fun NavGraphBuilder.settingScreen() {
     composable(
         route = SettingsScreen.route,
         deepLinks = listOf(

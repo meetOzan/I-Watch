@@ -139,8 +139,11 @@ dependencies {
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
 
-    // Snw  acky - 3rd party lib.
+    // Snacky - 3rd party lib.
     implementation(libs.com.github.snacky)
+
+    // Snackie - 3rd party lib.
+    implementation(libs.com.github.snackie)
 
     // Swipe - 3rd party lib.
     implementation(libs.me.saket.swipe)

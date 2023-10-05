@@ -197,10 +197,10 @@ fun WatchListScreen(
 
                                                 ) {
                                                     WatchCardItem(
-                                                    content = content,
-                                                    onWatchListAction = onWatchListAction,
-                                                    watchListType = WatchListType.WATCHED.name,
-                                                )
+                                                        content = content,
+                                                        onWatchListAction = onWatchListAction,
+                                                        watchListType = WatchListType.WATCHED.name,
+                                                    )
                                                 }
                                             }
                                         }

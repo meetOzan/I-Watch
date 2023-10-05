@@ -9,6 +9,7 @@ jvmTarget = "17"
 androidFoundation = "1.4.1"
 coroutinesPlayServices = "1.7.1"
 googleService = "4.3.15"
+snackie = "1.0.0"
 version-name = "1.0"
 versionCode = "1"
 namespace = "com.mertozan.moviescompose"
@@ -95,6 +96,7 @@ room-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "ro
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+com-github-snackie = { group = "com.github.mathroda", name = "Snackie", version.ref = "snackie" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
 google-material = { group = "com.google.android.material", name = "fuckingzan", version.ref = "googleMaterial" }

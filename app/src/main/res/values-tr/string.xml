@@ -28,7 +28,7 @@
     <string name="is_adult">is_adult</string>
     <string name="lottie_loading_link">https://lottie.host/edfaf547-7cb5-4fc9-8072-cd222bf0d380/3uBphp18vk.lottie</string>
     <string name="generated_image">generated_image</string>
-    <string name="sign_in">puzan</string>
+    <string name="sign_in">Giriş Yap</string>
     <string name="profile_account">profile_account</string>
     <string name="you_don_t_have_an_account">Hesabınız yok mu</string>
     <string name="swipe_left">swipe_left</string>
@@ -62,13 +62,18 @@
     <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You haven\'t watched a content yet. You can add the content you\'ve seen here!</string>
     <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">You haven\'t added content to your watch list yet. Add content to your watchlist!</string>
     <string name="did_you_watched">%1$s izledin mi ?</string>
-    <string name="i_watched">İzlenen</string>
+    <string name="i_watched">İzlendi</string>
     <string name="remove">Kaldır</string>
     <string name="still_waiting">Bekleniyor</string>
     <string name="delete_chat">Sohbeti sil</string>
-    <string name="change_theme">Temayı sil</string>
+    <string name="change_theme">Temayı değiştir</string>
     <string name="change_language">Dili Değiştir</string>
     <string name="source_code">Kaynak kodları</string>
     <string name="watch_list_pop_up_anim">https://lottie.host/0cb0a35a-1765-41f7-98f4-f81abbfe9e4e/B5JCVuxDeV.json</string>
     <string name="options">Seçenekler</string>
+    <string name="no_connection">İnternet bağlantısı yok</string>
+    <string name="internet_status">İnternet Durumu: %1$s</string>
+    <string name="return_to_home">Ana ekrana dön</string>
+    <string name="you_are_offline">Çevrim dışı</string>
+    <string name="online">Çevrim içi</string>
 </resources>
