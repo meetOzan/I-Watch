@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.content_list.viewmodel
+package com.mertozan.moviescompose.presentation.list.content.viewmodel
 
 import com.mertozan.moviescompose.domain.model.ContentModel
 

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.content_list.components
+package com.mertozan.moviescompose.presentation.list.content.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkRed80
 
 @Composable

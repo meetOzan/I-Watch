@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presentation.profile.components.ProfileOptionsCard
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileUiState

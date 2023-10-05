@@ -54,6 +54,8 @@ firebaseFirestore = "24.8.1"
 accompanistSystem = "0.32.0"
 snacky = "1.1.5"
 swipe = "1.1.1"
+crashlytics = "18.4.3"
+analytics = "21.3.0"
 
 [libraries]
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
@@ -111,6 +113,8 @@ android-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "bottomN
 android-compose-material = { module = "androidx.compose.material:material", version.ref = "bottomNav" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version = "2.9.9" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "crashlytics" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "analytics" }
 google-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystem" }
 com-github-snacky = { group = "com.github.matecode",name="Snacky",version.ref = "snacky"}
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat"}
@@ -126,3 +130,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleService" }
+firebase-crashlytics = {id = "com.google.firebase.crashlytics", version = "crashlytics"}

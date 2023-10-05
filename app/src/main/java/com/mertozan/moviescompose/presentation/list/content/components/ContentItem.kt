@@ -1,5 +1,6 @@
-package com.mertozan.moviescompose.presentation.watch_list.components
+package com.mertozan.moviescompose.presentation.list.content.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,44 +15,54 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presentation.main_components.CustomAlertDialog
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.CustomText
+import com.mertozan.moviescompose.presentation.navigation.DetailScreen
 import com.mertozan.moviescompose.presentation.theme.Dark80
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
-import com.mertozan.moviescompose.presentation.watch_list.viewmodel.WatchListAction
-import com.mertozan.moviescompose.util.enums.WatchListType
+import com.mertozan.moviescompose.util.enums.ContentType
+import com.mertozan.moviescompose.util.enums.ListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
 @Composable
-fun WatchCardItem(
+fun ContentItem(
     content: ContentModel,
-    watchListType: String,
-    onWatchListAction: (WatchListAction) -> Unit
+    type: String,
+    navController: NavController
 ) {
 
-    var openDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                openDialog = !openDialog
+                if (type == ContentType.FAVORITE_CONTENTS.name){
+                    Toast.makeText(
+                        context,context.getText(R.string.details_inaccessible_from_there),Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    navController.navigate(
+                        DetailScreen.navigateWithArgs(
+                            content.id,
+                            type,
+                            ListType.TOP_RATED.name
+                        )
+                    )
+                }
             }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
@@ -126,41 +137,5 @@ fun WatchCardItem(
         }
     }
 
-    if (openDialog) {
-        if (watchListType == WatchListType.WATCHLIST.name) {
-            CustomAlertDialog(
-                title = content.title,
-                animation = stringResource(R.string.watch_list_pop_up_anim),
-                onDismissClick = { openDialog = !openDialog },
-                onDoWatched = {
-                    onWatchListAction(
-                        WatchListAction.TransferToWatched(
-                            content.id,
-                            content.isInWatchList,
-                            content.type,
-                            content.listType
-                        )
-                    )
-                    onWatchListAction(
-                        WatchListAction.GetAllContents
-                    )
-                    openDialog = !openDialog
-                },
-                onRemoveFromList = {
-                    onWatchListAction(
-                        WatchListAction.RemoveFromWatchList(
-                            content.id,
-                            content.isInWatchList,
-                            content.type,
-                            content.listType
-                        ),
-                    )
-                    onWatchListAction(
-                        WatchListAction.GetAllContents
-                    )
-                    openDialog = !openDialog
-                }
-            )
-        }
-    }
+    // TODO navigation kullanımına bak projeye navController paslamadan nasıl yapabilirim.
 }

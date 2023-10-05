@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.theme.Dark80
 import com.mertozan.moviescompose.presentation.theme.amazonEmberFamily

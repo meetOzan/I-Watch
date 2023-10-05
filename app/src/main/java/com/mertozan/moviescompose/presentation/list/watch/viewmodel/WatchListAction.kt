@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.watch_list.viewmodel
+package com.mertozan.moviescompose.presentation.list.watch.viewmodel
 
 sealed class WatchListAction {
     data class TransferToWatched(

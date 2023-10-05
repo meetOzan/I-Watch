@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.watch_list
+package com.mertozan.moviescompose.presentation.list.watch
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -36,14 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presentation.content_list.components.EmptyListPlaceholder
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.list.content.components.EmptyListPlaceholder
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.presentation.theme.LightBlack
 import com.mertozan.moviescompose.presentation.theme.LightGray70
-import com.mertozan.moviescompose.presentation.watch_list.components.TabIndicator
-import com.mertozan.moviescompose.presentation.watch_list.components.WatchCardItem
-import com.mertozan.moviescompose.presentation.watch_list.viewmodel.WatchListAction
+import com.mertozan.moviescompose.presentation.list.watch.components.TabIndicator
+import com.mertozan.moviescompose.presentation.list.watch.components.WatchCardItem
+import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListAction
 import com.mertozan.moviescompose.util.enums.WatchListType
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox

@@ -13,8 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.mertozan.moviescompose.presentation.auth.LoginScreen
 import com.mertozan.moviescompose.presentation.auth.viewmodel.AuthViewModel
-import com.mertozan.moviescompose.presentation.content_list.ContentList
-import com.mertozan.moviescompose.presentation.content_list.viewmodel.ListViewModel
+import com.mertozan.moviescompose.presentation.list.content.ContentList
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presentation.detail.DetailScreen
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailViewModel
@@ -27,8 +27,8 @@ import com.mertozan.moviescompose.presentation.profile.ProfileScreen
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presentation.settings.SettingsScreen
 import com.mertozan.moviescompose.presentation.splash.SplashScreen
-import com.mertozan.moviescompose.presentation.watch_list.WatchListScreen
-import com.mertozan.moviescompose.presentation.watch_list.viewmodel.WatchListViewModel
+import com.mertozan.moviescompose.presentation.list.watch.WatchListScreen
+import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListViewModel
 
 @Composable
 fun MovieNavHost(

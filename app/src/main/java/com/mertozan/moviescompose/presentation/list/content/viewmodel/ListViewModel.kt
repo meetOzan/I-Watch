@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.content_list.viewmodel
+package com.mertozan.moviescompose.presentation.list.content.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

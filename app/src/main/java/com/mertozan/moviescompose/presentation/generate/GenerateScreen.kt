@@ -44,8 +44,8 @@ import com.mertozan.moviescompose.infrastructure.connectivity.NetworkConnectivit
 import com.mertozan.moviescompose.presentation.generate.components.NoGeneratedContents
 import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateUiState
-import com.mertozan.moviescompose.presentation.main_components.ConnectivityAlertDialog
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.ConnectivityAlertDialog
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
 import com.mertozan.moviescompose.presentation.theme.LightBlack
 
 @Composable
@@ -63,15 +63,12 @@ fun GenerateContent(
     var isPreferred by remember {
         mutableStateOf(false)
     }
-
     val splashAnimateComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_generate_loading))
     )
-
     val status by connectivityObserver.observe().collectAsState(
         initial = ConnectivityObserver.Status.Unavailable
     )
-
     var openDialog by remember { mutableStateOf(false) }
 
     Column(

@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 
 @Composable

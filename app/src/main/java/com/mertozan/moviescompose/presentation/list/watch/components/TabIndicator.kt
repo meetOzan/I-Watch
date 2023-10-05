@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.watch_list.components
+package com.mertozan.moviescompose.presentation.list.watch.components
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDp
