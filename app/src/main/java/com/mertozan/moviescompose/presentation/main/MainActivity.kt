@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             MoviesComposeTheme {
 
                 SetStatusBarColor(color = Color.Black)
-                
+
                 val navController = rememberNavController()
 
                 val items = listOf(
@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
                             navController = navController
                         )
                     },
-                    content = { it
+                    content = {
+                        it
                         MovieNavHost(
                             navController = navController
                         )

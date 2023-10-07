@@ -82,16 +82,20 @@ dependencies {
     implementation(libs.androidx.compose.ui.util)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.android.compose.ui)
+    implementation(libs.android.compose.material)
+    implementation(libs.firebase.crashlytics.buildtools)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(composeBom)
     androidTestImplementation(libs.junit)
+
+    // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation(libs.android.compose.ui)
-    implementation(libs.android.compose.material)
-    implementation(libs.firebase.crashlytics.buildtools)
 
     // AppCompat
     implementation(libs.androidx.appcompat)

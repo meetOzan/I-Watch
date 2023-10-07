@@ -12,9 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.mertozan.moviescompose.presentation.auth.LoginScreen
-import com.mertozan.moviescompose.presentation.auth.viewmodel.AuthViewModel
-import com.mertozan.moviescompose.presentation.list.content.ContentList
-import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListViewModel
+import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryViewModel
 import com.mertozan.moviescompose.presentation.detail.DetailScreen
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailViewModel
@@ -23,12 +21,14 @@ import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateViewModel
 import com.mertozan.moviescompose.presentation.home.HomeScreen
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeViewModel
+import com.mertozan.moviescompose.presentation.list.content.ContentList
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListViewModel
+import com.mertozan.moviescompose.presentation.list.watch.WatchListScreen
+import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListViewModel
 import com.mertozan.moviescompose.presentation.profile.ProfileScreen
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileViewModel
 import com.mertozan.moviescompose.presentation.settings.SettingsScreen
 import com.mertozan.moviescompose.presentation.splash.SplashScreen
-import com.mertozan.moviescompose.presentation.list.watch.WatchListScreen
-import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListViewModel
 
 @Composable
 fun MovieNavHost(
@@ -181,15 +181,13 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
     ) {
-        val loginViewModel = hiltViewModel<AuthViewModel>()
+        val loginViewModel = hiltViewModel<EntryViewModel>()
         val userModel = loginViewModel.userItem.collectAsState().value
-        val userCurrent = loginViewModel.authUiState.collectAsState().value.checkCurrentUser
-        val errorMessage = loginViewModel.authUiState.collectAsState().value.exceptionMessage
+        val authUiState = loginViewModel.entryUiState.collectAsState().value
 
         LoginScreen(
             userModel = userModel,
-            userCurrent = userCurrent,
-            errorMessage = errorMessage,
+            authUiState = authUiState,
             onNavigate = onNavigate,
             onAuthAction = loginViewModel::onAction,
         )
@@ -241,7 +239,7 @@ fun NavGraphBuilder.profileScreen(
             profileUiState = profileUiState,
             navController = navController,
             onSignOutNavigate = onSignOutNavigate,
-            onSignOutClick = profileViewModel::signOut,
+            onProfileAction = profileViewModel::onAction,
             onWatchListClick = onWatchListClick,
             onSettingsClick = onSettingsClick
         )

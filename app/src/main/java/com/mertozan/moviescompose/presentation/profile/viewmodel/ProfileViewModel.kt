@@ -3,9 +3,12 @@ package com.mertozan.moviescompose.presentation.profile.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.remote.response.NetworkResponse
+import com.mertozan.moviescompose.domain.model.UserModel
+import com.mertozan.moviescompose.domain.usecase.DeleteUserFromLocale
 import com.mertozan.moviescompose.domain.usecase.GetAllWatchedListContents
+import com.mertozan.moviescompose.domain.usecase.GetSingleLocalUser
 import com.mertozan.moviescompose.domain.usecase.GetUserFromLocal
-import com.mertozan.moviescompose.domain.usecase.SignOut
+import com.mertozan.moviescompose.domain.usecase.TransferNetworkToLocale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getUserNetwork: GetUserFromLocal,
-    private val userSignOut: SignOut,
+    private val deleteUserFromLocale: DeleteUserFromLocale,
+    private val transferNetworkToLocale: TransferNetworkToLocale,
+    private val getSingleLocalUser: GetSingleLocalUser,
     private val getAllWatchedListContents: GetAllWatchedListContents
 ) : ViewModel() {
 
@@ -24,37 +28,38 @@ class ProfileViewModel @Inject constructor(
     val profileUiState = _profileUiState.asStateFlow()
 
     init {
-        getUser()
+        getUserFromLocal()
         getProfileWatchedContent()
     }
 
-    private fun getUser() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getUserFromLocal()
-            _profileUiState.value.user = _profileUiState.value.user.copy(
-                fullName = _profileUiState.value.user.name + " " + _profileUiState.value.user.surname
-            )
+    fun onAction(action: ProfileAction) {
+        when (action) {
+            is ProfileAction.SignOut -> signOut(userModel = action.userModel)
         }
     }
 
-    fun signOut() {
+    private fun signOut(userModel: UserModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            userSignOut()
-            _profileUiState.value.user.name = ""
+            deleteUserFromLocale(userModel)
+            transferNetworkToLocale()
         }
     }
 
-    private suspend fun getUserFromLocal() {
-        _profileUiState.value = profileUiState.value.copy(isLoading = true)
-        when (val response = getUserNetwork()) {
-            is NetworkResponse.Error -> {
-                _profileUiState.value.errorMessage = response.error
-                _profileUiState.value = _profileUiState.value.copy(isLoading = false)
-            }
+    private fun getUserFromLocal() {
+        viewModelScope.launch {
+            _profileUiState.value = profileUiState.value.copy(isLoading = true)
+            when (val response = getSingleLocalUser()) {
+                is NetworkResponse.Error -> {
+                    _profileUiState.value.errorMessage = response.error
+                    _profileUiState.value = _profileUiState.value.copy(isLoading = false)
+                }
 
-            is NetworkResponse.Success -> {
-                _profileUiState.value.user = response.data
-                _profileUiState.value = _profileUiState.value.copy(isLoading = false)
+                is NetworkResponse.Success -> {
+                    _profileUiState.value.user = _profileUiState.value.user.copy(
+                        fullName = response.data.name + " " + response.data.surname
+                    )
+                    _profileUiState.value = _profileUiState.value.copy(isLoading = false)
+                }
             }
         }
     }

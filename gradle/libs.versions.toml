@@ -116,10 +116,10 @@ firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "fireb
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "crashlytics" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "analytics" }
 google-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystem" }
-com-github-snacky = { group = "com.github.matecode",name="Snacky",version.ref = "snacky"}
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat"}
-me-saket-swipe = { group = "me.saket.swipe", name = "swipe", version.ref = "swipe"}
-androidx-compose-material-icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-compiler"}
+com-github-snacky = { group = "com.github.matecode", name = "Snacky", version.ref = "snacky" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
+me-saket-swipe = { group = "me.saket.swipe", name = "swipe", version.ref = "swipe" }
+androidx-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-compiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -130,4 +130,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 androidx-navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleService" }
-firebase-crashlytics = {id = "com.google.firebase.crashlytics", version = "crashlytics"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }

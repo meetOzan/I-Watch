@@ -9,18 +9,15 @@ data class UserEntity(
 
     @PrimaryKey
     @ColumnInfo("user_id")
-    val id: Int,
+    val id: Int?,
 
     @ColumnInfo("user_name")
-    val name: String,
+    val name: String?,
 
     @ColumnInfo("user_surname")
-    val surname: String,
-
-    @ColumnInfo("user_email")
-    val email: String,
+    val surname: String?,
 
     @ColumnInfo("user_watched")
-    val watched: Int
+    val watched: Int?
 
 )
