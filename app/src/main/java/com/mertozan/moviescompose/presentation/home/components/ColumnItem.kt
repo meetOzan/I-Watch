@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.Dark80
 import com.mertozan.moviescompose.presentation.theme.LightGray70
 import com.mertozan.moviescompose.util.extensions.isLongerThan

@@ -70,6 +70,18 @@
     <string name="source_code">Source Code</string>
     <string name="watch_list_pop_up_anim">https://lottie.host/0cb0a35a-1765-41f7-98f4-f81abbfe9e4e/B5JCVuxDeV.json</string>
     <string name="options">Options</string>
+    <string name="no_connection">No Connection</string>
+    <string name="internet_status">Internet Status: %1$s</string>
+    <string name="return_to_home">Return to Home</string>
+    <string name="you_are_offline">You are Offline</string>
+    <string name="online">Online</string>
+    <string name="welcome_to_i_watch">Welcome to I-Watch</string>
+    <string name="discover_the_movies_you_love">Discover the movies and series you like</string>
+    <string name="save_them_watchlist">Save them to your watchlist and watch when you want</string>
+    <string name="like_what_you_like">Add what you like to your list!</string>
+    <string name="i_watch">I-Watch</string>
+    <string name="continue_to_app">Continue</string>
+    <string name="enter_your_name_and_surname_to_continue">Enter your name and surname to continue</string>
 
     <string-array name="languages" translatable="false">
         <item>en</item>

@@ -1,8 +1,8 @@
 package com.mertozan.moviescompose.di
 
 import android.content.Context
-import com.mertozan.moviescompose.infrastructure.StringResourceProvider
-import com.mertozan.moviescompose.infrastructure.StringResourceProviderImpl
+import com.mertozan.moviescompose.infrastructure.provider.StringResourceProvider
+import com.mertozan.moviescompose.infrastructure.provider.StringResourceProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

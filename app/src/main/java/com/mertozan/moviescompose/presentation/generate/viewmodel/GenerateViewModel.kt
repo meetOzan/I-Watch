@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.remote.response.NetworkResponse
 import com.mertozan.moviescompose.domain.usecase.GetAllContents
 import com.mertozan.moviescompose.domain.usecase.UpdateMovieIsInWatch
+import com.mertozan.moviescompose.domain.usecase.UpdateSeriesIsInWatch
 import com.mertozan.moviescompose.domain.usecase.UpdateTopMovieIsInWatch
 import com.mertozan.moviescompose.domain.usecase.UpdateTopSeriesIsInWatch
 import com.mertozan.moviescompose.util.enums.ContentType
@@ -22,7 +23,7 @@ class GenerateViewModel @Inject constructor(
     private val updateTopMovieIsInWatch: UpdateTopMovieIsInWatch,
     private val updateMovieIsInWatch: UpdateMovieIsInWatch,
     private val updateTopSeriesIsInWatch: UpdateTopSeriesIsInWatch,
-    private val updateSeriesIsInWatch: UpdateMovieIsInWatch
+    private val updateSeriesIsInWatch: UpdateSeriesIsInWatch
 ) : ViewModel() {
 
     private val _generateUiState = MutableStateFlow(GenerateUiState())

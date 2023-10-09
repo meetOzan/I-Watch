@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
+import com.mertozan.moviescompose.presentation.main.components.BottomNavigationView
 import com.mertozan.moviescompose.presentation.navigation.MovieNavHost
 import com.mertozan.moviescompose.presentation.theme.MoviesComposeTheme
 import com.mertozan.moviescompose.util.enums.BottomNavItems
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
             MoviesComposeTheme {
 
                 SetStatusBarColor(color = Color.Black)
-                
+
                 val navController = rememberNavController()
 
                 val items = listOf(
@@ -37,7 +38,8 @@ class MainActivity : ComponentActivity() {
                             navController = navController
                         )
                     },
-                    content = { it
+                    content = {
+                        it
                         MovieNavHost(
                             navController = navController
                         )

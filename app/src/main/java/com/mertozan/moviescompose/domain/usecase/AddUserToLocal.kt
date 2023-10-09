@@ -10,7 +10,7 @@ import javax.inject.Inject
 class AddUserToLocal @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(userEntity: UserEntity): NetworkResponse<Unit> {
+    suspend operator fun invoke(userEntity: UserEntity): NetworkResponse<Unit> {
         return try {
             NetworkResponse.Success(
                 userRepository.addUserToLocal(userEntity)

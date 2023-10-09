@@ -24,7 +24,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeUiState
 import com.mertozan.moviescompose.presentation.theme.LightBlack

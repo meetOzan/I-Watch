@@ -27,9 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presentation.profile.components.ProfileOptionsCard
+import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileAction
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileUiState
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
@@ -42,7 +43,7 @@ fun ProfileScreen(
     watched: Int,
     profileUiState: ProfileUiState,
     onSignOutNavigate: () -> Unit,
-    onSignOutClick: () -> Unit,
+    onProfileAction: (ProfileAction) -> Unit,
     onWatchListClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -162,7 +163,7 @@ fun ProfileScreen(
                 optionName = stringResource(R.string.sign_out),
                 icon = Icons.Rounded.ExitToApp,
                 onClick = {
-                    onSignOutClick()
+                    onProfileAction(ProfileAction.SignOut(profileUiState.user))
                     onSignOutNavigate()
                 },
             )

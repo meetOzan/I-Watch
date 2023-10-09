@@ -14,7 +14,9 @@ import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.data.source.local.LocalDataSource
+import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
 import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
+import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.repository.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +25,12 @@ import javax.inject.Inject
 
 class ContentRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val retrofitDataSource: RetrofitDataSource
+    private val retrofitDataSource: RetrofitDataSource,
+    private val firebaseDataSource: FirebaseDataSource
 ) : ContentRepository {
 
     init {
-        transferToLocal()
+        transferRemoteToLocal()
     }
 
     override fun getAllPopularMovies(): List<MovieEntity> {
@@ -200,8 +203,43 @@ class ContentRepositoryImpl @Inject constructor(
         return retrofitDataSource.getSeriesGenres()
     }
 
-    // Transfer
-    private fun transferToLocal() {
+    override suspend fun getAllFavorites(favoriteList: MutableList<ContentModel>) {
+        firebaseDataSource.getFavorites(favoriteList = favoriteList)
+    }
+
+    override suspend fun addContentTopMovieFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        firebaseDataSource.addContentTopMovieFavorite(id = id, hashMap = hashMap)
+    }
+
+    override suspend fun deleteContentTopMovieFavorite(id: Int) {
+        firebaseDataSource.deleteContentTopMovieFavorite(id = id)
+    }
+
+    override suspend fun addContentTopSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        firebaseDataSource.addContentTopSeriesFavorite(id = id, hashMap = hashMap)
+    }
+
+    override suspend fun deleteContentTopSeriesFavorite(id: Int) {
+        firebaseDataSource.deleteContentTopSeriesFavorite(id = id)
+    }
+
+    override suspend fun addContentPopularMoviesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        firebaseDataSource.addContentPopularMoviesFavorite(id = id, hashMap = hashMap)
+    }
+
+    override suspend fun deleteContentPopularMoviesFavorite(id: Int) {
+        firebaseDataSource.deleteContentPopularMoviesFavorite(id = id)
+    }
+
+    override suspend fun addContentPopularSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        firebaseDataSource.addContentPopularSeriesFavorite(id = id, hashMap = hashMap)
+    }
+
+    override suspend fun deleteContentPopularSeriesFavorite(id: Int) {
+        firebaseDataSource.deleteContentPopularSeriesFavorite(id = id)
+    }
+
+    override fun transferRemoteToLocal() {
         CoroutineScope(Dispatchers.IO).launch {
 
             /**
@@ -238,6 +276,37 @@ class ContentRepositoryImpl @Inject constructor(
                         .toDetailItemToTopSeriesEntityList()
                 )
             }
+        }
+    }
+
+    override suspend fun manualTransferRemoteToLocal() {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            addPopularMoviesToLocal(
+                getAllPopularNetworkMovies()
+                    .movieResults
+                    .moviesToMovieModelList()
+                    .movieModelToMovieEntityList()
+            )
+
+            addPopularSeriesToLocal(
+                getAllPopularNetworkSeries()
+                    .seriesResults
+                    .seriesToSeriesModelList()
+                    .toDetailItemToSeriesEntityList()
+            )
+
+            addTopRatedMoviesToLocal(
+                getAllTopRatedNetworkMovies()
+                    .movieResults.moviesToMovieModelList()
+                    .movieModelToTopMovieEntityList()
+            )
+
+            addTopRatedSeries(
+                getAllNetworkTopRatedSeries()
+                    .seriesResults.seriesToSeriesModelList()
+                    .toDetailItemToTopSeriesEntityList()
+            )
         }
     }
 }

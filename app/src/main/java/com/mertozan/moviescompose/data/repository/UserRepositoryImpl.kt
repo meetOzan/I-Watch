@@ -1,8 +1,8 @@
 package com.mertozan.moviescompose.data.repository
 
-import com.mertozan.moviescompose.data.source.local.LocalDataSource
 import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.data.model.entity.UserEntity
+import com.mertozan.moviescompose.data.source.local.LocalDataSource
 import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
 import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.domain.repository.UserRepository
@@ -11,14 +11,18 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val firebaseDataSource: FirebaseDataSource,
-):UserRepository {
+) : UserRepository {
 
-    override fun addUserToLocal(user: UserEntity) {
+    override suspend fun addUserToLocal(user: UserEntity) {
         localDataSource.addUserToLocal(user = user)
     }
 
-    override fun getSingleLocalUser(): UserModel {
+    override suspend fun getSingleLocalUser(): UserEntity {
         return localDataSource.getSingleLocalUser()
+    }
+
+    override suspend fun deleteUserFromLocale(userEntity: UserEntity) {
+        return localDataSource.deleteUserFromLocal(user = userEntity)
     }
 
     override suspend fun getUserFromLocale(): UserModel {
@@ -35,6 +39,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun signOut() {
         firebaseDataSource.signOut()
+    }
+
+    override suspend fun getRowCount(): Int {
+        return localDataSource.getRowCount()
     }
 
     override suspend fun transferUserToLocal(userModel: UserModel) {

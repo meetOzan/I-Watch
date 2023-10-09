@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 
 @Composable
@@ -51,7 +51,6 @@ fun DetailScreen(
     detail: ContentModel,
     onUpdateAction: (DetailAction) -> Unit
 ) {
-
 
     val isFavorite by rememberSaveable {
         mutableStateOf(detail.isFavorite)
@@ -119,7 +118,9 @@ fun DetailScreen(
             fontWeight = FontWeight.Bold
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

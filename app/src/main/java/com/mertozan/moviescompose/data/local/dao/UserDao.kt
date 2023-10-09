@@ -1,6 +1,7 @@
 package com.mertozan.moviescompose.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.mertozan.moviescompose.data.model.entity.UserEntity
@@ -9,6 +10,12 @@ import com.mertozan.moviescompose.data.model.entity.UserEntity
 interface UserDao {
     @Upsert
     fun addUserToLocal(user: UserEntity)
+
+    @Query("SELECT COUNT(*) FROM user_entity")
+    fun getRowCount(): Int
+
+    @Delete
+    fun deleteUserFromLocal(user: UserEntity)
 
     @Query("SELECT * FROM user_entity")
     fun getSingleUser(): UserEntity
