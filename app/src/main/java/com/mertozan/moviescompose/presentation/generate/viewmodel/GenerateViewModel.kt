@@ -31,7 +31,7 @@ class GenerateViewModel @Inject constructor(
 
     fun onAction(action: GenerateAction) {
         when (action) {
-            is GenerateAction.ShuffleList -> shuffleList()
+            is GenerateAction.ShuffleList -> getAllContent()
             is GenerateAction.AddToWatchList -> addToWatchList(
                 id = action.id,
                 isInWatch = action.isInWatchList,
@@ -57,6 +57,7 @@ class GenerateViewModel @Inject constructor(
 
     private fun getAllContent() {
         viewModelScope.launch(Dispatchers.IO) {
+
             _generateUiState.value = _generateUiState.value.copy(isLoading = true)
             when (val response = getAllContents()) {
                 is NetworkResponse.Error -> {
@@ -65,7 +66,10 @@ class GenerateViewModel @Inject constructor(
                 }
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
-                    shuffleList()
+                    _generateUiState.value = _generateUiState.value.copy(
+                        allContents =
+                        _generateUiState.value.allContents.shuffled().toMutableList()
+                    )
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
@@ -78,9 +82,11 @@ class GenerateViewModel @Inject constructor(
     }
 
     private fun shuffleList() {
-        _generateUiState.value = _generateUiState.value.copy(
-            allContents =
-            _generateUiState.value.allContents.shuffled().toMutableList()
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            _generateUiState.value = _generateUiState.value.copy(
+                allContents =
+                _generateUiState.value.allContents.shuffled().toMutableList()
+            )
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.auth.components
+package com.mertozan.moviescompose.presentation.entry.components
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -23,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.domain.model.UserModel
-import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryAction
+import com.mertozan.moviescompose.presentation.entry.viewmodel.EntryAction
 import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.main.components.CustomTextField
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.presentation.theme.LightBlack
 
 @Composable
-fun SignUpScreen(
+fun ProfileInfoScreen(
     userModel: UserModel,
     onNavigate: () -> Unit,
     continueAction: (EntryAction) -> Unit

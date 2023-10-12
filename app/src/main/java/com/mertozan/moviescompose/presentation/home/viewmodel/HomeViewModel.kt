@@ -35,6 +35,10 @@ class HomeViewModel @Inject constructor(
         when (action) {
             is HomeAction.UpdateFavoriteState ->
                 updateFavoriteState(action.id, action.isFavorite, action.type)
+            HomeAction.GetPopularMovies -> getPopularMovies()
+            HomeAction.GetPopularSeries -> getPopularSeries()
+            HomeAction.GetTopMovies -> getTopRatedMovies()
+            HomeAction.GetTopSeries -> getTopRatedSeries()
         }
     }
 
@@ -60,7 +64,7 @@ class HomeViewModel @Inject constructor(
                 is NetworkResponse.Error -> {
                     _homeUiState.value = _homeUiState.value.copy(errorMessage = response.error)
                     _homeUiState.value = _homeUiState.value.copy(popularMovieIsLoading = false)
-                    delay(500)
+                    delay(200)
                     return@launch
                 }
 

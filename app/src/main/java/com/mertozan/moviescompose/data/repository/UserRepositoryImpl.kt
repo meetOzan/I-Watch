@@ -41,7 +41,7 @@ class UserRepositoryImpl @Inject constructor(
         firebaseDataSource.signOut()
     }
 
-    override suspend fun getRowCount(): Int {
+    override fun getRowCount(): Int {
         return localDataSource.getRowCount()
     }
 

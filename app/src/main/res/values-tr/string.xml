@@ -59,8 +59,8 @@
     <string name="details_inaccessible_from_there">Detaylara burdan erişilemez</string>
     <string name="watched_list">İzlenenler listesi</string>
     <string name="watch_list">İzleme listesi</string>
-    <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You haven\'t watched a content yet. You can add the content you\'ve seen here!</string>
-    <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">You haven\'t added content to your watch list yet. Add content to your watchlist!</string>
+    <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">İzleme listesine hiç bir içerik eklemedin. Birkaç içerik ekle ve tekrar kontrol et!</string>
+    <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">İzlenenler listene hiç bir içerik eklemedin. Filmleri izle ve buraya kaydet!</string>
     <string name="did_you_watched">%1$s izledin mi ?</string>
     <string name="i_watched">İzlendi</string>
     <string name="remove">Kaldır</string>
@@ -82,4 +82,6 @@
     <string name="like_what_you_like">Beğendiğin içerikleri listene ekle!</string>
     <string name="i_watch">I-Watch</string>
     <string name="continue_to_app">Devam Et</string>
+    <string name="enter_your_name_and_surname_to_continue">İsmini ve Soyismini gir</string>
+    <string name="removed_from_watch_list">İzleme listesinden çıkarıldı</string>
 </resources>

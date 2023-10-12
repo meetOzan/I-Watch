@@ -63,7 +63,6 @@ fun HomeScreen(
         )
     }
 
-
     Column(
         modifier = Modifier
             .background(Color.Black)

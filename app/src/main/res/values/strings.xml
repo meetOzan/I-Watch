@@ -82,6 +82,7 @@
     <string name="i_watch">I-Watch</string>
     <string name="continue_to_app">Continue</string>
     <string name="enter_your_name_and_surname_to_continue">Enter your name and surname to continue</string>
+    <string name="removed_from_watch_list">Removed from watch list</string>
 
     <string-array name="languages" translatable="false">
         <item>en</item>

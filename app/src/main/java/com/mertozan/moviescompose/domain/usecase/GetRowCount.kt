@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetRowCount @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(): NetworkResponse<Int> {
+    operator fun invoke(): NetworkResponse<Int> {
         return try {
             NetworkResponse.Success(
                 userRepository.getRowCount()

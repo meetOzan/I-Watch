@@ -15,12 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.mertozan.moviescompose.presentation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presentation.navigation.DetailScreen
 import com.mertozan.moviescompose.presentation.navigation.GenerateScreen
 import com.mertozan.moviescompose.presentation.navigation.LoginScreen
 import com.mertozan.moviescompose.presentation.navigation.MainScreen
 import com.mertozan.moviescompose.presentation.navigation.ProfileScreen
+import com.mertozan.moviescompose.presentation.navigation.SettingsScreen
 import com.mertozan.moviescompose.presentation.navigation.SplashScreen
+import com.mertozan.moviescompose.presentation.navigation.WatchListScreen
 import com.mertozan.moviescompose.presentation.theme.Dark80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.util.enums.BottomNavItems
@@ -33,6 +36,7 @@ fun BottomNavigationView(items: List<BottomNavItems>, navController: NavControll
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
     when (navBackStackEntry?.destination?.route) {
+
         SplashScreen.route -> {
             bottomBarState.value = false
         }
@@ -42,7 +46,19 @@ fun BottomNavigationView(items: List<BottomNavItems>, navController: NavControll
         }
 
         DetailScreen.route -> {
+            bottomBarState.value = false
+        }
+
+        ContentListScreen.route -> {
             bottomBarState.value = true
+        }
+
+        WatchListScreen.route -> {
+            bottomBarState.value = false
+        }
+
+        SettingsScreen.route -> {
+            bottomBarState.value = false
         }
 
         MainScreen.route -> {

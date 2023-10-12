@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.auth.viewmodel
+package com.mertozan.moviescompose.presentation.entry.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,6 +35,10 @@ class EntryViewModel @Inject constructor(
 
     val userItem = MutableStateFlow(UserModel())
 
+    init {
+        checkRowCount()
+    }
+
     fun onAction(action: EntryAction) {
         when (action) {
             is EntryAction.TransferUserLocal -> transferUserLocal()
@@ -57,7 +61,7 @@ class EntryViewModel @Inject constructor(
     }
 
     private fun checkRowCount() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _entryUiState.value = _entryUiState.value.copy(isLoading = true)
             when (val response = getRowCount()) {
                 is NetworkResponse.Error -> {
@@ -68,7 +72,8 @@ class EntryViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-                    _entryUiState.value.rowCount = response.data
+                    _entryUiState.value =
+                        _entryUiState.value.copy(rowCount = response.data)
                     _entryUiState.value =
                         _entryUiState.value.copy(isLoading = false)
                 }

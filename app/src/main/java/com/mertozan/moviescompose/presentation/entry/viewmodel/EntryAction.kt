@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.auth.viewmodel
+package com.mertozan.moviescompose.presentation.entry.viewmodel
 
 import com.mertozan.moviescompose.data.model.entity.UserEntity
 

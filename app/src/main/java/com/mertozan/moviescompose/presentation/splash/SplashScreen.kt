@@ -28,11 +28,15 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
+import com.mertozan.moviescompose.presentation.entry.viewmodel.EntryUiState
 import com.mertozan.moviescompose.presentation.main.components.CustomText
-import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(onSplashNavigate: () -> Unit) {
+fun SplashScreen(
+    authUiState: EntryUiState,
+    onEntryNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit,
+) {
 
     val scale = remember {
         Animatable(0f)
@@ -42,7 +46,7 @@ fun SplashScreen(onSplashNavigate: () -> Unit) {
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_loading_link))
     )
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(Unit) {
         scale.animateTo(
             targetValue = 0.3f,
             animationSpec = tween(
@@ -52,8 +56,10 @@ fun SplashScreen(onSplashNavigate: () -> Unit) {
                 }
             )
         )
-        delay(2500)
-        onSplashNavigate()
+        if (!authUiState.isLoading) {
+            if (authUiState.rowCount != 0) onHomeNavigate()
+            else onEntryNavigate()
+        }
     }
 
     Column(

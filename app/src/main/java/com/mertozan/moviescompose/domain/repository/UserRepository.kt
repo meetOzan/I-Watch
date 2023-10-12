@@ -21,6 +21,6 @@ interface UserRepository {
 
     suspend fun signOut()
 
-    suspend fun getRowCount() : Int
+    fun getRowCount() : Int
 
 }
