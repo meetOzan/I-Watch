@@ -1,8 +1,8 @@
 package com.mertozan.moviescompose.di
 
 import android.content.Context
-import com.mertozan.moviescompose.infrastructure.stringResource.StringResourceProvider
-import com.mertozan.moviescompose.infrastructure.stringResource.StringResourceProviderImpl
+import com.mertozan.moviescompose.infrastructure.language.AppLanguageProvider
+import com.mertozan.moviescompose.infrastructure.language.AppLanguageProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,12 +12,12 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object InfrastructureModule {
+object LanguageProviderModule {
 
     @Provides
     @Singleton
-    fun provideStringResourceProvider(
+    fun provideLanguageProvider(
         @ApplicationContext context: Context
-    ): StringResourceProvider = StringResourceProviderImpl(context = context)
+    ) : AppLanguageProvider = AppLanguageProviderImpl(context = context)
 
 }

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.auth.components
+package com.mertozan.moviescompose.presentation.entry.components
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -23,17 +23,20 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.data.mapper.toUserItemToUserEntity
 import com.mertozan.moviescompose.domain.model.UserModel
-import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryAction
+import com.mertozan.moviescompose.presentation.entry.viewmodel.EntryAction
+import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.main.components.CustomTextField
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.presentation.theme.LightBlack
+import com.mertozan.moviescompose.util.extensions.nameRegex
 
 @Composable
-fun SignUpScreen(
+fun ProfileInfoScreen(
     userModel: UserModel,
     onNavigate: () -> Unit,
-    continueAction: (EntryAction) -> Unit
+    continueAction: (EntryAction) -> Unit,
+    homeAction: (HomeAction) -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -75,8 +78,18 @@ fun SignUpScreen(
             ElevatedButton(
                 onClick = {
                     if (userModel.name.isEmpty() || userModel.surname.isEmpty()) {
-                        Toast.makeText(context, "Please enter user information", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(
+                            context,
+                            context.getString(
+                                R.string.please_enter_user_information
+                            ), Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (userModel.name.nameRegex() || userModel.surname.nameRegex()) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.please_enter_your_name_with_true_format),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         continueAction(
                             EntryAction.CreateUserInFirebase(
@@ -95,9 +108,13 @@ fun SignUpScreen(
                             )
                         )
                         onNavigate()
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.welcome_to_i_buy), Toast.LENGTH_SHORT
+                        ).show()
+                        homeAction(HomeAction.GetAllContents)
                     }
                 },
-
                 colors = ButtonDefaults.elevatedButtonColors(
                     containerColor = DarkYellow
                 ),

@@ -1,4 +1,4 @@
-package com.mertozan.moviescompose.presentation.auth.components
+package com.mertozan.moviescompose.presentation.entry.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,7 +18,6 @@ import androidx.compose.material.icons.sharp.Favorite
 import androidx.compose.material.icons.sharp.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -29,28 +28,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
-import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryAction
-import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryUiState
 import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.presentation.theme.LightBlack
 
 @Composable
-fun SignInScreen(
-    authUiState: EntryUiState,
-    onNavigate: () -> Unit,
-    signInOnAction: (EntryAction) -> Unit,
-) {
-
-
-    LaunchedEffect(Unit) {
-        signInOnAction(EntryAction.GetRowCount)
-    }
-
-    if (authUiState.rowCount != 0){
-        onNavigate()
-    }
+fun WelcomeScreen() {
 
     Column(
         modifier = Modifier

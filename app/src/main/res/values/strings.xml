@@ -60,7 +60,7 @@
     <string name="watch_list">Watch List</string>
     <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">You haven\'t watched a content yet. You can add the content you\'ve seen here!</string>
     <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">You haven\'t added content to your watch list yet. Add content to your watchlist!</string>
-    <string name="did_you_watched">Did you watched %1$s ?</string>
+    <string name="did_you_watched">Did you watched?</string>
     <string name="i_watched">Watched</string>
     <string name="remove">Remove</string>
     <string name="still_waiting">Still waiting...</string>
@@ -82,6 +82,18 @@
     <string name="i_watch">I-Watch</string>
     <string name="continue_to_app">Continue</string>
     <string name="enter_your_name_and_surname_to_continue">Enter your name and surname to continue</string>
+    <string name="removed_from_watch_list">Removed from watch list</string>
+    <string name="please_enter_user_information">Please enter user information</string>
+    <string name="welcome_to_i_buy">Welcome to I-Buy</string>
+    <string name="sign_out_message">If you log out, all your favorite content and watchlist saved under your name will be forgotten and you will be able to see new content the next time you log in</string>
+    <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
+    <string name="please_enter_your_name_with_true_format">"Please enter your name with true format. "</string>
+    <string name="yes_i_m_sure">Yes, I\'m sure</string>
+    <string name="no_i_ll_think_it_over">No, I\'ll think it over</string>
+    <string name="are_you_sure_you_want_to_remove_the_content">Are you sure you want to remove the content?</string>
+    <string name="don_t_you_like_it_anymore">Don\'t you like it anymore?</string>
+    <string name="yes">Yes</string>
+    <string name="no_i_think_i_still_like_it">No, I think, I still like it</string>
 
     <string-array name="languages" translatable="false">
         <item>en</item>

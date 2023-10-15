@@ -11,17 +11,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
-import com.mertozan.moviescompose.presentation.auth.LoginScreen
-import com.mertozan.moviescompose.presentation.auth.viewmodel.EntryViewModel
 import com.mertozan.moviescompose.presentation.detail.DetailScreen
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailViewModel
+import com.mertozan.moviescompose.presentation.entry.LoginScreen
+import com.mertozan.moviescompose.presentation.entry.viewmodel.EntryViewModel
 import com.mertozan.moviescompose.presentation.generate.GenerateContent
 import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateAction
 import com.mertozan.moviescompose.presentation.generate.viewmodel.GenerateViewModel
 import com.mertozan.moviescompose.presentation.home.HomeScreen
+import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presentation.list.content.ContentList
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListAction
 import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presentation.list.watch.WatchListScreen
 import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListViewModel
@@ -34,17 +36,25 @@ import com.mertozan.moviescompose.presentation.splash.SplashScreen
 fun MovieNavHost(
     navController: NavHostController
 ) {
-
     NavHost(
         navController = navController, startDestination = SplashScreen.route
     ) {
-        splashScreen {
-            navController.navigate(LoginScreen.route) {
-                popUpTo(SplashScreen.route) {
-                    inclusive = true
+        splashScreen(
+            onEntryNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    popUpTo(SplashScreen.route) {
+                        inclusive = true
+                    }
                 }
-            }
-        }
+            },
+            onHomeNavigate = {
+                navController.navigate(MainScreen.route) {
+                    popUpTo(SplashScreen.route) {
+                        inclusive = true
+                    }
+                }
+            },
+        )
         loginScreen(onNavigate = {
             navController.navigate(MainScreen.route) {
                 popUpTo(LoginScreen.route) {
@@ -52,7 +62,16 @@ fun MovieNavHost(
                 }
             }
         })
-        settingScreen()
+        settingScreen(
+            onSignOutNavigate = {
+                navController.navigate(LoginScreen.route) {
+                    navController.popBackStack(
+                        route = MainScreen.route,
+                        inclusive = true
+                    )
+                }
+            },
+        )
         mainScreen(navController = navController)
         generateScreen(
             onNavigate = {
@@ -61,11 +80,6 @@ fun MovieNavHost(
         )
         profileScreen(
             navController = navController,
-            onSignOutNavigate = {
-                navController.navigate(LoginScreen.route) {
-                    navController.popBackStack(route = MainScreen.route, inclusive = true)
-                }
-            },
             onWatchListClick = {
                 navController.navigate(WatchListScreen.route)
             },
@@ -76,7 +90,7 @@ fun MovieNavHost(
         watchListScreen()
         detailScreen {
             navController.navigate(MainScreen.route) {
-                popUpTo(DetailScreen.route) {
+                popUpTo(MainScreen.route) {
                     inclusive = true
                 }
             }
@@ -93,6 +107,11 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
         val popularSeriesList = homeUiState.popularSeries
         val topRatedMovieList = homeUiState.topRatedMovies
         val topRatedSeriesList = homeUiState.topRatedSeries
+
+        LaunchedEffect(true) {
+            viewModel.onAction(HomeAction.GetAllContents)
+        }
+
         HomeScreen(
             popularMovieList = popularMovieList,
             popularSeriesList = popularSeriesList,
@@ -110,12 +129,14 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
         route = DetailScreen.routeWithArgs,
         arguments = DetailScreen.args
     ) {
+
         val viewModel: DetailViewModel = hiltViewModel()
-        val detail = viewModel.uiState.collectAsState().value.movieDetailUiState
 
         LaunchedEffect(Unit) {
             viewModel.onAction(DetailAction.GetSingleDetail)
         }
+
+        val detail = viewModel.uiState.collectAsState().value.movieDetailUiState
 
         DetailScreen(
             onBackClicked = onNavigate,
@@ -138,15 +159,17 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         val isLoading = listUiState.favoriteIsLoading
 
         LaunchedEffect(Unit) {
-            viewModel.getContentList()
+            viewModel.onAction(ListAction.GetAllContents)
         }
 
         ContentList(
             contentList = contentList,
             isLoading = isLoading,
             type = contentListType,
+            uiState = listUiState,
             title = contentTitle,
-            navController = navController
+            navController = navController,
+            onListAction = viewModel::onAction,
         )
     }
 }
@@ -169,11 +192,19 @@ fun NavGraphBuilder.watchListScreen() {
     }
 }
 
-fun NavGraphBuilder.splashScreen(onNavigate: () -> Unit) {
+fun NavGraphBuilder.splashScreen(onEntryNavigate: () -> Unit, onHomeNavigate: () -> Unit) {
     composable(
         route = SplashScreen.route
     ) {
-        SplashScreen(onSplashNavigate = onNavigate)
+
+        val loginViewModel = hiltViewModel<EntryViewModel>()
+        val authUiState = loginViewModel.entryUiState.collectAsState().value
+
+        SplashScreen(
+            authUiState = authUiState,
+            onEntryNavigate = onEntryNavigate,
+            onHomeNavigate = onHomeNavigate
+        )
     }
 }
 
@@ -181,15 +212,17 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
     composable(
         route = LoginScreen.route
     ) {
+
         val loginViewModel = hiltViewModel<EntryViewModel>()
         val userModel = loginViewModel.userItem.collectAsState().value
-        val authUiState = loginViewModel.entryUiState.collectAsState().value
+
+        val homeViewModel = hiltViewModel<HomeViewModel>()
 
         LoginScreen(
             userModel = userModel,
-            authUiState = authUiState,
             onNavigate = onNavigate,
             onAuthAction = loginViewModel::onAction,
+            onHomeAction = homeViewModel::onAction
         )
     }
 }
@@ -203,11 +236,7 @@ fun NavGraphBuilder.generateScreen(onNavigate: () -> Unit) {
         var generateList = generateUiState.allContents
 
         LaunchedEffect(Unit) {
-            viewModel.getContents()
-        }
-
-        LaunchedEffect(Unit) {
-            viewModel.onAction(GenerateAction.ShuffleList)
+            viewModel.onAction(GenerateAction.ShuffledList)
             generateList = viewModel.generateUiState.value.allContents
         }
 
@@ -222,7 +251,6 @@ fun NavGraphBuilder.generateScreen(onNavigate: () -> Unit) {
 
 fun NavGraphBuilder.profileScreen(
     navController: NavController,
-    onSignOutNavigate: () -> Unit,
     onWatchListClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -238,15 +266,15 @@ fun NavGraphBuilder.profileScreen(
             watched = profileUiState.watchCount,
             profileUiState = profileUiState,
             navController = navController,
-            onSignOutNavigate = onSignOutNavigate,
-            onProfileAction = profileViewModel::onAction,
             onWatchListClick = onWatchListClick,
             onSettingsClick = onSettingsClick
         )
     }
 }
 
-fun NavGraphBuilder.settingScreen() {
+fun NavGraphBuilder.settingScreen(
+    onSignOutNavigate: () -> Unit
+) {
     composable(
         route = SettingsScreen.route,
         deepLinks = listOf(
@@ -256,6 +284,14 @@ fun NavGraphBuilder.settingScreen() {
             }
         )
     ) {
-        SettingsScreen()
+
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val profileUiState = profileViewModel.profileUiState.collectAsState().value
+
+        SettingsScreen(
+            profileUiState = profileUiState,
+            onSignOutNavigate = onSignOutNavigate,
+            onProfileAction = profileViewModel::onAction,
+        )
     }
 }

@@ -1,14 +1,21 @@
 package com.mertozan.moviescompose.presentation.list.watch.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,13 +35,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListAction
 import com.mertozan.moviescompose.presentation.main.components.CustomAlertDialog
 import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
 import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.Dark80
+import com.mertozan.moviescompose.presentation.theme.DarkRed80
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
-import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListAction
 import com.mertozan.moviescompose.util.enums.WatchListType
 import com.mertozan.moviescompose.util.extensions.isLongerThan
 
@@ -45,13 +53,23 @@ fun WatchCardItem(
     onWatchListAction: (WatchListAction) -> Unit
 ) {
 
-    var openDialog by remember { mutableStateOf(false) }
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
 
     Card(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .clickable {
-                openDialog = !openDialog
+                if (watchListType == WatchListType.WATCHLIST.name) {
+                    openDialog = !openDialog
+                } else {
+                    isExpanded = !isExpanded
+                }
             }
             .padding(horizontal = 12.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(
@@ -63,16 +81,46 @@ fun WatchCardItem(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxSize()
         ) {
+            AnimatedVisibility(visible = isExpanded) {
+                Box(
+                    modifier = Modifier
+                        .size(
+                            height = 150.dp,
+                            width = 100.dp
+                        )
+                        .padding(start = 8.dp)
+                        .clip(MaterialTheme.shapes.large)
+                        .background(DarkRed80)
+                        .clickable {
+                            onWatchListAction(
+                                WatchListAction.RemoveContentFromWatched(
+                                    content.id,
+                                    content.isWatched,
+                                    content.type,
+                                    content.listType
+                                )
+                            )
+                            onWatchListAction(
+                                WatchListAction.GetAllContents
+                            )
+                            isExpanded = !isExpanded
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(imageVector = Icons.Filled.Delete, contentDescription = "")
+                }
+            }
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.weight(1f)
             ) {
                 CustomAsyncImage(
                     model = content.posterPath,
                     contentDescription = stringResource(R.string.custom_content_item_poster),
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
                         .size(
                             height = 150.dp,
                             width = 100.dp
@@ -83,24 +131,32 @@ fun WatchCardItem(
                 Column(
                     modifier = Modifier
                         .align(Alignment.Top)
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
+                        .fillMaxWidth()
+                        .padding(start = 8.dp),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.SpaceAround
                 ) {
-                    CustomText(
-                        text = content.title.isLongerThan(18),
-                        fontSize = 24,
-                        color = DarkWhite80,
-                        FontWeight.SemiBold,
-                        modifier = Modifier
-                            .padding(top = 8.dp, bottom = 16.dp)
-                    )
-                    CustomText(
-                        text = content.overview.isLongerThan(100),
-                        fontSize = 14,
-                        color = DarkWhite80,
-                        FontWeight.SemiBold,
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
+                    Column(
+                        modifier = Modifier,
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        CustomText(
+                            text = content.title.isLongerThan(if (!isExpanded) 18 else 12),
+                            fontSize = 24,
+                            color = DarkWhite80,
+                            FontWeight.SemiBold,
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                        )
+                        CustomText(
+                            text = content.overview.isLongerThan(if (!isExpanded) 100 else 60),
+                            fontSize = 14,
+                            color = DarkWhite80,
+                            FontWeight.SemiBold,
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                     Row(
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically,
@@ -127,40 +183,41 @@ fun WatchCardItem(
     }
 
     if (openDialog) {
-        if (watchListType == WatchListType.WATCHLIST.name) {
-            CustomAlertDialog(
-                title = content.title,
-                animation = stringResource(R.string.watch_list_pop_up_anim),
-                onDismissClick = { openDialog = !openDialog },
-                onDoWatched = {
-                    onWatchListAction(
-                        WatchListAction.TransferToWatched(
-                            content.id,
-                            content.isInWatchList,
-                            content.type,
-                            content.listType
-                        )
+        CustomAlertDialog(
+            title = stringResource(id = R.string.did_you_watched),
+            body = content.title,
+            positiveButtonName = stringResource(id = R.string.i_watched),
+            negativeButtonName = stringResource(id = R.string.remove),
+            animation = stringResource(R.string.watch_list_pop_up_anim),
+            onDismissClick = { openDialog = !openDialog },
+            onPositiveAction = {
+                onWatchListAction(
+                    WatchListAction.TransferToWatched(
+                        content.id,
+                        content.isInWatchList,
+                        content.type,
+                        content.listType
                     )
-                    onWatchListAction(
-                        WatchListAction.GetAllContents
-                    )
-                    openDialog = !openDialog
-                },
-                onRemoveFromList = {
-                    onWatchListAction(
-                        WatchListAction.RemoveFromWatchList(
-                            content.id,
-                            content.isInWatchList,
-                            content.type,
-                            content.listType
-                        ),
-                    )
-                    onWatchListAction(
-                        WatchListAction.GetAllContents
-                    )
-                    openDialog = !openDialog
-                }
-            )
-        }
+                )
+                onWatchListAction(
+                    WatchListAction.GetAllContents
+                )
+                openDialog = !openDialog
+            },
+            onNegativeAction = {
+                onWatchListAction(
+                    WatchListAction.RemoveFromWatchList(
+                        content.id,
+                        content.isInWatchList,
+                        content.type,
+                        content.listType
+                    ),
+                )
+                onWatchListAction(
+                    WatchListAction.GetAllContents
+                )
+                openDialog = !openDialog
+            }
+        )
     }
 }

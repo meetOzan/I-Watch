@@ -2,10 +2,8 @@ package com.mertozan.moviescompose.presentation.list.content.viewmodel
 
 import com.mertozan.moviescompose.domain.model.ContentModel
 
-data class ListUiState (
+data class ListUiState(
     val favoriteIsLoading: Boolean = false,
-    val watchIsLoading: Boolean = false,
-    val watchGoalIsLoading: Boolean = false,
     var topRatedMovies: List<ContentModel> = emptyList(),
     val topRatedSeries: List<ContentModel> = emptyList(),
     val favoriteContents: List<ContentModel> = emptyList(),

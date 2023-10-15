@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,7 +29,6 @@ import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.navigation.ContentListScreen
 import com.mertozan.moviescompose.presentation.profile.components.ProfileOptionsCard
-import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileAction
 import com.mertozan.moviescompose.presentation.profile.viewmodel.ProfileUiState
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
@@ -42,8 +40,6 @@ fun ProfileScreen(
     fullName: String,
     watched: Int,
     profileUiState: ProfileUiState,
-    onSignOutNavigate: () -> Unit,
-    onProfileAction: (ProfileAction) -> Unit,
     onWatchListClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -158,14 +154,6 @@ fun ProfileScreen(
                 optionName = stringResource(R.string.lists),
                 icon = Icons.Rounded.List,
                 onToListClick = { onWatchListClick() }
-            )
-            ProfileOptionsCard(
-                optionName = stringResource(R.string.sign_out),
-                icon = Icons.Rounded.ExitToApp,
-                onClick = {
-                    onProfileAction(ProfileAction.SignOut(profileUiState.user))
-                    onSignOutNavigate()
-                },
             )
         }
     }

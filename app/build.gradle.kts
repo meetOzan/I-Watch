@@ -140,6 +140,9 @@ dependencies {
     // Firebase - Firestore
     implementation(libs.firebase.firestore.ktx)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     // System UI Controller
     implementation(libs.google.accompanist.systemuicontroller)
 
@@ -151,5 +154,8 @@ dependencies {
 
     // Swipe - 3rd party lib.
     implementation(libs.me.saket.swipe)
+
+    // Process-Phoenix - 3rd party lib.
+    implementation(libs.github.process.phoneix)
 
 }

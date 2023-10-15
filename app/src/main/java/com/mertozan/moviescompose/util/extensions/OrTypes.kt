@@ -1,7 +1,5 @@
 package com.mertozan.moviescompose.util.extensions
 
-import com.mertozan.moviescompose.data.model.dto.Genres
-
 fun Boolean?.orFalse(): Boolean {
     return this ?: false
 }
