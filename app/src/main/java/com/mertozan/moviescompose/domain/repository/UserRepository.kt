@@ -5,7 +5,7 @@ import com.mertozan.moviescompose.domain.model.UserModel
 
 interface UserRepository {
 
-    fun addUserToLocal(user: UserEntity)
+    suspend fun addUserToLocal(user: UserEntity)
 
     suspend fun getUserFromLocale(): UserModel
 
@@ -13,10 +13,14 @@ interface UserRepository {
 
     suspend fun updateUserWatchState(userWatched: Int)
 
-    fun getSingleLocalUser(): UserModel
+    suspend fun getSingleLocalUser(): UserEntity
+
+    suspend fun deleteUserFromLocale(userEntity: UserEntity)
 
     suspend fun transferUserToLocal(userModel: UserModel)
 
     suspend fun signOut()
+
+    fun getRowCount() : Int
 
 }

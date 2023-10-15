@@ -1,5 +1,6 @@
 package com.mertozan.moviescompose.presentation.detail
 
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -41,8 +43,8 @@ import androidx.compose.ui.unit.dp
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.presentation.detail.viewmodel.DetailAction
-import com.mertozan.moviescompose.presentation.main_components.CustomAsyncImage
-import com.mertozan.moviescompose.presentation.main_components.CustomText
+import com.mertozan.moviescompose.presentation.main.components.CustomAsyncImage
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 
 @Composable
@@ -52,15 +54,21 @@ fun DetailScreen(
     onUpdateAction: (DetailAction) -> Unit
 ) {
 
-
-    val isFavorite by rememberSaveable {
+    val isFavorite = rememberSaveable {
         mutableStateOf(detail.isFavorite)
     }
 
+    LaunchedEffect(detail.isFavorite){
+        isFavorite.value = detail.isFavorite
+    }
+
     val animateFavColor: Color by animateColorAsState(
-        if (isFavorite) Color.Yellow else Color.White,
+        if (isFavorite.value) Color.Yellow else Color.White,
         label = stringResource(R.string.animated_color)
     )
+
+    Log.e("", "Detail Is Favorite: ${detail.isFavorite}")
+    Log.e("", "animate Is Favorite: $animateFavColor")
 
     Column(
         modifier = Modifier
@@ -119,7 +127,9 @@ fun DetailScreen(
             fontWeight = FontWeight.Bold
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, start = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, start = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -164,8 +174,14 @@ fun DetailScreen(
                     .padding(end = 8.dp)
                     .size(24.dp)
                     .clickable {
-                        onUpdateAction(DetailAction.UpdateSingleFavorite(detail.isFavorite))
+                        onUpdateAction(
+                            DetailAction.UpdateSingleFavorite(
+                                detail.isFavorite
+                            )
+                        )
+                        isFavorite.value = !(isFavorite.value)
                     },
+                alignment = Alignment.Center
             )
         }
         Row(
@@ -175,24 +191,6 @@ fun DetailScreen(
                 .fillMaxSize()
                 .padding(top = 16.dp, end = 12.dp, start = 12.dp, bottom = 12.dp)
         ) {
-            /*Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.duration),
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
-                    color = Color.White,
-                    fontFamily = amazonEmberFamily,
-                )
-                CustomText(
-                    text = detail.runTime,
-                    fontSize = 18,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-            }*/
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

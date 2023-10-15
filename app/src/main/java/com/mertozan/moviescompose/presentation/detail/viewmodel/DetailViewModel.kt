@@ -63,29 +63,33 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getDetail() {
-        when (listType) {
-            ListType.POPULAR.name -> when (type) {
-                ContentType.SERIES.name -> getSingleSeries(id.orZero())
-                ContentType.MOVIE.name -> getSingleMovie(id.orZero())
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            when (listType) {
+                ListType.POPULAR.name -> when (type) {
+                    ContentType.SERIES.name -> getSingleSeries(id.orZero())
+                    ContentType.MOVIE.name -> getSingleMovie(id.orZero())
+                }
 
-            ListType.TOP_RATED.name -> when (type) {
-                ContentType.SERIES.name -> getSingleTopSeries(id.orZero())
-                ContentType.MOVIE.name -> getSingleTopMovies(id.orZero())
+                ListType.TOP_RATED.name -> when (type) {
+                    ContentType.SERIES.name -> getSingleTopSeries(id.orZero())
+                    ContentType.MOVIE.name -> getSingleTopMovies(id.orZero())
+                }
             }
         }
     }
 
     private fun updateFavorite(isFavorite: Boolean) {
-        when (listType) {
-            ListType.POPULAR.name -> when (type) {
-                ContentType.SERIES.name -> updateSeriesFavorite(id.orZero(), isFavorite)
-                ContentType.MOVIE.name -> updateMovieFavorite(id.orZero(), isFavorite)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            when (listType) {
+                ListType.POPULAR.name -> when (type) {
+                    ContentType.SERIES.name -> updateSeriesFavorite(id.orZero(), isFavorite)
+                    ContentType.MOVIE.name -> updateMovieFavorite(id.orZero(), isFavorite)
+                }
 
-            ListType.TOP_RATED.name -> when (type) {
-                ContentType.SERIES.name -> updateTopSeriesFavorite(id.orZero(), isFavorite)
-                ContentType.MOVIE.name -> updateTopMovieFavorite(id.orZero(), isFavorite)
+                ListType.TOP_RATED.name -> when (type) {
+                    ContentType.SERIES.name -> updateTopSeriesFavorite(id.orZero(), isFavorite)
+                    ContentType.MOVIE.name -> updateTopMovieFavorite(id.orZero(), isFavorite)
+                }
             }
         }
     }
@@ -105,7 +109,7 @@ class DetailViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-                    _uiState.value.movieDetailUiState = response.data
+                    _uiState.value =_uiState.value.copy(movieDetailUiState = response.data)
                     _uiState.value = _uiState.value.copy(isLoading = false)
                 }
             }
@@ -122,7 +126,7 @@ class DetailViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-                    _uiState.value.movieDetailUiState = response.data
+                    _uiState.value =_uiState.value.copy(movieDetailUiState = response.data)
                     _uiState.value = _uiState.value.copy(isLoading = false)
                 }
             }
@@ -139,7 +143,7 @@ class DetailViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-                    _uiState.value.movieDetailUiState = response.data
+                    _uiState.value =_uiState.value.copy(movieDetailUiState = response.data)
                     _uiState.value = _uiState.value.copy(isLoading = false)
                 }
             }
@@ -156,7 +160,7 @@ class DetailViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.Success -> {
-                    _uiState.value.movieDetailUiState = response.data
+                    _uiState.value =_uiState.value.copy(movieDetailUiState = response.data)
                     _uiState.value = _uiState.value.copy(isLoading = false)
                 }
             }

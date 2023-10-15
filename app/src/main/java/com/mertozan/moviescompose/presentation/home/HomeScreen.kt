@@ -7,13 +7,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.mathroda.snackie.SnackieError
+import com.mathroda.snackie.rememberSnackieState
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
+import com.mertozan.moviescompose.infrastructure.connectivity.ConnectivityObserver
+import com.mertozan.moviescompose.infrastructure.connectivity.NetworkConnectivityObserver
 import com.mertozan.moviescompose.presentation.home.components.MainColumn
 import com.mertozan.moviescompose.presentation.home.components.MainRow
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
@@ -33,11 +41,38 @@ fun HomeScreen(
     homeUiState: HomeUiState,
     onFavoriteAction: (HomeAction) -> Unit,
 ) {
+
+    val context = LocalContext.current
+
+    val connectivityObserver: ConnectivityObserver = NetworkConnectivityObserver(context)
+
+    val status by connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Lost
+    )
+
+    val state = rememberSnackieState()
+
+    LaunchedEffect(status) {
+        state.addMessage(
+            (
+                    if (status == ConnectivityObserver.Status.Lost)
+                        context.getString(R.string.you_are_offline)
+                    else
+                        context.getString(R.string.online)
+                    )
+        )
+    }
+
     Column(
         modifier = Modifier
             .background(Color.Black)
             .verticalScroll(rememberScrollState())
     ) {
+
+        if (status != ConnectivityObserver.Status.Available) {
+            SnackieError(state = state, duration = 10000L)
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         MainRow(
             title = stringResource(R.string.top_20_movies_on_this_week),

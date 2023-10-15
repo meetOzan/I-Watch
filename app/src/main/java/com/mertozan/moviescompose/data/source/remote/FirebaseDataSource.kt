@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.mertozan.moviescompose.data.repository.CollectionName
+import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.model.UserModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,71 @@ class FirebaseDataSource @Inject constructor(
                 }
             }.addOnFailureListener {
                 continuation.resumeWithException(it)
+            }
+    }
+
+    suspend fun addContentTopMovieFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("topMovie").collection(id.toString())
+            .document(id.toString()).set(hashMap).await()
+    }
+
+    suspend fun deleteContentTopMovieFavorite(id: Int) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("topMovie").collection(id.toString())
+            .document(id.toString()).delete().await()
+    }
+
+    suspend fun addContentTopSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("topSeries").collection(id.toString())
+            .document(id.toString()).set(hashMap).await()
+    }
+
+    suspend fun deleteContentTopSeriesFavorite(id: Int) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("topMovie").collection(id.toString())
+            .document(id.toString()).delete().await()
+    }
+
+    suspend fun addContentPopularMoviesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("popularMovies").collection(id.toString())
+            .document(id.toString()).set(hashMap).await()
+    }
+
+    suspend fun deleteContentPopularMoviesFavorite(id: Int) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("popularMovies").collection(id.toString())
+            .document(id.toString()).delete().await()
+    }
+
+    suspend fun addContentPopularSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("popularSeries").collection(id.toString())
+            .document(id.toString()).set(hashMap).await()
+    }
+
+    suspend fun deleteContentPopularSeriesFavorite(id: Int) {
+        db.collection("users").document(auth.currentUser?.uid.toString())
+            .collection("favorites").document("popularSeries").collection(id.toString())
+            .document(id.toString()).delete().await()
+    }
+
+    fun getFavorites(favoriteList: MutableList<ContentModel>) {
+        db.collection("users").document(auth.currentUser?.email.toString())
+            .collection("favorites").addSnapshotListener { querySnapshot, firestoreException ->
+                firestoreException?.let {
+                    return@addSnapshotListener
+                }
+                querySnapshot?.let {
+                    val favoritesList: ArrayList<ContentModel> = ArrayList()
+                    for (document in it) {
+                        val favorites = document.toObject<ContentModel>()
+                        favoritesList.add(favorites)
+                        favoriteList.addAll(favoritesList)
+                    }
+                }
             }
     }
 

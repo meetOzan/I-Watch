@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mertozan.moviescompose.data.remote.response.NetworkResponse
 import com.mertozan.moviescompose.domain.usecase.GetAllContents
 import com.mertozan.moviescompose.domain.usecase.UpdateMovieIsInWatch
+import com.mertozan.moviescompose.domain.usecase.UpdateSeriesIsInWatch
 import com.mertozan.moviescompose.domain.usecase.UpdateTopMovieIsInWatch
 import com.mertozan.moviescompose.domain.usecase.UpdateTopSeriesIsInWatch
 import com.mertozan.moviescompose.util.enums.ContentType
@@ -22,7 +23,7 @@ class GenerateViewModel @Inject constructor(
     private val updateTopMovieIsInWatch: UpdateTopMovieIsInWatch,
     private val updateMovieIsInWatch: UpdateMovieIsInWatch,
     private val updateTopSeriesIsInWatch: UpdateTopSeriesIsInWatch,
-    private val updateSeriesIsInWatch: UpdateMovieIsInWatch
+    private val updateSeriesIsInWatch: UpdateSeriesIsInWatch
 ) : ViewModel() {
 
     private val _generateUiState = MutableStateFlow(GenerateUiState())
@@ -30,13 +31,14 @@ class GenerateViewModel @Inject constructor(
 
     fun onAction(action: GenerateAction) {
         when (action) {
-            is GenerateAction.ShuffleList -> shuffleList()
+            is GenerateAction.ShuffledList -> getShuffledList()
             is GenerateAction.AddToWatchList -> addToWatchList(
                 id = action.id,
                 isInWatch = action.isInWatchList,
                 type = action.type,
                 listType = action.listType
             )
+            GenerateAction.GetAllContents -> getAllContent()
         }
     }
 
@@ -56,6 +58,7 @@ class GenerateViewModel @Inject constructor(
 
     private fun getAllContent() {
         viewModelScope.launch(Dispatchers.IO) {
+
             _generateUiState.value = _generateUiState.value.copy(isLoading = true)
             when (val response = getAllContents()) {
                 is NetworkResponse.Error -> {
@@ -64,22 +67,27 @@ class GenerateViewModel @Inject constructor(
                 }
                 is NetworkResponse.Success -> {
                     _generateUiState.value.allContents.addAll(response.data)
-                    shuffleList()
+                    _generateUiState.value = _generateUiState.value.copy(
+                        allContents =
+                        _generateUiState.value.allContents.shuffled().toMutableList()
+                    )
                     _generateUiState.value = _generateUiState.value.copy(isLoading = false)
                 }
             }
         }
     }
 
-    fun getContents() {
+    private fun getShuffledList() {
         getAllContent()
         shuffleList()
     }
 
     private fun shuffleList() {
-        _generateUiState.value = _generateUiState.value.copy(
-            allContents =
-            _generateUiState.value.allContents.shuffled().toMutableList()
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            _generateUiState.value = _generateUiState.value.copy(
+                allContents =
+                _generateUiState.value.allContents.shuffled().toMutableList()
+            )
+        }
     }
 }

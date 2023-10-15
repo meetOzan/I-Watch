@@ -21,10 +21,12 @@ object RepositoryModule {
     @Singleton
     fun provideContentsRepository(
         retrofitDataSource: RetrofitDataSource,
-        localDataSource: LocalDataSource
+        localDataSource: LocalDataSource,
+        firebaseDataSource: FirebaseDataSource
     ): ContentRepository = ContentRepositoryImpl(
         localDataSource,
-        retrofitDataSource
+        retrofitDataSource,
+        firebaseDataSource
     )
 
     @Provides
