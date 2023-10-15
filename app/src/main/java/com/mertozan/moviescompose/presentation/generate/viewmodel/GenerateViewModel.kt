@@ -31,13 +31,14 @@ class GenerateViewModel @Inject constructor(
 
     fun onAction(action: GenerateAction) {
         when (action) {
-            is GenerateAction.ShuffleList -> getAllContent()
+            is GenerateAction.ShuffledList -> getShuffledList()
             is GenerateAction.AddToWatchList -> addToWatchList(
                 id = action.id,
                 isInWatch = action.isInWatchList,
                 type = action.type,
                 listType = action.listType
             )
+            GenerateAction.GetAllContents -> getAllContent()
         }
     }
 
@@ -76,7 +77,7 @@ class GenerateViewModel @Inject constructor(
         }
     }
 
-    fun getContents() {
+    private fun getShuffledList() {
         getAllContent()
         shuffleList()
     }

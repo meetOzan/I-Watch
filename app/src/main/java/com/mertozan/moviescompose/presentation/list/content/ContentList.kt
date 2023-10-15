@@ -26,17 +26,21 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
-import com.mertozan.moviescompose.presentation.main.components.CustomText
 import com.mertozan.moviescompose.presentation.list.content.components.ContentItem
 import com.mertozan.moviescompose.presentation.list.content.components.EmptyListPlaceholder
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListAction
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListUiState
+import com.mertozan.moviescompose.presentation.main.components.CustomText
 
 @Composable
 fun ContentList(
     type: String,
     title: String,
     isLoading: Boolean,
+    uiState: ListUiState,
     contentList: List<ContentModel>,
-    navController: NavController
+    navController: NavController,
+    onListAction: (ListAction) -> Unit
 ) {
 
     val splashAnimateComposition by rememberLottieComposition(

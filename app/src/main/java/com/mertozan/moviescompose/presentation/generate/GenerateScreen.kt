@@ -40,6 +40,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.mathroda.snackie.rememberSnackieState
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.infrastructure.connectivity.ConnectivityObserver
@@ -65,7 +66,14 @@ fun GenerateContent(
 
     val context = LocalContext.current
 
+
+    // Connectivity
+
     val connectivityObserver: ConnectivityObserver = NetworkConnectivityObserver(context)
+
+    val status by connectivityObserver.observe().collectAsState(
+        initial = ConnectivityObserver.Status.Unavailable
+    )
 
     var isPreferred by remember {
         mutableStateOf(false)
@@ -75,18 +83,15 @@ fun GenerateContent(
         spec = LottieCompositionSpec.Url(stringResource(R.string.lottie_generate_loading))
     )
 
-    val status by connectivityObserver.observe().collectAsState(
-        initial = ConnectivityObserver.Status.Unavailable
-    )
-
     var openDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
         if (openDialog) {
             ConnectivityAlertDialog(
                 title = status.name,
@@ -94,6 +99,7 @@ fun GenerateContent(
                 onOkClicked = { onOkClicked() }
             )
         }
+
         Box(
             modifier = Modifier.padding(top = 50.dp)
         ) {
@@ -149,16 +155,19 @@ fun GenerateContent(
                                 listType = trendList[0].listType
                             )
                         )
-                        if (!trendList[0].isInWatchList)
+                        if (!trendList[0].isInWatchList) {
                             Toast.makeText(
                                 context,
-                                context.getText(R.string.added_to_watch_list), Toast.LENGTH_SHORT
+                                context.getText(R.string.removed_from_watch_list),
+                                Toast.LENGTH_SHORT
                             ).show()
-                        else Toast.makeText(
-                            context,
-                            context.getText(R.string.removed_from_watch_list), Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                context.getText(R.string.removed_from_watch_list),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     },
                     modifier = Modifier
                         .width(200.dp)
@@ -179,7 +188,7 @@ fun GenerateContent(
                     if (!isPreferred) {
                         isPreferred = true
                     } else {
-                        onGenerateAction(GenerateAction.ShuffleList)
+                        onGenerateAction(GenerateAction.ShuffledList)
                     }
                 }
             }, modifier = Modifier

@@ -4,8 +4,6 @@ import com.mertozan.moviescompose.domain.model.ContentModel
 
 data class ListUiState(
     val favoriteIsLoading: Boolean = false,
-    val watchIsLoading: Boolean = false,
-    val watchGoalIsLoading: Boolean = false,
     var topRatedMovies: List<ContentModel> = emptyList(),
     val topRatedSeries: List<ContentModel> = emptyList(),
     val favoriteContents: List<ContentModel> = emptyList(),

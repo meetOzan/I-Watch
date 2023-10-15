@@ -15,6 +15,7 @@ import com.mertozan.moviescompose.presentation.entry.PagerState.PAGER_STATE
 import com.mertozan.moviescompose.presentation.entry.components.ProfileInfoScreen
 import com.mertozan.moviescompose.presentation.entry.components.WelcomeScreen
 import com.mertozan.moviescompose.presentation.entry.viewmodel.EntryAction
+import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.theme.LightBlack
 import com.mertozan.moviescompose.util.enums.PagerScreen
 
@@ -23,7 +24,8 @@ import com.mertozan.moviescompose.util.enums.PagerScreen
 fun LoginScreen(
     userModel: UserModel,
     onNavigate: () -> Unit,
-    onAuthAction: (EntryAction) -> Unit
+    onAuthAction: (EntryAction) -> Unit,
+    onHomeAction: (HomeAction) -> Unit
 ) {
 
     val pagerState = rememberPagerState(pageCount = { PAGER_STATE })
@@ -45,7 +47,8 @@ fun LoginScreen(
                 PagerScreen.INFORMATION.ordinal -> ProfileInfoScreen(
                     userModel = userModel,
                     onNavigate = onNavigate,
-                    continueAction = onAuthAction
+                    continueAction = onAuthAction,
+                    homeAction = onHomeAction
                 )
             }
         }

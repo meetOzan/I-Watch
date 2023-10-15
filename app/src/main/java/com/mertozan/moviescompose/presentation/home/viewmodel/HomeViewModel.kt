@@ -35,18 +35,18 @@ class HomeViewModel @Inject constructor(
         when (action) {
             is HomeAction.UpdateFavoriteState ->
                 updateFavoriteState(action.id, action.isFavorite, action.type)
+
             HomeAction.GetPopularMovies -> getPopularMovies()
             HomeAction.GetPopularSeries -> getPopularSeries()
             HomeAction.GetTopMovies -> getTopRatedMovies()
             HomeAction.GetTopSeries -> getTopRatedSeries()
+            HomeAction.GetAllContents -> {
+                getPopularMovies()
+                getPopularSeries()
+                getTopRatedMovies()
+                getTopRatedSeries()
+            }
         }
-    }
-
-    init {
-        getPopularMovies()
-        getPopularSeries()
-        getTopRatedMovies()
-        getTopRatedSeries()
     }
 
     private fun updateFavoriteState(id: Int, isFavorite: Boolean, type: String) {

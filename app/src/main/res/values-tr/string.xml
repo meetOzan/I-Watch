@@ -61,7 +61,7 @@
     <string name="watch_list">İzleme listesi</string>
     <string name="you_ve_never_seen_a_movie_you_can_add_the_movies_you_ve_seen_here">İzleme listesine hiç bir içerik eklemedin. Birkaç içerik ekle ve tekrar kontrol et!</string>
     <string name="you_haven_t_added_content_to_your_watch_list_yet_add_content_to_your_watchlist">İzlenenler listene hiç bir içerik eklemedin. Filmleri izle ve buraya kaydet!</string>
-    <string name="did_you_watched">%1$s izledin mi ?</string>
+    <string name="did_you_watched">İzledin mi ?</string>
     <string name="i_watched">İzlendi</string>
     <string name="remove">Kaldır</string>
     <string name="still_waiting">Bekleniyor</string>
@@ -84,4 +84,14 @@
     <string name="continue_to_app">Devam Et</string>
     <string name="enter_your_name_and_surname_to_continue">İsmini ve Soyismini gir</string>
     <string name="removed_from_watch_list">İzleme listesinden çıkarıldı</string>
+    <string name="please_enter_user_information">Lütfen bilgilerinizi girin</string>
+    <string name="welcome_to_i_buy">I-Buy\'a hoşgeldiniz</string>
+    <string name="sign_out_message">Oturumu kapatırsanız, adınıza kayıtlı tüm favori içerikleriniz ve izleme listeniz unutulacak ve bir sonraki oturum açışınızda yeni içerikleri görebilirsiniz.</string><string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
+    <string name="please_enter_your_name_with_true_format">"Lütfen isminizi doğru format ile girin. "</string>
+    <string name="yes_i_m_sure">Evet, eminim!</string>
+    <string name="no_i_ll_think_it_over">Hayır, biraz daha düşüneceğim.</string>
+    <string name="are_you_sure_you_want_to_remove_the_content">Bu içeriği kaldırmak istediğine emin misin?</string>
+    <string name="don_t_you_like_it_anymore">Artık bunu sevmiyor musun?</string>
+    <string name="yes">Evet</string>
+    <string name="no_i_think_i_still_like_it">Hayır, galiba hala seviyorum.</string>
 </resources>

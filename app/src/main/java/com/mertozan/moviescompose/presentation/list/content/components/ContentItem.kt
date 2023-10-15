@@ -41,7 +41,7 @@ import com.mertozan.moviescompose.util.extensions.isLongerThan
 fun ContentItem(
     content: ContentModel,
     type: String,
-    navController: NavController
+    navController: NavController,
 ) {
 
     val context = LocalContext.current
@@ -50,11 +50,15 @@ fun ContentItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (type == ContentType.FAVORITE_CONTENTS.name){
-                    Toast.makeText(
-                        context,context.getText(R.string.details_inaccessible_from_there),Toast.LENGTH_SHORT
-                    ).show()
-                }else{
+                if (type == ContentType.FAVORITE_CONTENTS.name) {
+                    Toast
+                        .makeText(
+                            context,
+                            context.getText(R.string.details_inaccessible_from_there),
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                } else {
                     navController.navigate(
                         DetailScreen.navigateWithArgs(
                             content.id,
@@ -137,5 +141,24 @@ fun ContentItem(
         }
     }
 
-    // TODO navigation kullanımına bak projeye navController paslamadan nasıl yapabilirim.
+    /*if (openDialog) {
+        CustomAlertDialog(
+            title = stringResource(R.string.don_t_you_like_it_anymore),
+            body = stringResource(R.string.are_you_sure_you_want_to_remove_the_content),
+            positiveButtonName = stringResource(R.string.yes),
+            negativeButtonName = stringResource(R.string.no_i_think_i_still_like_it),
+            onPositiveAction = {
+                listAction(
+                    ListAction.UpdateFavoriteState(
+                        id = content.id,
+                        isFavorite = content.isFavorite,
+                        type = content.type
+                    )
+                )
+                openDialog = !openDialog
+            },
+            onNegativeAction = { openDialog = !openDialog },
+            onDismissClick = { openDialog = !openDialog }
+        )
+    }*/
 }

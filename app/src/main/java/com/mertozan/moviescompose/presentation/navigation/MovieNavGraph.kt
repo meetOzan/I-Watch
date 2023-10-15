@@ -23,6 +23,7 @@ import com.mertozan.moviescompose.presentation.home.HomeScreen
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeAction
 import com.mertozan.moviescompose.presentation.home.viewmodel.HomeViewModel
 import com.mertozan.moviescompose.presentation.list.content.ContentList
+import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListAction
 import com.mertozan.moviescompose.presentation.list.content.viewmodel.ListViewModel
 import com.mertozan.moviescompose.presentation.list.watch.WatchListScreen
 import com.mertozan.moviescompose.presentation.list.watch.viewmodel.WatchListViewModel
@@ -61,15 +62,7 @@ fun MovieNavHost(
                 }
             }
         })
-        settingScreen()
-        mainScreen(navController = navController)
-        generateScreen(
-            onNavigate = {
-                navController.navigate(MainScreen.route)
-            }
-        )
-        profileScreen(
-            navController = navController,
+        settingScreen(
             onSignOutNavigate = {
                 navController.navigate(LoginScreen.route) {
                     navController.popBackStack(
@@ -78,6 +71,15 @@ fun MovieNavHost(
                     )
                 }
             },
+        )
+        mainScreen(navController = navController)
+        generateScreen(
+            onNavigate = {
+                navController.navigate(MainScreen.route)
+            }
+        )
+        profileScreen(
+            navController = navController,
             onWatchListClick = {
                 navController.navigate(WatchListScreen.route)
             },
@@ -106,20 +108,8 @@ fun NavGraphBuilder.mainScreen(navController: NavController) {
         val topRatedMovieList = homeUiState.topRatedMovies
         val topRatedSeriesList = homeUiState.topRatedSeries
 
-        LaunchedEffect(!homeUiState.topMoviesIsLoading){
-            viewModel.onAction(HomeAction.GetTopMovies)
-        }
-
-        LaunchedEffect(!homeUiState.topSeriesIsLoading){
-            viewModel.onAction(HomeAction.GetTopSeries)
-        }
-
-        LaunchedEffect(!homeUiState.popularMovieIsLoading){
-            viewModel.onAction(HomeAction.GetPopularMovies)
-        }
-
-        LaunchedEffect(!homeUiState.popularSeriesIsLoading){
-            viewModel.onAction(HomeAction.GetPopularSeries)
+        LaunchedEffect(true) {
+            viewModel.onAction(HomeAction.GetAllContents)
         }
 
         HomeScreen(
@@ -142,7 +132,7 @@ fun NavGraphBuilder.detailScreen(onNavigate: () -> Unit) {
 
         val viewModel: DetailViewModel = hiltViewModel()
 
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             viewModel.onAction(DetailAction.GetSingleDetail)
         }
 
@@ -169,15 +159,17 @@ fun NavGraphBuilder.contentList(navController: NavController) {
         val isLoading = listUiState.favoriteIsLoading
 
         LaunchedEffect(Unit) {
-            viewModel.getContentList()
+            viewModel.onAction(ListAction.GetAllContents)
         }
 
         ContentList(
             contentList = contentList,
             isLoading = isLoading,
             type = contentListType,
+            uiState = listUiState,
             title = contentTitle,
-            navController = navController
+            navController = navController,
+            onListAction = viewModel::onAction,
         )
     }
 }
@@ -224,10 +216,13 @@ fun NavGraphBuilder.loginScreen(onNavigate: () -> Unit) {
         val loginViewModel = hiltViewModel<EntryViewModel>()
         val userModel = loginViewModel.userItem.collectAsState().value
 
+        val homeViewModel = hiltViewModel<HomeViewModel>()
+
         LoginScreen(
             userModel = userModel,
             onNavigate = onNavigate,
             onAuthAction = loginViewModel::onAction,
+            onHomeAction = homeViewModel::onAction
         )
     }
 }
@@ -241,11 +236,7 @@ fun NavGraphBuilder.generateScreen(onNavigate: () -> Unit) {
         var generateList = generateUiState.allContents
 
         LaunchedEffect(Unit) {
-            viewModel.getContents()
-        }
-
-        LaunchedEffect(Unit) {
-            viewModel.onAction(GenerateAction.ShuffleList)
+            viewModel.onAction(GenerateAction.ShuffledList)
             generateList = viewModel.generateUiState.value.allContents
         }
 
@@ -260,7 +251,6 @@ fun NavGraphBuilder.generateScreen(onNavigate: () -> Unit) {
 
 fun NavGraphBuilder.profileScreen(
     navController: NavController,
-    onSignOutNavigate: () -> Unit,
     onWatchListClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -276,15 +266,15 @@ fun NavGraphBuilder.profileScreen(
             watched = profileUiState.watchCount,
             profileUiState = profileUiState,
             navController = navController,
-            onSignOutNavigate = onSignOutNavigate,
-            onProfileAction = profileViewModel::onAction,
             onWatchListClick = onWatchListClick,
             onSettingsClick = onSettingsClick
         )
     }
 }
 
-fun NavGraphBuilder.settingScreen() {
+fun NavGraphBuilder.settingScreen(
+    onSignOutNavigate: () -> Unit
+) {
     composable(
         route = SettingsScreen.route,
         deepLinks = listOf(
@@ -294,6 +284,14 @@ fun NavGraphBuilder.settingScreen() {
             }
         )
     ) {
-        SettingsScreen()
+
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val profileUiState = profileViewModel.profileUiState.collectAsState().value
+
+        SettingsScreen(
+            profileUiState = profileUiState,
+            onSignOutNavigate = onSignOutNavigate,
+            onProfileAction = profileViewModel::onAction,
+        )
     }
 }

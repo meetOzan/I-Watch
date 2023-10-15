@@ -18,14 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.presentation.theme.DarkWhite80
 import com.mertozan.moviescompose.presentation.theme.DarkYellow
 import com.mertozan.moviescompose.presentation.theme.LightBlack
@@ -34,10 +32,13 @@ import com.mertozan.moviescompose.presentation.theme.LightBlack
 @Composable
 fun CustomAlertDialog(
     title: String,
+    body: String,
+    positiveButtonName : String,
+    negativeButtonName : String,
     animation: String = "",
     onDismissClick: () -> Unit = {},
-    onDoWatched: () -> Unit = {},
-    onRemoveFromList : () -> Unit = {}
+    onPositiveAction: () -> Unit = {},
+    onNegativeAction : () -> Unit = {}
 ) {
 
     val splashAnimateComposition by rememberLottieComposition(
@@ -61,31 +62,39 @@ fun CustomAlertDialog(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                LottieAnimation(
-                    composition = splashAnimateComposition,
-                    iterations = LottieConstants.IterateForever,
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .fillMaxHeight(0.2f),
-                    alignment = Alignment.Center
-                )
+                if (animation != ""){
+                    LottieAnimation(
+                        composition = splashAnimateComposition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .fillMaxHeight(0.2f),
+                        alignment = Alignment.Center
+                    )
+                }
                 CustomText(
-                    text = stringResource(R.string.did_you_watched, title),
+                    text = title,
                     color = DarkWhite80,
-                    fontSize = 22,
+                    fontSize = 24,
                     fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                CustomText(
+                    text = body,
+                    color = DarkWhite80,
+                    fontSize = 20,
+                    fontWeight = FontWeight.Normal
                 )
                 Spacer(modifier = Modifier.height(14.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    TextButton(onClick = { onDoWatched() }) {
-                        CustomText(text = stringResource(R.string.i_watched), color = DarkYellow)
+                    TextButton(onClick = { onPositiveAction() }) {
+                        CustomText(text = positiveButtonName, color = DarkYellow)
                     }
-
-                    TextButton(onClick = { onRemoveFromList()}) {
-                        CustomText(text = stringResource(R.string.remove), color = DarkYellow)
+                    TextButton(onClick = { onNegativeAction()}) {
+                        CustomText(text = negativeButtonName, color = DarkYellow)
                     }
                 }
             }
