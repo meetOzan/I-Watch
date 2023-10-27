@@ -22,4 +22,8 @@ interface UserDao {
 
     @Query("UPDATE user_entity SET user_watched = :userWatched WHERE user_id = 1")
     fun updateUserWatchState(userWatched: Int)
+
+
+    @Query("UPDATE user_entity SET user_language = :userLanguage WHERE user_id = 1")
+    fun updateUserLanguage(userLanguage: String)
 }

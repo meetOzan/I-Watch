@@ -5,5 +5,6 @@ data class UserModel(
     var name: String = "",
     val surname: String = "",
     val fullName : String = "",
-    val watched : Int = 0
+    val watched : Int = 0,
+    val language: String = "en"
 )

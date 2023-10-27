@@ -18,6 +18,9 @@ data class UserEntity(
     val surname: String?,
 
     @ColumnInfo("user_watched")
-    val watched: Int?
+    val watched: Int?,
+
+    @ColumnInfo("user_language")
+    val language: String?
 
 )

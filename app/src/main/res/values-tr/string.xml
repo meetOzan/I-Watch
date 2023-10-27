@@ -76,7 +76,6 @@
     <string name="return_to_home">Ana ekrana dön</string>
     <string name="you_are_offline">Çevrim dışı</string>
     <string name="online">Çevrim içi</string>
-    <string name="welcome_to_i_watch">I-Watch\'a hoşgeldiniz</string>
     <string name="discover_the_movies_you_love">Sevdiğin filmleri ve dizileri keşfet</string>
     <string name="save_them_watchlist">Onları izleme listene kaydet</string>
     <string name="like_what_you_like">Beğendiğin içerikleri listene ekle!</string>
@@ -85,7 +84,7 @@
     <string name="enter_your_name_and_surname_to_continue">İsmini ve Soyismini gir</string>
     <string name="removed_from_watch_list">İzleme listesinden çıkarıldı</string>
     <string name="please_enter_user_information">Lütfen bilgilerinizi girin</string>
-    <string name="welcome_to_i_buy">I-Buy\'a hoşgeldiniz</string>
+    <string name="welcome_to_i_watch">I-Watch\'a hoşgeldiniz</string>
     <string name="sign_out_message">Oturumu kapatırsanız, adınıza kayıtlı tüm favori içerikleriniz ve izleme listeniz unutulacak ve bir sonraki oturum açışınızda yeni içerikleri görebilirsiniz.</string><string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
     <string name="please_enter_your_name_with_true_format">"Lütfen isminizi doğru format ile girin. "</string>
     <string name="yes_i_m_sure">Evet, eminim!</string>
