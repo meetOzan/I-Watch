@@ -75,7 +75,6 @@
     <string name="return_to_home">Return to Home</string>
     <string name="you_are_offline">You are Offline</string>
     <string name="online">Online</string>
-    <string name="welcome_to_i_watch">Welcome to I-Watch</string>
     <string name="discover_the_movies_you_love">Discover the movies and series you like</string>
     <string name="save_them_watchlist">Save them to your watchlist and watch when you want</string>
     <string name="like_what_you_like">Add what you like to your list!</string>
@@ -84,7 +83,7 @@
     <string name="enter_your_name_and_surname_to_continue">Enter your name and surname to continue</string>
     <string name="removed_from_watch_list">Removed from watch list</string>
     <string name="please_enter_user_information">Please enter user information</string>
-    <string name="welcome_to_i_buy">Welcome to I-Buy</string>
+    <string name="welcome_to_i_watch">Welcome to I-Watch</string>
     <string name="sign_out_message">If you log out, all your favorite content and watchlist saved under your name will be forgotten and you will be able to see new content the next time you log in</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
     <string name="please_enter_your_name_with_true_format">"Please enter your name with true format. "</string>

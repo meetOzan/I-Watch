@@ -77,6 +77,10 @@ class LocalDataSource @Inject constructor(
         userDao.updateUserWatchState(userWatched = userWatched)
     }
 
+    fun updateUserLanguage(language: String){
+        userDao.updateUserLanguage(userLanguage = language)
+    }
+
     // Get Favorite List
     fun getFavoritePopularMovie(): List<MovieEntity> {
         return movieDao.getFavoritePopularMovie()
