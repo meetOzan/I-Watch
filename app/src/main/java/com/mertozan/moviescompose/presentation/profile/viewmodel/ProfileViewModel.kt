@@ -7,7 +7,6 @@ import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.domain.usecase.DeleteUserFromLocale
 import com.mertozan.moviescompose.domain.usecase.GetAllWatchedListContents
 import com.mertozan.moviescompose.domain.usecase.GetSingleLocalUser
-import com.mertozan.moviescompose.domain.usecase.GetUserFromLocal
 import com.mertozan.moviescompose.domain.usecase.TransferNetworkToLocale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,7 @@ class ProfileViewModel @Inject constructor(
     private val deleteUserFromLocale: DeleteUserFromLocale,
     private val transferNetworkToLocale: TransferNetworkToLocale,
     private val getSingleLocalUser: GetSingleLocalUser,
-    private val getAllWatchedListContents: GetAllWatchedListContents
+    private val getAllWatchedListContents: GetAllWatchedListContents,
 ) : ViewModel() {
 
     private val _profileUiState = MutableStateFlow(ProfileUiState())

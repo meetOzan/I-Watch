@@ -7,10 +7,6 @@ interface UserRepository {
 
     suspend fun addUserToLocal(user: UserEntity)
 
-    suspend fun getUserFromLocale(): UserModel
-
-    suspend fun getUserFromNetwork(): UserModel
-
     suspend fun updateUserWatchState(userWatched: Int)
 
     suspend fun updateUserLanguage(language: String)
@@ -20,8 +16,6 @@ interface UserRepository {
     suspend fun deleteUserFromLocale(userEntity: UserEntity)
 
     suspend fun transferUserToLocal(userModel: UserModel)
-
-    suspend fun signOut()
 
     fun getRowCount() : Int
 

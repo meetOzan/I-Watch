@@ -93,4 +93,5 @@
     <string name="don_t_you_like_it_anymore">Artık bunu sevmiyor musun?</string>
     <string name="yes">Evet</string>
     <string name="no_i_think_i_still_like_it">Hayır, galiba hala seviyorum.</string>
+    <string name="added_your_watchlist">İzlenme listene eklendi!</string>
 </resources>

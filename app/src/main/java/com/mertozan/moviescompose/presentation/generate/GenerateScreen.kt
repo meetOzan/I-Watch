@@ -40,7 +40,6 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.mathroda.snackie.rememberSnackieState
 import com.mertozan.moviescompose.R
 import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.infrastructure.connectivity.ConnectivityObserver
@@ -61,11 +60,10 @@ fun GenerateContent(
     trendList: List<ContentModel>,
     generateUiState: GenerateUiState,
     onGenerateAction: (GenerateAction) -> Unit,
-    onOkClicked: () -> Unit
+    onOkClicked: () -> Unit,
 ) {
 
     val context = LocalContext.current
-
 
     // Connectivity
 
@@ -158,7 +156,7 @@ fun GenerateContent(
                         if (!trendList[0].isInWatchList) {
                             Toast.makeText(
                                 context,
-                                context.getText(R.string.removed_from_watch_list),
+                                context.getText(R.string.added_your_watchlist),
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
