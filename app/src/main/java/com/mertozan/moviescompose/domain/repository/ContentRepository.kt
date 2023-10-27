@@ -7,7 +7,6 @@ import com.mertozan.moviescompose.data.model.entity.MovieEntity
 import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
-import com.mertozan.moviescompose.domain.model.ContentModel
 
 interface ContentRepository {
 
@@ -94,24 +93,6 @@ interface ContentRepository {
     suspend fun getMovieGenres(): GenresResponse
 
     suspend fun getSeriesGenres(): GenresResponse
-
-    suspend fun getAllFavorites(favoriteList: MutableList<ContentModel>)
-
-    suspend fun addContentTopMovieFavorite(id: Int, hashMap: HashMap<Any, Any>)
-
-    suspend fun deleteContentTopMovieFavorite(id: Int)
-
-    suspend fun addContentTopSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>)
-
-    suspend fun deleteContentTopSeriesFavorite(id: Int)
-
-    suspend fun addContentPopularMoviesFavorite(id: Int, hashMap: HashMap<Any, Any>)
-
-    suspend fun deleteContentPopularMoviesFavorite(id: Int)
-
-    suspend fun addContentPopularSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>)
-
-    suspend fun deleteContentPopularSeriesFavorite(id: Int)
 
     fun transferRemoteToLocal()
 
