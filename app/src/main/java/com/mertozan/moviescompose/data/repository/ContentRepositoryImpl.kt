@@ -14,9 +14,7 @@ import com.mertozan.moviescompose.data.model.entity.SeriesEntity
 import com.mertozan.moviescompose.data.model.entity.TopMovieEntity
 import com.mertozan.moviescompose.data.model.entity.TopSeriesEntity
 import com.mertozan.moviescompose.data.source.local.LocalDataSource
-import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
 import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
-import com.mertozan.moviescompose.domain.model.ContentModel
 import com.mertozan.moviescompose.domain.repository.ContentRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +24,6 @@ import javax.inject.Inject
 class ContentRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val retrofitDataSource: RetrofitDataSource,
-    private val firebaseDataSource: FirebaseDataSource
 ) : ContentRepository {
 
     init {
@@ -201,42 +198,6 @@ class ContentRepositoryImpl @Inject constructor(
 
     override suspend fun getSeriesGenres(): GenresResponse {
         return retrofitDataSource.getSeriesGenres()
-    }
-
-    override suspend fun getAllFavorites(favoriteList: MutableList<ContentModel>) {
-        firebaseDataSource.getFavorites(favoriteList = favoriteList)
-    }
-
-    override suspend fun addContentTopMovieFavorite(id: Int, hashMap: HashMap<Any, Any>) {
-        firebaseDataSource.addContentTopMovieFavorite(id = id, hashMap = hashMap)
-    }
-
-    override suspend fun deleteContentTopMovieFavorite(id: Int) {
-        firebaseDataSource.deleteContentTopMovieFavorite(id = id)
-    }
-
-    override suspend fun addContentTopSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
-        firebaseDataSource.addContentTopSeriesFavorite(id = id, hashMap = hashMap)
-    }
-
-    override suspend fun deleteContentTopSeriesFavorite(id: Int) {
-        firebaseDataSource.deleteContentTopSeriesFavorite(id = id)
-    }
-
-    override suspend fun addContentPopularMoviesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
-        firebaseDataSource.addContentPopularMoviesFavorite(id = id, hashMap = hashMap)
-    }
-
-    override suspend fun deleteContentPopularMoviesFavorite(id: Int) {
-        firebaseDataSource.deleteContentPopularMoviesFavorite(id = id)
-    }
-
-    override suspend fun addContentPopularSeriesFavorite(id: Int, hashMap: HashMap<Any, Any>) {
-        firebaseDataSource.addContentPopularSeriesFavorite(id = id, hashMap = hashMap)
-    }
-
-    override suspend fun deleteContentPopularSeriesFavorite(id: Int) {
-        firebaseDataSource.deleteContentPopularSeriesFavorite(id = id)
     }
 
     override fun transferRemoteToLocal() {

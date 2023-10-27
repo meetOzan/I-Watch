@@ -93,6 +93,7 @@
     <string name="don_t_you_like_it_anymore">Don\'t you like it anymore?</string>
     <string name="yes">Yes</string>
     <string name="no_i_think_i_still_like_it">No, I think, I still like it</string>
+    <string name="added_your_watchlist">Added your watchlist!</string>
 
     <string-array name="languages" translatable="false">
         <item>en</item>

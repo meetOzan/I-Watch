@@ -11,7 +11,6 @@ import com.mertozan.moviescompose.data.repository.CollectionName.COLLECTION_NAME
 import com.mertozan.moviescompose.domain.model.UserModel
 import com.mertozan.moviescompose.domain.usecase.AddUserToLocal
 import com.mertozan.moviescompose.domain.usecase.GetRowCount
-import com.mertozan.moviescompose.domain.usecase.TransferUserToLocal
 import com.mertozan.moviescompose.util.extensions.nameRegex
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +24,6 @@ import javax.inject.Inject
 class EntryViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore,
-    private val transferUserToLocal: TransferUserToLocal,
     private val addUserToLocal: AddUserToLocal,
     private val getRowCount: GetRowCount
 ) : ViewModel() {
@@ -41,10 +39,8 @@ class EntryViewModel @Inject constructor(
 
     fun onAction(action: EntryAction) {
         when (action) {
-            is EntryAction.TransferUserLocal -> transferUserLocal()
             is EntryAction.ChangeItemName -> changeItemName(action.name)
             is EntryAction.ChangeItemSurname -> changeItemSurname(action.surname)
-            is EntryAction.GetRowCount -> checkRowCount()
             is EntryAction.AddUserToLocal -> addUser(userEntity = action.userEntity)
             is EntryAction.CreateUserInFirebase -> createUserInFirebase(
                 name = action.name,
@@ -78,12 +74,6 @@ class EntryViewModel @Inject constructor(
                         _entryUiState.value.copy(isLoading = false)
                 }
             }
-        }
-    }
-
-    private fun transferUserLocal() {
-        viewModelScope.launch(Dispatchers.IO) {
-            transferUserToLocal()
         }
     }
 
