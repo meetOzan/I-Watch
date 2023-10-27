@@ -37,6 +37,10 @@ class UserRepositoryImpl @Inject constructor(
         localDataSource.updateUserWatchState(userWatched)
     }
 
+    override suspend fun updateUserLanguage(language: String) {
+        return localDataSource.updateUserLanguage(language = language)
+    }
+
     override suspend fun signOut() {
         firebaseDataSource.signOut()
     }

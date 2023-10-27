@@ -110,7 +110,7 @@ fun ProfileInfoScreen(
                         onNavigate()
                         Toast.makeText(
                             context,
-                            context.getString(R.string.welcome_to_i_buy), Toast.LENGTH_SHORT
+                            context.getString(R.string.welcome_to_i_watch), Toast.LENGTH_SHORT
                         ).show()
                         homeAction(HomeAction.GetAllContents)
                     }

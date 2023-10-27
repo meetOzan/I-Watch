@@ -1,41 +1,24 @@
 package com.mertozan.moviescompose.di
 
-import com.mertozan.moviescompose.data.source.local.LocalDataSource
-import com.mertozan.moviescompose.data.source.remote.FirebaseDataSource
-import com.mertozan.moviescompose.data.source.remote.RetrofitDataSource
 import com.mertozan.moviescompose.data.repository.ContentRepositoryImpl
 import com.mertozan.moviescompose.data.repository.UserRepositoryImpl
 import com.mertozan.moviescompose.domain.repository.ContentRepository
 import com.mertozan.moviescompose.domain.repository.UserRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideContentsRepository(
-        retrofitDataSource: RetrofitDataSource,
-        localDataSource: LocalDataSource,
-        firebaseDataSource: FirebaseDataSource
-    ): ContentRepository = ContentRepositoryImpl(
-        localDataSource,
-        retrofitDataSource,
-        firebaseDataSource
-    )
+    abstract fun provideContentsRepository(contentRepositoryImpl: ContentRepositoryImpl): ContentRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideUserRepository(
-        firebaseDataSource: FirebaseDataSource,
-        localDataSource: LocalDataSource
-    ): UserRepository = UserRepositoryImpl(
-        localDataSource,
-        firebaseDataSource
-    )
+    abstract fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 }

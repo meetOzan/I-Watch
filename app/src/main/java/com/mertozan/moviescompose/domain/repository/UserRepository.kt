@@ -13,6 +13,8 @@ interface UserRepository {
 
     suspend fun updateUserWatchState(userWatched: Int)
 
+    suspend fun updateUserLanguage(language: String)
+
     suspend fun getSingleLocalUser(): UserEntity
 
     suspend fun deleteUserFromLocale(userEntity: UserEntity)

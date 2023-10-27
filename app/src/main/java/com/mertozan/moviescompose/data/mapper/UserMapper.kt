@@ -8,7 +8,8 @@ fun UserEntity.toUserEntityToUserItem(): UserModel {
     return UserModel(
         name = name.orEmpty(),
         surname = surname.orEmpty(),
-        watched = watched.orZero()
+        watched = watched.orZero(),
+        language = language.orEmpty()
     )
 }
 
@@ -17,6 +18,7 @@ fun UserModel.toUserItemToUserEntity(): UserEntity {
         id = 1,
         name = name,
         surname = surname,
-        watched = watched
+        watched = watched,
+        language = language
     )
 }
