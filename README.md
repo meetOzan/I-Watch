@@ -11,7 +11,6 @@ A movie and TV show info app for teaching how to use Jetpack Compose with Clean 
 </p>
 
 ## Screenshoots
-
 | Splash | Entrance | Login |
 | ------ | ---- | ------ |
 |<img src="https://github.com/meetOzan/I-Watch/assets/99891928/8387294a-df6e-4137-873d-b3954dae3daa" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/38024c0a-9dfc-4a38-8e00-5bf5bf11c521" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/ca226317-a1fb-47f0-ae18-04c04fd56158" width="250" height="550"/>|
@@ -24,16 +23,15 @@ A movie and TV show info app for teaching how to use Jetpack Compose with Clean 
 
 </br>
 
-| Favorites | Search | Profile |
+| Favorites | Watch List | Watched List |
 | --------- | ------ | ------- |
-|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/ae3e444d-40d5-4555-8aa6-ef66c7c6057f" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/b5d40595-5432-4ba9-a325-b4f21f8d0407" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/77a6721f-335d-4397-ac07-005d102453a5" width="250" height="550"/>|
+|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/ad83f8c1-6a74-4086-b750-1d6b9f475e8a" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/dcfc1bc8-af05-448b-816a-50047a25d3dd" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/6007042b-c891-432a-9c0a-390fd8ecf968" width="250" height="550"/>|
 
 </br>
 
-| Home | Detail |
-| --------- | ------- |
-|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/cdd81779-b5aa-4e15-97ce-84f65764d717" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/49dd9308-94b3-4788-b022-311d9195d8dd" width="250" height="550"/> |
-
+| Prefer | Profile | Settings |
+| --------- | ------- | ------- |
+|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/5196ac75-1362-4cba-b998-a098bf748b6b" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/7e7fae65-b6cf-43b7-9a42-c6d5a6ae9c2a" width="250" height="550"/> | <img src="https://github.com/meetOzan/I-Watch/assets/99891928/a0336676-1855-408b-aeae-dec73acbb18d" width="250" height="550"/> |
 
 ## What did I use?
 - Minimum SDK level 23
@@ -47,8 +45,11 @@ A movie and TV show info app for teaching how to use Jetpack Compose with Clean 
   - [UseCases](https://developer.android.com/topic/architecture/domain-layer) - Located domain layer that sits between the UI layer and the data layer. 
   - [Repository](https://developer.android.com/topic/architecture/data-layer) - Located in data layer that contains application data and business logic.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) - is Android’s next generation and recommended modern toolkit for building native UI with declaritive style. It makes development UI simpler and more understandable on Android.
+- [Version Catalog](https://developer.android.com/build/migrate-to-catalogs#kts) to import dependencies to project.
 - [Android Hilt](https://developer.android.com/training/dependency-injection/hilt-android) for dependency injection.
 - [Retrofit](https://square.github.io/retrofit/) - for network calls.
+- [DeepLink](https://developer.android.com/training/app-links/deep-linking) to navigate another application.
+- [Language Localication](https://developer.android.com/guide/topics/resources/localization) to language localization.
 - [Room](https://developer.android.com/training/data-storage/room) to local database and to make an application that can run completely locally.
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for async. operations.
 - [Firebase Firestore](https://firebase.google.com/docs/firestore/quickstart) to user save operations.
