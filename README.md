@@ -31,3 +31,29 @@ A movie and TV show info app for teaching how to use Jetpack Compose with Clean 
 - [Chucker](https://github.com/ChuckerTeam/chucker) is simplifies the inspection of HTTP(S) requests/responses fired by your Android App.
 - [Coil Compose](https://coil-kt.github.io/coil/compose/) to load image what comes from API.
 - [Material Design 3](https://m3.material.io/) is the latest version of Google’s open-source design system.
+
+## Architecture
+This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture structure.
+![](https://i.stack.imgur.com/cr3Qk.png)
+
+
+## :heart: Are you liked that repository? 
+__[Follow Me!](https://github.com/meetOzan)__ for projects!
+
+
+# License
+```xml
+Designed and developed by 2023 meetOzan (Mert Ozan Kahraman)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
