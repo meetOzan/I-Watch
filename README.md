@@ -10,6 +10,31 @@ A movie and TV show info app for teaching how to use Jetpack Compose with Clean 
   <a href="https://github.com/meetOzab"><img alt="Profile" src="https://img.shields.io/badge/github-meetOzan-blue"/></a> 
 </p>
 
+## Screenshoots
+
+| Splash | Entrance | Login |
+| ------ | ---- | ------ |
+|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/8387294a-df6e-4137-873d-b3954dae3daa" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/38024c0a-9dfc-4a38-8e00-5bf5bf11c521" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/ca226317-a1fb-47f0-ae18-04c04fd56158" width="250" height="550"/>|
+
+</br>
+
+| Home | Detail | Top Rated List |
+| --- | ------- | ------- |
+|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/e018a670-9c80-4560-b971-35a263285058)" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/102e2f44-383c-43d6-bf49-458d13df2547" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/c5d5f39e-d144-40cc-8abd-5b6097c32ee8" width="250" height="550"/>|
+
+</br>
+
+| Favorites | Search | Profile |
+| --------- | ------ | ------- |
+|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/ae3e444d-40d5-4555-8aa6-ef66c7c6057f" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/b5d40595-5432-4ba9-a325-b4f21f8d0407" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/77a6721f-335d-4397-ac07-005d102453a5" width="250" height="550"/>|
+
+</br>
+
+| Home | Detail |
+| --------- | ------- |
+|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/cdd81779-b5aa-4e15-97ce-84f65764d717" width="250" height="550"/>|<img src="https://github.com/meetOzan/E-Commerce/assets/99891928/49dd9308-94b3-4788-b022-311d9195d8dd" width="250" height="550"/> |
+
+
 ## What did I use?
 - Minimum SDK level 23
 - Only [Kotlin](https://kotlinlang.org/) based
